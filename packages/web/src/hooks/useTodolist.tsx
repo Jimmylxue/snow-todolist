@@ -28,10 +28,7 @@ export const TodoListProvider: FC<TProps> = (props) => {
 
   const { isFetching } = useTaskType(
     'taskType',
-    {
-      userId: 1001,
-      // todo: 将 写死的userId 替换成 真正的用户id
-    },
+    {},
     {
       refetchOnWindowFocus: false,
       onSuccess(data) {

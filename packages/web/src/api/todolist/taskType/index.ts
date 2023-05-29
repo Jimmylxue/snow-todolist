@@ -1,4 +1,3 @@
-import { ClientError } from '@/api/location';
 import {
   QueryKey,
   UseMutationOptions,
@@ -12,13 +11,11 @@ import {
   TUpdateTaskTypeParams,
   TaskType,
 } from './type';
-import { post } from '../..';
+import { ClientError, post } from '../..';
 
 export function useTaskType(
   queryKey: QueryKey,
-  variable: {
-    userId: number;
-  },
+  variable: {},
   config?: UseQueryOptions<
     {
       code: number;

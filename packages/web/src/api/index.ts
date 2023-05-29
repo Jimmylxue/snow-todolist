@@ -50,6 +50,7 @@ type TResponse = {
 const handle401 = debounce(() => {
   message.error('未登录 请重新登录');
   todoListAuth.setShouldLoginStatus(true);
+  todoListAuth.setLoginUser(undefined);
 }, 500);
 
 class RequestHttp {

@@ -25,7 +25,7 @@ export const Avatar: FC<Props> = observer(
         className={classNames(
           'rounded-full overflow-hidden  flex justify-center items-center flex-shrink-0 cursor-pointer',
           {
-            'bg-green-600': !avatar,
+            'bg-green-600': !avatar || !showAvatar,
           },
         )}>
         {avatar && showAvatar ? (

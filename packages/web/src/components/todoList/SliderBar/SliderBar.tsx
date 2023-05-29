@@ -22,6 +22,7 @@ import { useUser } from '@/hooks/useAuth';
 import moment from 'moment';
 import { menuListConst, taskStatusListConst } from './const';
 import { useSearchInfo } from '@/hooks/useSearch';
+import './style.less';
 
 const { RangePicker } = DatePicker;
 
