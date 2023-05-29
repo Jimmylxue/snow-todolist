@@ -1,7 +1,7 @@
 export const weChat = {
-  appID: 'wxaacbd3b8822b6e5f', //公众号里面取
+  appID: '', //公众号里面取
 
-  AppSecret: '8dfafc53b8087da84f17c8c8aca589b7', //公众号里面取
+  AppSecret: '', //公众号里面取
 
   base_templateId: '795qXlW76mDQ48QpzoBbmjyQhlrPJ-TG_wep50yiD8I', // 元气提醒模板的id
 
