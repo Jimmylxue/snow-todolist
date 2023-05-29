@@ -1,0 +1,39 @@
+.sliderBarShow {
+  width: 300px;
+  height: 100%;
+  background-color: #fafafa;
+  animation: sliderBarShow 0.2s ease forwards;
+}
+.sliderBarClose {
+  width: 0px;
+  height: 100%;
+  background-color: #fafafa;
+  animation: sliderBarClose 0.2s ease forwards;
+}
+@keyframes sliderBarShow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 300px;
+  }
+}
+@keyframes sliderBarClose {
+  from {
+    width: 300px;
+  }
+  to {
+    width: 0px;
+  }
+}
+.btn_hover_dz:hover {
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  color: red;
+  box-shadow: 0 0 5px #fff;
+  background-color: #eee;
+  /* text-shadow: 5px #fff; */
+  transition: background-all 0.5s ease-in-out;
+}
+.snow-content > .ant-spin-nested-loading {
+  height: 100% !important;
+}

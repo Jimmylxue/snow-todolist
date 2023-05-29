@@ -1,0 +1,9 @@
+node_modules/
+dist/
+logs/
+
+# Project specifies
+*.pem
+*.crx
+
+.DS_Store

@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "SnowIndex",
+  "version": "0.0.0",
+  "description": "极客风格的浏览器主页",
+  "author": "jimmy <1002661758@qq.com>",
+  "chrome_url_overrides" : {
+    "newtab": "index.html"
+  },
+  "homepage_url": "http://www.jimmyxuexue.top:668/",
+  "minimum_chrome_version": "81.0.0",
+  "offline_enabled": true,
+  "permissions": ["tabs"],
+  "short_name": "snowIndex"
+}

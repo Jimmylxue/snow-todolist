@@ -1,0 +1,14 @@
+/* @import '~antd/es/style/themes/default.less'; */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+p{
+  margin-bottom: 0 !important;
+}
+
+
+
