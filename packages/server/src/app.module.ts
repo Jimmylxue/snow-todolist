@@ -12,11 +12,11 @@ import { TodoListModule } from './modules/todolist/todolist.module';
     NestLogsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'us-east.connect.psdb.cloud', // mysql host
+      host: '', // mysql host
       port: 3306,
-      username: '4azsnvlhhc698t2j2iiy', // 用户名
-      password: 'pscale_pw_NhSkGnSEYh7VBDk5noALSN1iHX7c47OPmTU4dQXZE3D', // 密码
-      database: 'snow-server', // 数据库名
+      username: '', // 用户名
+      password: '', // 密码
+      database: '', // 数据库名
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false,
       ssl: {},
