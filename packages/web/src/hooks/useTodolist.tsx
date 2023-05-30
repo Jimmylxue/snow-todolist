@@ -8,6 +8,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useUser } from './useAuth';
 
 type TodoListInfo = {
   taskType?: TaskType[];
@@ -25,12 +26,14 @@ export const TodoListProvider: FC<TProps> = (props) => {
     taskType: undefined,
     isFetchingTaskType: false,
   });
+  const { user } = useUser();
 
   const { isFetching } = useTaskType(
     'taskType',
     {},
     {
       refetchOnWindowFocus: false,
+      enabled: !!user?.id,
       onSuccess(data) {
         setTaskListInfo((info) => ({ ...info, taskType: data?.result }));
       },

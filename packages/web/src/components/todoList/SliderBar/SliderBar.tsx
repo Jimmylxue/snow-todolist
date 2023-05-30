@@ -95,8 +95,20 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
 
   // index 变化触发请求
   useEffect(() => {
-    paramsChangeFn();
-  }, [timeIndex, taskStatusIndex, taskTypeIndex]);
+    if (taskTypeList?.length) {
+      paramsChangeFn();
+    }
+  }, [timeIndex, taskStatusIndex, taskTypeList]);
+
+  useEffect(() => {
+    if (taskTypeIndex === 0) {
+      if (taskTypeList?.length) {
+        paramsChangeFn();
+      }
+    } else {
+      paramsChangeFn();
+    }
+  }, [taskTypeIndex, taskTypeList]);
 
   // 初次进入默认请求
   useEffect(() => {

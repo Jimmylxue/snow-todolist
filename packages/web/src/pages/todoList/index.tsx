@@ -11,7 +11,7 @@ import { useUserTask } from '@/api/todolist/task';
 import { Spin } from 'antd';
 import { Login } from '@/components/common/Login';
 import { observer } from 'mobx-react-lite';
-import { todoListAuth } from '@/hooks/useAuth';
+import { todoListAuth, useUser } from '@/hooks/useAuth';
 import { TaskItem } from '@/api/todolist/task/type';
 
 export const TodoList = observer(() => {
@@ -22,6 +22,7 @@ export const TodoList = observer(() => {
   const taskModalType = useRef<'ADD' | 'EDIT'>('ADD');
   const selectTask = useRef<TaskItem>();
   const currentChooseTaskType = useRef<number>();
+  const { user } = useUser();
 
   const { data, refetch, isFetching } = useUserTask(
     ['userTask', searchParams],
@@ -36,7 +37,8 @@ export const TodoList = observer(() => {
     },
     {
       refetchOnWindowFocus: false,
-      enabled: !!searchParams?.startTime && !!searchParams.taskType,
+      enabled:
+        !!searchParams?.startTime && !!searchParams.taskType && !!user?.id,
     },
   );
 
