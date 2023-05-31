@@ -40,9 +40,9 @@ export type TDelTaskParams = {
 };
 
 export type TUserTaskList = {
-  page: number;
+  total: number;
   result: TaskItem[];
-  pageSize: number;
+  page: number;
   typeId?: number;
 };
 
