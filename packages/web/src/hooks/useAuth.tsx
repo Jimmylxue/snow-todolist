@@ -68,7 +68,6 @@ export function useUser() {
       message.success('登录成功');
       localStorage.setItem('token', res.result.token);
       localStorage.setItem('login-user', JSON.stringify(res.result.user));
-      console.log('here', res.result.user);
       todoListAuth.setLoginUser(res.result.user);
       return true;
     }

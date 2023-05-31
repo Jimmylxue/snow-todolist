@@ -1,4 +1,3 @@
-import { ClientError } from '@/api/location';
 import {
   QueryKey,
   UseMutationOptions,
@@ -6,7 +5,7 @@ import {
   useMutation,
   useQuery,
 } from 'react-query';
-import { post } from '../..';
+import { ClientError, post } from '../..';
 import {
   TAddTaskParams,
   TDelTaskParams,
