@@ -4,7 +4,6 @@ import { User } from '../entities/user.entity';
 import { UserService } from '../services/user.service';
 import { BcryptService } from '../../auth/auth.service';
 import { JwtStrategy } from '../../auth/jwtStrategy.service';
-// import { AuthService } from '../auth/auth.service';
 import { UserController } from '../controllers/user/user.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from '../../auth/constats';
@@ -21,7 +20,13 @@ import { TaskType } from '@src/modules/todolist/entities/taskType.entity';
       },
     }),
   ],
-  providers: [UserService, BcryptService, JwtStrategy, TaskTypeService],
+  providers: [
+    UserService,
+    BcryptService,
+    JwtStrategy,
+    TaskTypeService,
+    BcryptService,
+  ],
   controllers: [UserController],
   // exports: [TypeOrmModule],
 })

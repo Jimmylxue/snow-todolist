@@ -1,5 +1,6 @@
 import { config } from '@/config/react-query';
 import { useUser } from '@/hooks/useAuth';
+import { encrypt } from '@/utils/encrypt';
 import { Button, Form, Input, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 
@@ -37,8 +38,8 @@ export function Login({ show, onClose }: TProps) {
         initialValues={{ remember: true }}
         onFinish={async () => {
           const params = form.getFieldsValue();
-
           if (modalType === 'login') {
+            params.password = await encrypt(params.password);
             const status = await login(params);
             if (status) {
               // 重新触发一些请求
@@ -47,6 +48,7 @@ export function Login({ show, onClose }: TProps) {
               onClose();
             }
           } else {
+            params.password = btoa(params.password + 'snow-todoList');
             const status = await register(params);
             if (status) {
               form.resetFields();
