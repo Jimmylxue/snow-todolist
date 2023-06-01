@@ -16,7 +16,7 @@ import { TaskType } from '@src/modules/todolist/entities/taskType.entity';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '3h',
+        expiresIn: '12h',
       },
     }),
   ],

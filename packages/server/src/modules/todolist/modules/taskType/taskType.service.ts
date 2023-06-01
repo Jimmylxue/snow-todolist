@@ -15,8 +15,11 @@ export class TaskTypeService {
     return taskTypes;
   }
 
-  async getTaskTypeDetail(typeId: number) {
-    const taskType = await this.taskTypeRepository.findBy({ typeId });
+  async getTaskTypeDetail(typeId: number, userId) {
+    const taskType = await this.taskTypeRepository.findOneBy({
+      typeId,
+      userId,
+    });
     return taskType;
   }
 
@@ -42,5 +45,10 @@ export class TaskTypeService {
       .where('taskType.typeId = :typeId', { typeId })
       .execute();
     return { status: 1, message: '更新成功' };
+  }
+
+  async hasTaskType(typeId, userId): Promise<boolean> {
+    const taskType = await this.getTaskTypeDetail(typeId, userId);
+    return !!taskType;
   }
 }

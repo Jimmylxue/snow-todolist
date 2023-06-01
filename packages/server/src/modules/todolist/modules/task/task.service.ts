@@ -46,8 +46,8 @@ export class TaskService {
     };
   }
 
-  async getTaskDetail(taskId: number) {
-    const task = await this.taskRepository.findBy({ taskId });
+  async getTaskDetail(taskId: number, userId: number) {
+    const task = await this.taskRepository.findOneBy({ taskId, userId });
     return task;
   }
 
@@ -108,5 +108,10 @@ export class TaskService {
       result,
       total,
     };
+  }
+
+  async hasTask(typeId, userId): Promise<boolean> {
+    const task = await this.getTaskDetail(typeId, userId);
+    return !!task;
   }
 }

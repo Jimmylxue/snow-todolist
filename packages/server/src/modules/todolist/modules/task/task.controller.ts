@@ -41,13 +41,22 @@ export class TaskController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/detail')
-  async getTypeDetail(@Body() req: DetailParams) {
+  async getTypeDetail(@Body() req: DetailParams, @Req() auth) {
     const { taskId } = req;
-    const taskTypes = await this.taskService.getTaskDetail(+taskId);
+    const { user } = auth;
+    const userId = user.userId;
+    const task = await this.taskService.getTaskDetail(+taskId, userId);
+    if (!task) {
+      return {
+        code: 500,
+        message: '参数错误-请检查参数是否一致',
+      };
+    }
     return {
       code: 200,
-      result: taskTypes,
+      result: task,
     };
   }
 
@@ -71,9 +80,19 @@ export class TaskController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/del')
-  async delType(@Body() req: DelParams) {
+  async delType(@Body() req: DelParams, @Req() auth) {
     const { taskId } = req;
+    const { user } = auth;
+    const userId = user.userId;
+    const whetherCorrect = await this.taskService.hasTask(taskId, userId);
+    if (!whetherCorrect) {
+      return {
+        code: 500,
+        message: '参数错误-请检查参数是否一致',
+      };
+    }
     const tasks = await this.taskService.delTask(+taskId);
     return {
       code: 200,
@@ -88,6 +107,15 @@ export class TaskController {
     const timeString = Date.now();
     const { user } = auth;
     const userId = user.userId;
+
+    const whetherCorrect = await this.taskService.hasTask(req.taskId, userId);
+    if (!whetherCorrect) {
+      return {
+        code: 500,
+        message: '参数错误-请检查参数是否一致',
+      };
+    }
+
     const params: any = {
       ...req,
       userId,
@@ -96,7 +124,7 @@ export class TaskController {
       params.completeTime = timeString;
     }
     params.updateTime = timeString;
-    const tasks = await this.taskService.updateTaskStatus(params);
+    await this.taskService.updateTaskStatus(params);
     return {
       code: 200,
       result: '更新成功',
@@ -110,12 +138,21 @@ export class TaskController {
     const timeString = Date.now();
     const { user } = auth;
     const userId = user.userId;
+
+    const whetherCorrect = await this.taskService.hasTask(req.taskId, userId);
+    if (!whetherCorrect) {
+      return {
+        code: 500,
+        message: '参数错误-请检查参数是否一致',
+      };
+    }
+
     const params: any = {
       ...req,
       userId,
     };
     params.updateTime = timeString;
-    const tasks = await this.taskService.updateTask(params);
+    await this.taskService.updateTask(params);
     return {
       code: 200,
       result: '更新成功',

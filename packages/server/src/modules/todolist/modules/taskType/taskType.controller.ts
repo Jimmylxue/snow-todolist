@@ -30,10 +30,22 @@ export class TaskTypeController {
     };
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/detail')
-  async getTypeDetail(@Body() req: DetailTypeParams) {
+  async getTypeDetail(@Body() req: DetailTypeParams, @Req() auth) {
     const { typeId } = req;
-    const taskTypes = await this.taskTypeService.getTaskTypeDetail(+typeId);
+    const { user } = auth;
+    const userId = user.userId;
+    const taskTypes = await this.taskTypeService.getTaskTypeDetail(
+      +typeId,
+      userId,
+    );
+    if (!taskTypes) {
+      return {
+        code: 500,
+        message: '参数错误-请检查参数是否一致',
+      };
+    }
     return {
       code: 200,
       result: taskTypes,
@@ -60,7 +72,19 @@ export class TaskTypeController {
   }
 
   @Post('/del')
-  async delType(@Body() req: DelTypeParams) {
+  async delType(@Body() req: DelTypeParams, @Req() auth) {
+    const { user } = auth;
+    const userId = user.userId;
+    const whetherCorrect = await this.taskTypeService.hasTaskType(
+      req.typeId,
+      userId,
+    );
+    if (!whetherCorrect) {
+      return {
+        code: 500,
+        message: '参数错误-请检查参数是否一致',
+      };
+    }
     const { typeId } = req;
     const tasks = await this.taskTypeService.delTaskType(+typeId);
     return {
@@ -71,13 +95,25 @@ export class TaskTypeController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('/update')
-  async updateTask(@Body() req: UpdateTypeParams) {
+  async updateTask(@Body() req: UpdateTypeParams, @Req() auth) {
+    const { user } = auth;
+    const userId = user.userId;
+    const whetherCorrect = await this.taskTypeService.hasTaskType(
+      req.typeId,
+      userId,
+    );
+    if (!whetherCorrect) {
+      return {
+        code: 500,
+        message: '参数错误-请检查参数是否一致',
+      };
+    }
     const timeString = Date.now();
     const params: any = {
       ...req,
     };
     params.updateTime = timeString;
-    const tasks = await this.taskTypeService.updateTaskType(params);
+    await this.taskTypeService.updateTaskType(params);
     return {
       code: 200,
       result: '更新成功',
