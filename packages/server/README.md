@@ -1,91 +1,364 @@
 <br>
 
-<h1 align="center">Welcome to snow-todolist 👋</h1>
+<h1 align="center">Welcome to snow-todolist 接口文档 👋</h1>
 
 <br>
 
 > 前后端全栈项目 By [吉米](https://github.com/Jimmylxue)
 
+接口会持续维护，可根据接口文档进行二次开发
+
 在线体验：[http://www.jimmyxuexue.top:668/#/todolist](http://www.jimmyxuexue.top:668/#/todolist)
 
-![图片效果](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/base.png?raw=true)
+介绍文档：[https://github.com/Jimmylxue/snow-todolist/blob/master/README.md](https://github.com/Jimmylxue/snow-todolist/blob/master/README.md)
 
-![登录](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/login.jpg?raw=true)
+baseUrl：http://www.jimmyxuexue.top:9999
 
-不知不觉记录 todolist 已半年之久了，确实是个非常不错的学习方式，时刻提醒自己还有未完成的任务。
+完整请求 path: http://www.jimmyxuexue.top:9999/user/register
 
-此项目是在 b 站直播时一点一点写的，也第一次尝试直播写代码，上线个简单 todolist ，目前已有 11 个小伙伴注册使用了 😊。
+---
 
-## 快速上手
+## 注册用户
 
-打开网站：[http://www.jimmyxuexue.top:668/#/todolist](http://www.jimmyxuexue.top:668/#/todolist)
+> BASIC
 
-注册一个账号，并创建一个 task。（我已默认为你生成一个生活的 task 类型）
+**Path:** /user/register
 
-> 现在注册需使用手机号，经费有限，随便填一个 11 位数的手机号就好啦~😋
+**Method:** POST
 
-**项目如何运行？**
+**Request Body:**
 
-执行以下步骤即可：
+| name     | type   | desc               |
+| -------- | ------ | ------------------ |
+| username | string | 用户名             |
+| phone    | string | 手机号             |
+| password | string | 密码               |
+| avatar   | string | 头像地址（可不传） |
+| sex      | 0 或 1 | 性别（可不传）     |
 
-- 拉去项目
-- 执行 `pnpm install`
-  > 未安装 pnpm 的小伙伴需先行安装 pnpm
-- 执行 `pnpm web:dev` 本地环境启动前端项目
-- 执行 `pnpm server:dev` 本地环境启动后端服务
+**Request Demo:**
 
-## 项目特点
+```json
+{
+  "username": "testUser",
+  "phone": "13355556666",
+  "password": "MTIzNDU2c25vdy10b2RvTGlzdA=="
+}
+```
 
-采用 monorepo 架构全栈项目。麻雀虽小，五脏俱全。
+原密码是 123456，注册时需要做一层简单的编码。逻辑如下：
 
-是一个完整体系且能上线的小项目，非常适合于还未毕业的同学作为毕业设计的参考学习项目。且项目中许多实现思路均是我在企业开发中学到的点。还是比较适合学习的。
+```ts
+const originPassword = '123456';
+const newPassword = btoa(originPassword + 'snow-todoList'); // MTIzNDU2c25vdy10b2RvTGlzdA==
+```
 
-## 技术栈
+---
 
-### 前端
+## 登录接口
 
-主要技术：
+> BASIC
 
-- react
-- vite
-- Ant Design 组件库
-- mobx 状态管理
-- Prettier 美化代码
-- Jest 单元测试
+**Path:** /user/login
 
-依赖库：
+**Method:** POST
 
-- react-query 管理请求
-- dayjs&moment 时间处理
-- lodash 工具库
+**Request Body:**
 
-### 后端
+| name     | type   | desc   |
+| -------- | ------ | ------ |
+| phone    | string | 手机号 |
+| password | string | 密码   |
 
-主要技术：
+**Request Demo:**
 
-- Node.js
-- Nest.js
-- Mysql
-- TypeORM
+```json
+{
+  "phone": 13355556666,
+  "password": "$2a$10$YtclWAftd1X/pHtTUUzaHuZnjCVBGQcHOwLSVyDRVAnvlyMuKlqA2"
+}
+```
 
-依赖服务：
+原密码 123456，登录时需通过 bcrypt 做一层加盐加密。逻辑如下：
 
-- planetScale 免费云数据库
+```ts
+import bcrypt from 'bcryptjs';
 
-## 目录结构
+const SALT_ROUNDS = 10;
 
-采用 monorepo 架构，前端代码位于 packages/web 后端代码位于 packages/server
+export async function encrypt(rawStr: string) {
+  const res = await bcrypt.hash(rawStr, SALT_ROUNDS);
+  return res;
+}
 
-## 其他内容
+const originPassword = '123456';
+const newPassword = await encrypt(originPassword); // $2a$10$YtclWAftd1X/pHtTUUzaHuZnjCVBGQcHOwLSVyDRVAnvlyMuKlqA2
+```
 
-不定期在 B 站直播写代码，欢迎有兴趣的小伙伴们前来围观，期待你们的关注~
+这个加密算法每次生成的 password 都是不同的。只需要这样加密，登录接口就能正确解密。
 
-[B 站个人主页](https://space.bilibili.com/304985153?spm_id_from=333.1007.0.0)
+---
 
-我有个前端交流群，平时大家一起讨论技术和交流 bug，有兴趣的小伙伴欢迎加入。（vx 添加：ysh15120）
+## 任务类型模块
 
-## 敬请期待
+需要携带 token，否则 401。
 
-有时间会直播时不断完善（或者有小伙伴反馈问题时处理一下）
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwicGFzc3dvcmQiOiJNVEl6TkRVMmMyNXZkeTEwYjJSdlRHbHpkQT09IiwidXNlcklkIjozMiwiaWF0IjoxNjg1NTg4MTMwLCJleHAiOjE2ODU1OTg5MzB9.AdpIFK0THzc7wLPRdgp_HNvM2otPkSkl9hmc3VjkV5g
+```
 
-期待小伙伴们的 star 和 PR🤞🤞🤞
+### 用户任务类型列表
+
+> BASIC
+
+**Path:** /taskType/list
+
+**Method:** POST
+
+**Request Body:**
+
+用户任务类型不会很多，不需要传参。
+
+### 类型详情
+
+**Path:** /taskType/detail
+
+**Request Body:**
+
+| name   | type   | desc        |
+| ------ | ------ | ----------- |
+| typeId | number | 任务类型 id |
+
+**Request Demo:**
+
+```json
+{
+  "typeId": 1038
+}
+```
+
+### 添加类型
+
+**Path:** /taskType/add
+
+**Request Body:**
+
+| name     | type   | desc     |
+| -------- | ------ | -------- |
+| typeName | string | 类型名称 |
+| desc     | number | 类型描述 |
+
+**Request Demo:**
+
+```json
+{
+  "typeName": "工作",
+  "desc": "用户记录所有工作类型的任务"
+}
+```
+
+### 类型更新
+
+**Path:** /taskType/update
+
+**Request Body:**
+
+| name     | type   | desc     |
+| -------- | ------ | -------- |
+| typeId   | number | 类型 Id  |
+| typeName | string | 类型名称 |
+| desc     | number | 类型描述 |
+
+**Request Demo:**
+
+```json
+{
+  "typeId": 1038,
+  "typeName": "工作",
+  "desc": "用户记录所有工作类型的任务"
+}
+```
+
+### 删除类型
+
+**Path:** /taskType/del
+
+**Request Body:**
+
+| name   | type   | desc    |
+| ------ | ------ | ------- |
+| typeId | number | 类型 Id |
+
+**Request Demo:**
+
+```json
+{
+  "typeId": 1039
+}
+```
+
+## 任务模块
+
+需要携带 token，否则 401。
+
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwicGFzc3dvcmQiOiJNVEl6TkRVMmMyNXZkeTEwYjJSdlRHbHpkQT09IiwidXNlcklkIjozMiwiaWF0IjoxNjg1NTg4MTMwLCJleHAiOjE2ODU1OTg5MzB9.AdpIFK0THzc7wLPRdgp_HNvM2otPkSkl9hmc3VjkV5g
+```
+
+### 用户任务列表
+
+> BASIC
+
+**Path:** /task/list
+
+**Method:** POST
+
+**Request Body:**
+
+| name      | type   | desc                       |
+| --------- | ------ | -------------------------- |
+| typeId    | number | 任务类型 id                |
+| status    | 0 或 1 | 任务状态 0 未完成 1 已完成 |
+| startTime | number | 开始时间                   |
+| endTime   | number | 结束时间                   |
+| page      | number | 查询页数                   |
+| pageSize  | number | 一页查询数量               |
+
+**Request Demo:**
+
+```json
+{
+  "status": 0,
+  "startTime": 1684944000000,
+  "endTime": 1685635199999,
+  "typeId": 1038,
+  "page": 1,
+  "pageSize": 10
+}
+```
+
+### 搜索用户任务
+
+按照任务名称模糊匹配最多十条任务
+
+> BASIC
+
+**Path:** /task/search
+
+**Method:** POST
+
+**Request Body:**
+
+| name     | type   | desc     |
+| -------- | ------ | -------- |
+| taskName | string | 任务名称 |
+
+**Request Demo:**
+
+```json
+{
+  "taskName": "打扫"
+}
+```
+
+### 任务详情
+
+**Path:** /task/detail
+
+**Request Body:**
+
+| name   | type   | desc    |
+| ------ | ------ | ------- |
+| taskId | number | 任务 Id |
+
+**Request Demo:**
+
+```json
+{
+  "taskId": 1038
+}
+```
+
+### 添加任务
+
+**Path:** /task/add
+
+**Request Body:**
+
+| name        | type   | desc        |
+| ----------- | ------ | ----------- |
+| typeId      | number | 任务类型 Id |
+| taskName    | string | 任务名称    |
+| taskContent | number | 任务描述    |
+
+**Request Demo:**
+
+```json
+{
+  "typeId": 1038,
+  "taskName": "做一下家务",
+  "taskContent": "打扫一下房间，和阳台"
+}
+```
+
+### 任务状态更新
+
+**Path:** /task/updateStatus
+
+**Request Body:**
+
+| name   | type   | desc                       |
+| ------ | ------ | -------------------------- |
+| taskId | number | 类型 Id                    |
+| status | 0 或 1 | 任务状态 0 未完成 1 已完成 |
+
+**Request Demo:**
+
+```json
+{
+  "taskId": 1038,
+  "status": 1
+}
+```
+
+### 任务内容更新
+
+**Path:** /task/update
+
+**Request Body:**
+
+| name        | type   | desc     |
+| ----------- | ------ | -------- |
+| taskId      | number | 任务 Id  |
+| typeId      | number | 类型 Id  |
+| taskName    | string | 任务名称 |
+| taskContent | number | 任务描述 |
+
+**Request Demo:**
+
+```json
+{
+  "taskName": "做一下家务哈哈",
+  "taskContent": "打扫一下房间，和阳台",
+  "typeId": 1038,
+  "taskId": 1066
+}
+```
+
+### 删除类型
+
+**Path:** /task/del
+
+**Request Body:**
+
+| name   | type   | desc    |
+| ------ | ------ | ------- |
+| taskId | number | 任务 Id |
+
+**Request Demo:**
+
+```json
+{
+  "taskId": 1066
+}
+```

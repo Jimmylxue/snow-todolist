@@ -8,6 +8,10 @@
 
 在线体验：[http://www.jimmyxuexue.top:668/#/todolist](http://www.jimmyxuexue.top:668/#/todolist)
 
+接口文档：[https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md](https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md)
+
+> 可根据接口文档进行二次开发
+
 ![图片效果](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/base.png?raw=true)
 
 ![登录](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/login.jpg?raw=true)
@@ -25,6 +29,8 @@
 > 现在注册需使用手机号，经费有限，随便填一个 11 位数的手机号就好啦~😋
 
 **项目如何运行？**
+
+接口文档：[https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md](https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md)
 
 执行以下步骤即可：
 
