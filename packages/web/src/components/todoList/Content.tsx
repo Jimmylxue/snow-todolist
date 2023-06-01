@@ -15,15 +15,9 @@ type TProps = {
   onEditTask: (type: 'ADD' | 'EDIT', task?: Task) => void;
   taskData: Task[];
   searchParams?: TSearchTaskParams;
-  refetchList: () => void;
 };
 
-export function Content({
-  onEditTask,
-  taskData,
-  searchParams,
-  refetchList,
-}: TProps) {
+export function Content({ onEditTask, taskData, searchParams }: TProps) {
   const { mutateAsync } = useUpdateTaskStatus();
   const { mutateAsync: delTask } = useDelTask();
   const { queryClient } = config();
@@ -74,7 +68,6 @@ export function Content({
           </div>
         </div>
         {/* 任务项 */}
-        {/* {data?.result?.result?.map((task, index) => ( */}
         {taskList?.map((task, index) => (
           <TaskItem
             isComplete={task.status}

@@ -31,7 +31,7 @@ export const TodoList = observer(() => {
   const currentChooseTaskType = useRef<number>();
   const { user } = useUser();
 
-  const { data, refetch, isFetching } = useUserTask(
+  const { data, isFetching } = useUserTask(
     ['userTask', searchParams, pageParams],
     {
       status: searchParams?.status,
@@ -74,7 +74,6 @@ export const TodoList = observer(() => {
               menuShow={menuShow}
               onSearchChange={(searchParams) => {
                 setSearchParams(searchParams);
-                // refetch();
               }}
             />
             <div className='flex-grow h-full snow-content'>
@@ -88,7 +87,6 @@ export const TodoList = observer(() => {
                     currentChooseTaskType.current = searchParams?.taskType;
                     setTaskModalShow(true);
                   }}
-                  refetchList={refetch}
                 />
                 <div
                   className=' flex w-full justify-end '
@@ -120,7 +118,6 @@ export const TodoList = observer(() => {
               setTaskModalShow(false);
             }}
             onOk={() => {
-              refetch();
               setTaskModalShow(false);
             }}
           />

@@ -1,7 +1,6 @@
-import { useCallback, useRef } from 'react';
 import classNames from 'classnames';
 import { MenuItem } from './MenuItem';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { SButton } from '../Button';
 import { PlusOutlined, SlackOutlined } from '@ant-design/icons';
 import { TaskTypeModal } from '../Tasks/TaskTypeModal';
@@ -44,12 +43,14 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   const { checkUserLoginBeforeFn } = useUser();
 
   const [timeIndex, setTimeIndex] = useState<number>(0);
-  const [taskTypeIndex, setTaskTypeIndex] = useState<number>(0);
   const [taskStatusIndex, setTaskStatusIndex] = useState<number>(0);
+  const [taskTypeIndex, setTaskTypeIndex] = useState<number>(0);
+
   const [taskTypeModalShow, setTaskTypeModalShow] = useState<boolean>(false);
   const [taskTypeModalType, setTaskTypeModalType] = useState<'ADD' | 'EDIT'>(
     'ADD',
   );
+
   const timeStr = useRef<number[]>([0, 0]);
   const selectTaskType = useRef<TaskType>();
   const dateRangeValue = useRef<[moment.Moment, moment.Moment]>([
@@ -110,13 +111,6 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
     }
   }, [taskTypeIndex, taskTypeList]);
 
-  // 初次进入默认请求
-  useEffect(() => {
-    if (taskTypeList?.length) {
-      paramsChangeFn();
-    }
-  }, [taskTypeList]);
-
   // 搜索任务时 默认赋值
   useEffect(() => {
     if (!taskTypeList || !searchInfo?.taskId) {
@@ -142,15 +136,6 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
     timeStr.current = tempStr;
     setTimeIndex(3);
   }, [taskTypeList, searchInfo]);
-
-  const onTaskTypeOk = useCallback(() => {
-    setTaskTypeModalShow(false);
-    message.success('任务添加成功');
-  }, []);
-
-  const onTaskTypeCancel = useCallback(() => {
-    setTaskTypeModalShow(false);
-  }, []);
 
   return (
     <div
@@ -285,8 +270,9 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
         type={taskTypeModalType}
         typeInfo={selectTaskType.current}
         show={taskTypeModalShow}
-        onOk={onTaskTypeOk}
-        onCancel={onTaskTypeCancel}
+        onCancel={() => {
+          setTaskTypeModalShow(false);
+        }}
       />
     </div>
   );

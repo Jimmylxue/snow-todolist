@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Popconfirm, message } from 'antd';
+import { Button, Form, Input, Modal, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { useAddTaskType, useUpdateTaskType } from '@/api/todolist/taskType';
@@ -9,17 +9,10 @@ type TProps = {
   type: 'ADD' | 'EDIT';
   typeInfo?: TaskType;
   show: boolean;
-  onOk: () => void;
   onCancel: () => void;
 };
 
-export const TaskTypeModal = ({
-  type,
-  show,
-  onOk,
-  onCancel,
-  typeInfo,
-}: TProps) => {
+export const TaskTypeModal = ({ type, show, onCancel, typeInfo }: TProps) => {
   const { mutateAsync } = useAddTaskType();
   const { mutateAsync: updateTaskType } = useUpdateTaskType();
   const { queryClient } = config();
