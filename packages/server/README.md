@@ -215,14 +215,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name      | type   | desc                       |
-| --------- | ------ | -------------------------- |
-| typeId    | number | 任务类型 id                |
-| status    | 0 或 1 | 任务状态 0 未完成 1 已完成 |
-| startTime | number | 开始时间                   |
-| endTime   | number | 结束时间                   |
-| page      | number | 查询页数                   |
-| pageSize  | number | 一页查询数量               |
+| name      | type              | desc                       |
+| --------- | ----------------- | -------------------------- |
+| typeId    | number （可不填） | 任务类型 id                |
+| status    | 0 或 1 (可不填)   | 任务状态 0 未完成 1 已完成 |
+| startTime | number            | 开始时间                   |
+| endTime   | number            | 结束时间                   |
+| page      | number            | 查询页数                   |
+| pageSize  | number            | 一页查询数量               |
 
 **Request Demo:**
 

@@ -34,8 +34,10 @@ export class TaskService {
       .where('task.userId = :userId', { userId })
       .andWhere('task.createTime >= :startTime', { startTime })
       .andWhere('task.createTime <= :endTime', { endTime })
-      .andWhere('task.status = :status', { status })
-      .andWhere('task.typeId = :typeId', { typeId })
+      .andWhere('task.status LIKE :status', {
+        status: status === undefined ? '%' : status,
+      })
+      .andWhere('task.typeId LIKE :typeId', { typeId: typeId || '%' })
       .skip(pageSize * (page - 1))
       .take(pageSize)
       // .execute();
