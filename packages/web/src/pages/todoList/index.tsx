@@ -13,6 +13,9 @@ import { Login } from '@/components/common/Login';
 import { observer } from 'mobx-react-lite';
 import { todoListAuth, useUser } from '@/hooks/useAuth';
 import { TaskItem } from '@/api/todolist/task/type';
+import { ActionBar } from '@/components/todoList/ActionBar';
+import { WelcomeModal } from '@/components/todoList/Welcome';
+import { useWelcome } from '@/hooks/useWelcome';
 
 export const TodoList = observer(() => {
   const [menuShow, setMenuShow] = useState<boolean>(true);
@@ -30,6 +33,7 @@ export const TodoList = observer(() => {
   const selectTask = useRef<TaskItem>();
   const currentChooseTaskType = useRef<number>();
   const { user } = useUser();
+  const { node: welcomeNode } = useWelcome();
 
   const { data, isFetching } = useUserTask(
     ['userTask', searchParams, pageParams],
@@ -57,7 +61,7 @@ export const TodoList = observer(() => {
   return (
     <TodoListProvider>
       <SearchProvider>
-        <div className=' w-screen h-screen flex flex-col'>
+        <div className=' w-screen h-screen flex flex-col relative'>
           <NavBar
             onMenuClick={() => {
               setMenuShow((status) => !status);
@@ -121,11 +125,13 @@ export const TodoList = observer(() => {
               setTaskModalShow(false);
             }}
           />
+          <ActionBar />
         </div>
         <Login
           show={todoListAuth.shouldLogin}
           onClose={() => todoListAuth.setShouldLoginStatus(false)}
         />
+        {welcomeNode}
       </SearchProvider>
     </TodoListProvider>
   );
