@@ -52,4 +52,4 @@ jobs:
           # 用户
           REMOTE_USER: 'root'
           # 目标地址 - 服务器上nginx对应访问的地址
-          TARGET: '/me/snow-todoList'
+          TARGET: '/www/server/nginx/html/snow-todoList'
