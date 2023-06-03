@@ -1,4 +1,4 @@
-name: 打包应用并上传服务器
+name: 打包todoList web 应用并上传服务器
 
 on:
   push:
@@ -23,22 +23,22 @@ jobs:
         with:
           node-version: 16.14.0
 
-      - name: 安装yarn
-        run: npm install -g yarn
+      - name: 安装pnpm
+        run: npm install -g pnpm
 
-      - name: 设置屏蔽版本检查
-        run: yarn config set ignore-engines true
+      # - name: 设置屏蔽版本检查
+      #   run: yarn config set ignore-engines true
 
       # 安装依赖
       - name: 安装依赖
-        run: yarn
+        run: pnpm install
 
       # 打包
       - name: 打包
-        run: yarn build
+        run: pnpm web:build
 
-      # 上传到阿里云
-      - name: 发布到阿里云
+      # 上传到腾讯云
+      - name: 发布到腾讯云
         uses: easingthemes/ssh-deploy@v2.1.1
         env:
           # 私钥
@@ -46,10 +46,10 @@ jobs:
           # SCP参数
           ARGS: '-avzr --delete'
           # 源目录
-          SOURCE: 'dist'
+          SOURCE: 'packages/web/dist'
           # 服务器ip
-          REMOTE_HOST: ''
+          REMOTE_HOST: ${{ secrets.PRIVATE_HOST }}
           # 用户
           REMOTE_USER: 'root'
           # 目标地址 - 服务器上nginx对应访问的地址
-          TARGET: ''
+          TARGET: '/me/snow-todoList'

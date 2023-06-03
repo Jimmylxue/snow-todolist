@@ -1,11 +1,10 @@
-import { ClientError } from '@/api/location';
 import { UseMutationOptions, useMutation } from 'react-query';
 import {
   TUpdateTaskParams,
   TUserLoginParams,
   TUserRegisterParams,
 } from './type';
-import { post } from '..';
+import { ClientError, post } from '..';
 
 export type TLoginUser = {
   id: number;
