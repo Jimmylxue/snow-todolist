@@ -24,7 +24,7 @@ jobs:
           node-version: 16.14.0
 
       - name: 安装pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm@7.12.2
 
       # - name: 设置屏蔽版本检查
       #   run: yarn config set ignore-engines true
