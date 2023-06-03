@@ -73,11 +73,15 @@ export class TaskController {
       taskContent,
       createTime: String(Date.now()),
     };
-    const tasks = await this.taskService.addUserTask(params);
-    return {
-      code: 200,
-      result: tasks,
-    };
+    const { status, id } = await this.taskService.addUserTask(params);
+    if (status === 1) {
+      const task = await this.taskService.getTaskDetail(id, userId);
+      return {
+        code: 200,
+        result: task,
+        message: '添加成功',
+      };
+    }
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -125,9 +129,11 @@ export class TaskController {
     }
     params.updateTime = timeString;
     await this.taskService.updateTaskStatus(params);
+    const task = await this.taskService.getTaskDetail(req.taskId, userId);
     return {
       code: 200,
-      result: '更新成功',
+      result: { ...task, status: req.status },
+      message: '更新成功',
     };
   }
 
@@ -153,9 +159,14 @@ export class TaskController {
     };
     params.updateTime = timeString;
     await this.taskService.updateTask(params);
+    const task = await this.taskService.getTaskDetail(req.taskId, userId);
     return {
       code: 200,
-      result: '更新成功',
+      result: {
+        task,
+        ...params,
+      },
+      message: '更新成功',
     };
   }
 

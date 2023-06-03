@@ -60,8 +60,8 @@ export class TaskService {
     taskContent: string;
     createTime: string;
   }) {
-    await this.taskRepository.insert(params);
-    return { status: 1, message: '添加成功' };
+    const task = await this.taskRepository.insert(params);
+    return { status: 1, message: '添加成功', id: task.raw.insertId };
   }
 
   async delTask(taskId: number) {

@@ -32,7 +32,7 @@ export class UserController {
         password,
       );
       if (compareRes) {
-        return await this.usersService.createToken(user, user.password);
+        return await this.usersService.createToken(user);
       }
       return {
         code: 10000,
@@ -50,7 +50,7 @@ export class UserController {
         password,
       );
       if (compareHashSuccess) {
-        return await this.usersService.createToken(user, user.password);
+        return await this.usersService.createToken(user);
       }
       return {
         code: 10000,

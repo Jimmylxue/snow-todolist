@@ -25,8 +25,8 @@ export class UserService {
     return await this.userRepository.findOneBy({ phone });
   }
 
-  async createToken(user, password) {
-    const payload = { username: user.username, password, userId: user.id };
+  async createToken(user) {
+    const payload = { username: user.username, userId: user.id };
     //在实际项目中一般要进行数据库验证查看用户用户名密码是否正确
     //const data = await this.userRepository.findOne({username:user.username, password: user.password})
     //if(!data) {

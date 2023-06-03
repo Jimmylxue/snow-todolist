@@ -28,8 +28,8 @@ export class TaskTypeService {
     typeName: string;
     createTime: string;
   }) {
-    await this.taskTypeRepository.insert(params);
-    return { status: 1, message: '添加成功' };
+    const res = await this.taskTypeRepository.insert(params);
+    return { status: 1, message: '添加成功', id: res.raw.insertId };
   }
 
   async delTaskType(typeId: number) {

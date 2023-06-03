@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Query,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import {
   AddUserTypeParams,
   DelTypeParams,
@@ -64,11 +56,14 @@ export class TaskTypeController {
       desc,
       createTime: String(Date.now()),
     };
-    const tasks = await this.taskTypeService.addUserTaskType(params);
-    return {
-      code: 200,
-      result: tasks,
-    };
+    const { status, id } = await this.taskTypeService.addUserTaskType(params);
+    if (status === 1) {
+      const taskType = await this.taskTypeService.getTaskTypeDetail(id, userId);
+      return {
+        code: 200,
+        result: taskType,
+      };
+    }
   }
 
   @Post('/del')
@@ -116,7 +111,8 @@ export class TaskTypeController {
     await this.taskTypeService.updateTaskType(params);
     return {
       code: 200,
-      result: '更新成功',
+      result: { ...params, userId },
+      message: '更新成功',
     };
   }
 }
