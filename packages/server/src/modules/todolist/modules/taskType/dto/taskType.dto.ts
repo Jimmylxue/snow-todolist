@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UserTaskBody {
   @IsNotEmpty({ message: 'typeId不能为空' })
@@ -18,6 +18,10 @@ export class AddUserTypeParams {
   @IsNotEmpty({ message: 'desc不能为空' })
   @IsString({ message: 'desc-参数类型错误' })
   desc: string;
+
+  @IsOptional()
+  @IsString({ message: 'themeColor-参数类型错误' })
+  themeColor: string;
 }
 
 export class DelTypeParams {
@@ -44,4 +48,8 @@ export class UpdateTypeParams {
   @IsNotEmpty({ message: 'desc不能为空' })
   @IsString({ message: 'desc-参数类型错误' })
   desc: string;
+
+  @IsOptional()
+  @IsString({ message: 'themeColor-参数类型错误' })
+  themeColor: string;
 }

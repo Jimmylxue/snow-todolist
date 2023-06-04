@@ -47,7 +47,7 @@ export class TaskTypeController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/add')
   async addUserType(@Body() req: AddUserTypeParams, @Req() auth) {
-    const { typeName, desc } = req;
+    const { typeName, desc, themeColor } = req;
     const { user } = auth;
     const userId = user.userId;
     const params = {
@@ -55,6 +55,7 @@ export class TaskTypeController {
       typeName,
       desc,
       createTime: String(Date.now()),
+      themeColor,
     };
     const { status, id } = await this.taskTypeService.addUserTaskType(params);
     if (status === 1) {

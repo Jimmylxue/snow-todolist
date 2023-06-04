@@ -28,4 +28,8 @@ export class Task {
 
   @Column('varchar', { name: 'updateTime', length: 45 })
   updateTime: string;
+
+  // 期待任务完成的时间
+  @Column('varchar', { name: 'expectTime', length: 45 })
+  expectTime: string;
 }

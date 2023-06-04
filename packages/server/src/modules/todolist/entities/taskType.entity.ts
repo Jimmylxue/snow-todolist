@@ -19,4 +19,7 @@ export class TaskType {
 
   @Column('varchar', { name: 'updateTime', length: 45 })
   updateTime: string;
+
+  @Column('varchar', { name: 'themeColor', length: 45 })
+  themeColor: string;
 }

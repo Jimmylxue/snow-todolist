@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsNumberString,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -54,6 +55,10 @@ export class AddTaskParams {
 
   @IsString({ message: 'taskContent-参数类型错误' })
   taskContent: string;
+
+  @IsOptional()
+  @IsString({ message: 'expectTime-参数类型错误' })
+  expectTime: string;
 }
 
 export class DelParams {
@@ -93,6 +98,10 @@ export class UpdateTaskParams {
 
   @IsString({ message: 'taskContent-参数类型错误' })
   taskContent: string;
+
+  @IsOptional()
+  @IsString({ message: 'expectTime-参数类型错误' })
+  expectTime: string;
 }
 
 export class SearchParams {

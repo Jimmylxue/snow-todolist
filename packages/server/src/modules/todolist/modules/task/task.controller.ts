@@ -63,7 +63,7 @@ export class TaskController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/add')
   async addUserType(@Body() req: AddTaskParams, @Req() auth) {
-    const { typeId, taskName, taskContent } = req;
+    const { typeId, taskName, taskContent, expectTime } = req;
     const { user } = auth;
     const userId = user.userId;
     const params = {
@@ -72,6 +72,7 @@ export class TaskController {
       taskName,
       taskContent,
       createTime: String(Date.now()),
+      expectTime,
     };
     const { status, id } = await this.taskService.addUserTask(params);
     if (status === 1) {
