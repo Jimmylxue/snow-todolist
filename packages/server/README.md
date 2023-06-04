@@ -8,13 +8,13 @@
 
 接口会持续维护，可根据接口文档进行二次开发
 
-在线体验：[http://www.jimmyxuexue.top:668/#/todolist](http://www.jimmyxuexue.top:668/#/todolist)
+在线体验：[https://tdl.jimmyxuexue.top](https://tdl.jimmyxuexue.top)
 
 介绍文档：[https://github.com/Jimmylxue/snow-todolist/blob/master/README.md](https://github.com/Jimmylxue/snow-todolist/blob/master/README.md)
 
-baseUrl：http://www.jimmyxuexue.top:9999
+baseUrl：https://api.jimmyxuexue.top
 
-完整请求 path: http://www.jimmyxuexue.top:9999/user/register
+完整请求 path: https://api.jimmyxuexue.top/user/register
 
 ---
 
@@ -143,10 +143,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name     | type   | desc     |
-| -------- | ------ | -------- |
-| typeName | string | 类型名称 |
-| desc     | number | 类型描述 |
+| name       | type   | desc                   |
+| ---------- | ------ | ---------------------- |
+| typeName   | string | 类型名称               |
+| desc       | number | 类型描述               |
+| themeColor | string | 类型主题颜色（可不传） |
 
 **Request Demo:**
 
@@ -163,11 +164,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name     | type   | desc     |
-| -------- | ------ | -------- |
-| typeId   | number | 类型 Id  |
-| typeName | string | 类型名称 |
-| desc     | number | 类型描述 |
+| name       | type   | desc                   |
+| ---------- | ------ | ---------------------- |
+| typeId     | number | 类型 Id                |
+| typeName   | string | 类型名称               |
+| desc       | number | 类型描述               |
+| themeColor | string | 类型主题颜色（可不传） |
 
 **Request Demo:**
 
@@ -285,11 +287,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name        | type   | desc        |
-| ----------- | ------ | ----------- |
-| typeId      | number | 任务类型 Id |
-| taskName    | string | 任务名称    |
-| taskContent | number | 任务描述    |
+| name        | type   | desc                       |
+| ----------- | ------ | -------------------------- |
+| typeId      | number | 任务类型 Id                |
+| taskName    | string | 任务名称                   |
+| taskContent | number | 任务描述                   |
+| expectTime  | string | 任务预期完成时间（可不传） |
 
 **Request Demo:**
 
@@ -327,12 +330,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name        | type   | desc     |
-| ----------- | ------ | -------- |
-| taskId      | number | 任务 Id  |
-| typeId      | number | 类型 Id  |
-| taskName    | string | 任务名称 |
-| taskContent | number | 任务描述 |
+| name        | type   | desc                       |
+| ----------- | ------ | -------------------------- |
+| taskId      | number | 任务 Id                    |
+| typeId      | number | 类型 Id                    |
+| taskName    | string | 任务名称                   |
+| taskContent | number | 任务描述                   |
+| expectTime  | string | 任务预期完成时间（可不传） |
 
 **Request Demo:**
 
