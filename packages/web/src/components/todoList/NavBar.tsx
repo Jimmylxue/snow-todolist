@@ -87,7 +87,7 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
 
   return (
     <div
-      className='w-full px-5'
+      className='w-full px-5 flex-shrink-0'
       style={{
         height: 45,
         backgroundColor: '#db4c3f',

@@ -139,10 +139,13 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
 
   return (
     <div
-      className={classNames('whitespace-nowrap overflow-hidden flex-shrink-0', {
-        sliderBarShow: menuShow,
-        sliderBarClose: !menuShow,
-      })}>
+      className={classNames(
+        'sliderBar-container whitespace-nowrap overflow-hidden flex-shrink-0',
+        {
+          sliderBarShow: menuShow,
+          sliderBarClose: !menuShow,
+        },
+      )}>
       <div className='w-full px-3 py-3'>
         <div className=' flex justify-between items-center'>
           <div className=' font-bold text-base mb-1'>日期</div>
