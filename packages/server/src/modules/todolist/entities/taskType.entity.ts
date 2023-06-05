@@ -22,4 +22,7 @@ export class TaskType {
 
   @Column('varchar', { name: 'themeColor', length: 45 })
   themeColor: string;
+
+  @Column('varchar', { name: 'icon', length: 45 })
+  icon: string;
 }

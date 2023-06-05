@@ -1,10 +1,12 @@
-import { Form, Input, Modal, Select, message } from 'antd';
+import { DatePicker, Form, Input, Modal, Select, Space, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useTodoList } from '@/hooks/useTodolist';
 import { useAddTask, useUpdateTask } from '@/api/todolist/task';
 import { config } from '@/config/react-query';
 import { TaskItem } from '@/api/todolist/task/type';
 import { useEffect } from 'react';
+import moment from 'moment';
+import { getTimeByMoment } from '../utils';
 
 type TProps = {
   type: 'ADD' | 'EDIT';
@@ -33,11 +35,12 @@ export function TasksModal({
 
   useEffect(() => {
     if (selectTask) {
-      const { taskName, taskContent, typeId } = selectTask;
+      const { taskName, taskContent, typeId, expectTime } = selectTask;
       form.setFieldsValue({
         taskName,
         taskContent,
         typeId,
+        expectTime: expectTime ? moment(+expectTime) : null,
       });
     }
   }, [selectTask]);
@@ -66,6 +69,11 @@ export function TasksModal({
         name='horizontal_login'
         onFinish={async () => {
           const params = form.getFieldsValue();
+          if (params.expectTime) {
+            params.expectTime = String(
+              getTimeByMoment(params.expectTime, 'end'),
+            );
+          }
           if (type === 'ADD') {
             const res = await mutateAsync({ ...params });
             if (res.code === 200) {
@@ -106,22 +114,69 @@ export function TasksModal({
             placeholder='描述'
           />
         </Form.Item>
-        <Form.Item
-          name='typeId'
-          rules={[{ required: true, message: '请选择任务类型' }]}>
-          <Select
-            placeholder='任务类型'
-            style={{
-              width: 150,
-            }}>
-            {taskType?.map((taskType) => (
-              <Select.Option key={taskType.typeId} value={taskType.typeId}>
-                {taskType.typeName}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
+
+        <Space align='start'>
+          <Form.Item noStyle dependencies={['expectTime']}>
+            {({ getFieldValue }) => {
+              const chooseTime = getFieldValue('expectTime');
+              return (
+                <>
+                  <Form.Item
+                    name='expectTime'
+                    rules={[
+                      {
+                        required: true,
+                        message: '请选择期待任务完成的截止时间',
+                      },
+                    ]}
+                    extra={<DateExtra chooseTime={chooseTime} />}>
+                    <DatePicker
+                      placeholder='请选择任务预期截止时间'
+                      style={{
+                        width: 200,
+                      }}
+                    />
+                  </Form.Item>
+                </>
+              );
+            }}
+          </Form.Item>
+
+          <Form.Item
+            name='typeId'
+            rules={[{ required: true, message: '请选择任务类型' }]}>
+            <Select
+              placeholder='任务类型'
+              style={{
+                width: 150,
+              }}>
+              {taskType?.map((taskType) => (
+                <Select.Option key={taskType.typeId} value={taskType.typeId}>
+                  {taskType.typeName}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Space>
       </Form>
     </Modal>
   );
+}
+
+function DateExtra({ chooseTime }: any) {
+  console.log(chooseTime, 'ss');
+  if (!chooseTime) {
+    return <div className=' text-xs mt-1 '>还没想好可先不填~</div>;
+  }
+  const timeStamp = getTimeByMoment(chooseTime, 'end');
+  const isLessThanToday = timeStamp && timeStamp < Date.now();
+  if (isLessThanToday) {
+    return (
+      <div className=' text-xs mt-1 text-orange-300'>
+        截止时间已经小于当前时间咯~
+      </div>
+    );
+  }
+
+  return <></>;
 }

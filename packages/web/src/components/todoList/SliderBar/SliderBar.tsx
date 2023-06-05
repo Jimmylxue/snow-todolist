@@ -8,7 +8,6 @@ import { useDelTaskType } from '@/api/todolist/taskType';
 import { message, DatePicker, Empty, Spin } from 'antd';
 import {
   getCurrentMonthsTime,
-  getRandomColor,
   getStatusByIndex,
   getTaskTypeByIndex,
   getTimeByIndex,
@@ -21,6 +20,8 @@ import { useUser } from '@/hooks/useAuth';
 import moment from 'moment';
 import { menuListConst, taskStatusListConst } from './const';
 import { useSearchInfo } from '@/hooks/useSearch';
+import Icon from '@ant-design/icons';
+import * as icons from '@ant-design/icons';
 import './style.less';
 
 const { RangePicker } = DatePicker;
@@ -231,14 +232,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                 showEdit
                 showDel
                 checked={index === taskTypeIndex}
-                icon={
-                  <SlackOutlined
-                    className='text-lg '
-                    style={{
-                      color: getRandomColor(index),
-                    }}
-                  />
-                }
+                icon={renderIcon(taskType.icon, taskType.themeColor)}
                 text={taskType.typeName}
                 message={<></>}
                 onClick={() => {
@@ -279,4 +273,32 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       />
     </div>
   );
+}
+
+function renderIcon(iconName?: string, themeColor?: string) {
+  // @ts-ignore
+  const isAntdIcon = iconName && icons?.[iconName];
+
+  if (isAntdIcon) {
+    return (
+      <Icon
+        className='text-lg'
+        component={(icons as any)?.[iconName]}
+        style={{
+          color: themeColor,
+        }}
+      />
+    );
+  }
+
+  return (
+    <SlackOutlined
+      className='text-lg'
+      style={{
+        color: themeColor,
+      }}
+    />
+  );
+
+  return;
 }

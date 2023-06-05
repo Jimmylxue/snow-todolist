@@ -22,6 +22,10 @@ export class AddUserTypeParams {
   @IsOptional()
   @IsString({ message: 'themeColor-参数类型错误' })
   themeColor: string;
+
+  @IsOptional()
+  @IsString({ message: 'icon-参数类型错误' })
+  icon: string;
 }
 
 export class DelTypeParams {
@@ -52,4 +56,8 @@ export class UpdateTypeParams {
   @IsOptional()
   @IsString({ message: 'themeColor-参数类型错误' })
   themeColor: string;
+
+  @IsOptional()
+  @IsString({ message: 'icon-参数类型错误' })
+  icon: string;
 }

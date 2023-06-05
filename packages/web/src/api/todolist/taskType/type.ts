@@ -16,4 +16,6 @@ export type TaskType = {
   desc: string;
   createTime: string;
   updateTime: string;
+  themeColor?: string;
+  icon?: string;
 };

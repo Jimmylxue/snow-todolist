@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import moment from 'moment';
 
 export function getTimeTextByIndex(index?: number) {
   switch (index) {
@@ -34,4 +35,11 @@ export function getFullTimeByIndex(
         dayjs(endTime).format('YYYY-MM-DD')
       );
   }
+}
+
+export function getTimeByMoment(moments: any, type: 'start' | 'end' = 'start') {
+  if (type === 'start') {
+    return moment(moments).startOf('day').valueOf();
+  }
+  return moment(moments).endOf('day').valueOf();
 }

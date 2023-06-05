@@ -11,13 +11,14 @@ export type TaskItem = {
   createTime: string;
   updateTime: string;
   typeMessage: TaskType;
+  expectTime: string | null;
 };
 
 export type TAddTaskParams = {
-  userId?: number;
   typeId: number;
   taskName: string;
   taskContent: string;
+  expectTime?: string; // 任务期待完成时间
 };
 
 export type TUpdateTaskStatusParams = {
