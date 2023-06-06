@@ -1,15 +1,7 @@
-import {
-  IsBooleanString,
-  IsInt,
-  IsNotEmpty,
-  IsNumber,
-  IsNumberString,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UserTaskBody {
-  @IsNotEmpty({ message: 'typeId不能为空' })
+  @IsOptional()
   @IsInt({ message: 'typeId-参数类型错误' })
   typeId: number;
 
@@ -19,7 +11,7 @@ export class UserTaskBody {
 }
 
 export class UserTaskParams {
-  @IsNotEmpty({ message: 'typeId不能为空' })
+  @IsOptional()
   @IsInt({ message: 'typeId-参数类型错误' })
   typeId: number;
 
@@ -39,7 +31,7 @@ export class UserTaskParams {
   @IsInt({ message: 'endTime-参数类型错误' })
   endTime: number;
 
-  @IsNotEmpty({ message: 'status不能为空' })
+  @IsOptional()
   @IsInt({ message: 'status-参数类型错误' })
   status: number;
 }
