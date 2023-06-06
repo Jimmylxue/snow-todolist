@@ -1,6 +1,6 @@
 <br>
 
-<h1 align="center">Welcome to snow-todolist 接口文档 👋</h1>
+<h1 align="center">Welcome to TODD - 极简的TodoList工具 接口文档 👋</h1>
 
 <br>
 
@@ -143,11 +143,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name       | type   | desc                   |
-| ---------- | ------ | ---------------------- |
-| typeName   | string | 类型名称               |
-| desc       | number | 类型描述               |
-| themeColor | string | 类型主题颜色（可不传） |
+| name       | type             | desc                   |
+| ---------- | ---------------- | ---------------------- |
+| typeName   | string           | 类型名称               |
+| desc       | number           | 类型描述               |
+| themeColor | string           | 类型主题颜色（可不传） |
+| icon       | string（可不传） | 任务类型图标           |
 
 **Request Demo:**
 
@@ -164,12 +165,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name       | type   | desc                   |
-| ---------- | ------ | ---------------------- |
-| typeId     | number | 类型 Id                |
-| typeName   | string | 类型名称               |
-| desc       | number | 类型描述               |
-| themeColor | string | 类型主题颜色（可不传） |
+| name       | type             | desc         |
+| ---------- | ---------------- | ------------ |
+| typeId     | number           | 类型 Id      |
+| typeName   | string           | 类型名称     |
+| desc       | number           | 类型描述     |
+| themeColor | string（可不传） | 类型主题颜色 |
+| icon       | string（可不传） | 任务类型图标 |
 
 **Request Demo:**
 
@@ -217,14 +219,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name      | type              | desc                       |
-| --------- | ----------------- | -------------------------- |
-| typeId    | number （可不填） | 任务类型 id                |
-| status    | 0 或 1 (可不填)   | 任务状态 0 未完成 1 已完成 |
-| startTime | number            | 开始时间                   |
-| endTime   | number            | 结束时间                   |
-| page      | number            | 查询页数                   |
-| pageSize  | number            | 一页查询数量               |
+| name       | type              | desc                       |
+| ---------- | ----------------- | -------------------------- |
+| typeId     | number （可不填） | 任务类型 id                |
+| status     | 0 或 1 (可不填)   | 任务状态 0 未完成 1 已完成 |
+| startTime  | number            | 开始时间                   |
+| endTime    | number            | 结束时间                   |
+| page       | number            | 查询页数                   |
+| pageSize   | number            | 一页查询数量               |
+| expectTime | number（可不填）  | 期待任务完成的时间         |
 
 **Request Demo:**
 
@@ -287,12 +290,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name        | type   | desc                       |
-| ----------- | ------ | -------------------------- |
-| typeId      | number | 任务类型 Id                |
-| taskName    | string | 任务名称                   |
-| taskContent | number | 任务描述                   |
-| expectTime  | string | 任务预期完成时间（可不传） |
+| name        | type             | desc             |
+| ----------- | ---------------- | ---------------- |
+| typeId      | number           | 任务类型 Id      |
+| taskName    | string           | 任务名称         |
+| taskContent | number           | 任务描述         |
+| expectTime  | string（可不传） | 任务预期完成时间 |
 
 **Request Demo:**
 
@@ -330,13 +333,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 **Request Body:**
 
-| name        | type   | desc                       |
-| ----------- | ------ | -------------------------- |
-| taskId      | number | 任务 Id                    |
-| typeId      | number | 类型 Id                    |
-| taskName    | string | 任务名称                   |
-| taskContent | number | 任务描述                   |
-| expectTime  | string | 任务预期完成时间（可不传） |
+| name        | type             | desc             |
+| ----------- | ---------------- | ---------------- |
+| taskId      | number           | 任务 Id          |
+| typeId      | number           | 类型 Id          |
+| taskName    | string           | 任务名称         |
+| taskContent | number           | 任务描述         |
+| expectTime  | string（可不传） | 任务预期完成时间 |
 
 **Request Demo:**
 

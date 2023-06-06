@@ -123,12 +123,6 @@ export function TasksModal({
                 <>
                   <Form.Item
                     name='expectTime'
-                    rules={[
-                      {
-                        required: true,
-                        message: '请选择期待任务完成的截止时间',
-                      },
-                    ]}
                     extra={<DateExtra chooseTime={chooseTime} />}>
                     <DatePicker
                       placeholder='请选择任务预期截止时间'

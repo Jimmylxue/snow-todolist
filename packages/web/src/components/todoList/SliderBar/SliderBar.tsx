@@ -241,7 +241,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
                   setTaskTypeIndex(index);
                 }}
                 onEdit={() => {
-                  selectTaskType.current = taskType;
+                  selectTaskType.current = { ...taskType };
                   setTaskTypeModalType('EDIT');
                   setTaskTypeModalShow(true);
                 }}

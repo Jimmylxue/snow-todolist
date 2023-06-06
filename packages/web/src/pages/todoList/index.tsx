@@ -14,7 +14,6 @@ import { observer } from 'mobx-react-lite';
 import { todoListAuth, useUser } from '@/hooks/useAuth';
 import { TaskItem } from '@/api/todolist/task/type';
 import { ActionBar } from '@/components/todoList/ActionBar';
-import { WelcomeModal } from '@/components/todoList/Welcome';
 import { useWelcome } from '@/hooks/useWelcome';
 
 export const TodoList = observer(() => {
@@ -87,7 +86,8 @@ export const TodoList = observer(() => {
                   taskData={data?.result?.result || []}
                   onEditTask={(type, task) => {
                     taskModalType.current = type;
-                    selectTask.current = task;
+                    // @ts-ignore
+                    selectTask.current = { ...task };
                     currentChooseTaskType.current = searchParams?.taskType;
                     setTaskModalShow(true);
                   }}

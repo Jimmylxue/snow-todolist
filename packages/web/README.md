@@ -1,12 +1,16 @@
 <br>
 
-<h1 align="center">Welcome to snow-todolist 👋</h1>
+<h1 align="center">Welcome to TODD - 极简的TodoList工具 👋</h1>
 
 <br>
 
 > 前后端全栈项目 By [吉米](https://github.com/Jimmylxue)
 
-在线体验：[http://www.jimmyxuexue.top:668/#/todolist](http://www.jimmyxuexue.top:668/#/todolist)
+在线体验：[https://tdl.jimmyxuexue.top](https://tdl.jimmyxuexue.top)
+
+接口文档：[https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md](https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md)
+
+> 可根据接口文档进行二次开发
 
 ![图片效果](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/base.png?raw=true)
 
@@ -18,13 +22,15 @@
 
 ## 快速上手
 
-打开网站：[http://www.jimmyxuexue.top:668/#/todolist](http://www.jimmyxuexue.top:668/#/todolist)
+打开网站：[https://tdl.jimmyxuexue.top](https://tdl.jimmyxuexue.top)
 
 注册一个账号，并创建一个 task。（我已默认为你生成一个生活的 task 类型）
 
 > 现在注册需使用手机号，经费有限，随便填一个 11 位数的手机号就好啦~😋
 
 **项目如何运行？**
+
+接口文档：[https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md](https://github.com/Jimmylxue/snow-todolist/blob/master/packages/server/README.md)
 
 执行以下步骤即可：
 
