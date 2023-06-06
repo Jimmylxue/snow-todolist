@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
 import { UserService } from '../../services/user.service';
-import { RegisterDto } from '../../dto/register.dto';
+import { RegisterDto, UpdateDto } from '../../dto/register.dto';
 import { LoginDto } from '../../dto/login.dto';
 import { TaskTypeService } from '@src/modules/todolist/modules/taskType/taskType.service';
 import { BcryptService } from '../../../auth/auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
@@ -91,6 +92,21 @@ export class UserController {
     return {
       code: 200,
       result: '注册成功',
+    };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('update')
+  async updateUser(@Body() body: UpdateDto, @Req() auth) {
+    // 注册时 传的密码 使用的是 btoa 处理过的密码
+    // const  = body;
+    const { user } = auth;
+    const userId = user.userId;
+    const params = body;
+    await this.usersService.updateUser({ ...params, userId });
+    return {
+      code: 200,
+      message: '更新成功',
     };
   }
 
