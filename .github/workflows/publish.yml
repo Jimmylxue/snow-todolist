@@ -4,7 +4,7 @@ on:
   push:
     # push 代码的时候 哪个分支会受到影响 这里是 master 主分支
     branches:
-      - master
+      - web-master
 
 # 推送之后执行一系列的任务
 jobs:
