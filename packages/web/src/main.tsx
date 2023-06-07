@@ -6,7 +6,7 @@ import 'tailwindcss/tailwind.css';
 import './index.css';
 import './var.less';
 import { config } from './config/react-query';
-
+import 'animate.css';
 const Root = function () {
   const { queryClient, QueryClientProvider } = config();
   return (

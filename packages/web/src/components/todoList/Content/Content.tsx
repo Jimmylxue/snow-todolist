@@ -63,7 +63,6 @@ export function Content({ onEditTask, taskData, searchParams }: TProps) {
             isComplete={task.status}
             key={index}
             taskName={task.taskName}
-            taskType={task.typeMessage?.typeName}
             task={task}
             desc={task.taskContent}
             onClick={() => {
@@ -99,7 +98,9 @@ export function Content({ onEditTask, taskData, searchParams }: TProps) {
                     />
                   ),
                 });
-                queryClient.invalidateQueries('userTask');
+                setTimeout(() => {
+                  queryClient.invalidateQueries('userTask');
+                }, 300);
               }
             }}
             onDeleteTask={async () => {

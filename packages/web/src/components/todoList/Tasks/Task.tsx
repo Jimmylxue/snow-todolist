@@ -1,19 +1,15 @@
 import { Checkbox, Divider, Popconfirm } from 'antd';
-import { FC, HTMLAttributes } from 'react';
-import {
-  DeleteOutlined,
-  QuestionCircleOutlined,
-  DribbbleOutlined,
-} from '@ant-design/icons';
+import { FC, HTMLAttributes, useRef, useState } from 'react';
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './index.less';
 import dayjs from 'dayjs';
 import { TaskItem as Task } from '@/api/todolist/task/type';
-import { renderIcon } from '../SliderBar/SliderBar';
+import classNames from 'classnames';
+import { addAnimate } from '@/utils/animate';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   taskName: string;
   desc: string;
-  taskType: string;
   task: Task;
   isComplete: 1 | 0;
   onCompleteTask: (status: boolean) => void;
@@ -23,20 +19,31 @@ interface TProps extends HTMLAttributes<HTMLDivElement> {
 export const TaskItem: FC<TProps> = ({
   taskName,
   desc,
-  taskType,
   isComplete,
   task,
   onCompleteTask,
   onClick,
   onDeleteTask,
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   return (
-    <div className='snow-task-item relative px-2 py-2 rounded-md'>
+    <div
+      ref={ref}
+      className={classNames('snow-task-item relative px-2 py-2 rounded-md', {
+        // 'animate__animated animate__shakeX': isClick,
+      })}>
       <div>
         <Checkbox
           checked={isComplete === 1}
           onChange={(e) => {
-            onCompleteTask(e.target.checked);
+            addAnimate(
+              ref?.current!,
+              ['animate__animated', 'animate__shakeX'],
+              800,
+            );
+            setTimeout(() => {
+              onCompleteTask(e.target.checked);
+            }, 200);
             // todo 完成任务
           }}></Checkbox>
         <span onClick={onClick} className=' text-sm ml-2 cursor-pointer'>
