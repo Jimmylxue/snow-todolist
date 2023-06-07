@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UserTaskBody {
   @IsOptional()
@@ -34,6 +34,10 @@ export class UserTaskParams {
   @IsOptional()
   @IsInt({ message: 'status-参数类型错误' })
   status: number;
+
+  @IsOptional()
+  @IsIn(['ASC', 'DESC'])
+  sort: string;
 }
 
 export class AddTaskParams {

@@ -11,15 +11,9 @@ export class TaskService {
     private readonly taskRepository: Repository<Task>,
   ) {}
 
-  async getUserTask(
-    userId: number,
-    page: number,
-    pageSize: number,
-    startTime: number,
-    endTime: number,
-    status: number,
-    typeId: number,
-  ) {
+  async getUserTask(params: any) {
+    const { userId, page, pageSize, startTime, endTime, status, typeId, sort } =
+      params;
     // 分页操作
     const qb = this.taskRepository.createQueryBuilder('task');
     const [result, total] = await qb
@@ -30,6 +24,7 @@ export class TaskService {
         'taskType',
         'task.typeId = taskType.typeId',
       )
+      .orderBy('task.taskId', sort)
       // .leftJoinAndSelect(TaskType, 'taskType', 'task.typeId = taskType.typeId') // 表关联
       .where('task.userId = :userId', { userId })
       .andWhere('task.createTime >= :startTime', { startTime })

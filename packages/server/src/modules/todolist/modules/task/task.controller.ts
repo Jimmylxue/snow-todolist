@@ -18,10 +18,18 @@ export class TaskController {
   @UseGuards(AuthGuard('jwt'))
   @Post('/list')
   async getUserType(@Body() req: UserTaskParams, @Req() auth) {
-    const { page, pageSize, startTime, endTime, status, typeId } = req;
+    const {
+      page,
+      pageSize,
+      startTime,
+      endTime,
+      status,
+      typeId,
+      sort = 'DESC',
+    } = req;
     const { user } = auth;
     const userId = user.userId;
-    const { result, total } = await this.taskService.getUserTask(
+    const params = {
       userId,
       page,
       pageSize,
@@ -29,7 +37,9 @@ export class TaskController {
       endTime,
       status,
       typeId,
-    );
+      sort,
+    };
+    const { result, total } = await this.taskService.getUserTask(params);
     return {
       code: 200,
       message: '请求成功',
