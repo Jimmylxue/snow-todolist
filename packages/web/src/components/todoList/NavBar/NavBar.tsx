@@ -4,17 +4,16 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { Dropdown, Input, MenuProps, Modal } from 'antd';
-import { Avatar } from './SAvatar';
-import { SButton } from './Button';
-import './index.css';
+import { Avatar } from '../SAvatar';
+import { SButton } from '../Button';
 import { useUser } from '@/hooks/useAuth';
 import { observer } from 'mobx-react-lite';
 import { useCallback, useState } from 'react';
 import { TaskItem } from '@/api/todolist/task/type';
 import { debounce } from 'lodash';
 import { useSearchTask } from '@/api/todolist/task';
-import './style.less';
 import { useSearchInfo } from '@/hooks/useSearch';
+import './navbar.less';
 
 type TProps = {
   onMenuClick: () => void;
@@ -87,7 +86,7 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
 
   return (
     <div
-      className='w-full px-5 flex-shrink-0'
+      className='w-full px-5 flex-shrink-0 dz-navbar'
       style={{
         height: 45,
         backgroundColor: '#db4c3f',
@@ -103,9 +102,17 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
           <div className=' relative'>
             <Input
               className='dz-input ml-4 border-r-2 w-full'
-              placeholder='请输入'
+              placeholder='搜索'
               value={searchText}
-              prefix={<SearchOutlined />}
+              prefix={
+                <SearchOutlined
+                  style={{
+                    color: '#fff',
+                    fontWeight: 300,
+                  }}
+                  className=' text-lg'
+                />
+              }
               onChange={changeFn}
               style={{
                 width: 300,

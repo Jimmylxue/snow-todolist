@@ -1,10 +1,12 @@
-import { Content, NavBar, TasksModal } from '@/components/todoList';
-import { useEffect, useRef, useState } from 'react';
-import './index.less';
 import {
-  SliderBar,
+  Content,
+  NavBar,
   TSearchTaskParams,
-} from '@/components/todoList/SliderBar/SliderBar';
+  TasksModal,
+} from '@/components/todoList';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import './index.less';
+import { SliderBar } from '@/components/todoList/SliderBar/SliderBar';
 import { TodoListProvider } from '@/hooks/useTodolist';
 import { SearchProvider } from '@/hooks/useSearch';
 import { useUserTask } from '@/api/todolist/task';
@@ -57,6 +59,13 @@ export const TodoList = observer(() => {
     }
   }, [searchParams]);
 
+  const hasOneMorePage = useMemo(() => {
+    if (data?.result?.total) {
+      return data.result.total / 10 > 1;
+    }
+    return false;
+  }, [data?.result]);
+
   return (
     <TodoListProvider>
       <SearchProvider>
@@ -92,24 +101,29 @@ export const TodoList = observer(() => {
                     setTaskModalShow(true);
                   }}
                 />
-                <div
-                  className=' flex w-full justify-end '
-                  style={{
-                    width: 800,
-                    margin: '0 auto',
-                    marginTop: 10,
-                  }}>
-                  <Pagination
-                    defaultCurrent={data?.result?.page}
-                    total={data?.result?.total}
-                    onChange={(pageData) => {
-                      setPageParams((params) => ({
-                        ...params,
-                        page: pageData,
-                      }));
-                    }}
-                  />
-                </div>
+
+                {hasOneMorePage && (
+                  <div
+                    className=' flex w-full justify-end '
+                    style={{
+                      width: 800,
+                      margin: '0 auto',
+                      marginTop: 10,
+                    }}>
+                    <Pagination
+                      size='small'
+                      current={data?.result?.page}
+                      defaultCurrent={data?.result?.page}
+                      total={data?.result?.total}
+                      onChange={(pageData) => {
+                        setPageParams((params) => ({
+                          ...params,
+                          page: pageData,
+                        }));
+                      }}
+                    />
+                  </div>
+                )}
               </Spin>
             </div>
           </div>

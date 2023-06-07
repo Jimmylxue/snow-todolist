@@ -1,14 +1,15 @@
 import {
   CarryOutOutlined,
   CheckCircleOutlined,
-  AlertOutlined,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
+import { STime, TSliderTime } from './type';
 
 export const taskStatusListConst = [
   {
     statusName: '未完成',
     icon: (
-      <AlertOutlined
+      <ExclamationCircleOutlined
         className='text-lg '
         style={{
           color: '#e67e22',
@@ -29,7 +30,7 @@ export const taskStatusListConst = [
   },
 ];
 
-export const menuListConst = [
+export const timeListConst: TSliderTime[] = [
   {
     icon: (
       <CarryOutOutlined
@@ -41,6 +42,7 @@ export const menuListConst = [
     ),
     text: '近7天',
     message: 2,
+    type: STime.近七天,
   },
   {
     icon: (
@@ -53,6 +55,7 @@ export const menuListConst = [
     ),
     text: '昨天',
     message: 2,
+    type: STime.昨天,
   },
   {
     icon: (
@@ -65,6 +68,7 @@ export const menuListConst = [
     ),
     text: '今天',
     message: 3,
+    type: STime.今天,
   },
   {
     icon: (
@@ -77,5 +81,6 @@ export const menuListConst = [
     ),
     text: '自定义',
     message: 2,
+    type: STime.自定义,
   },
 ];

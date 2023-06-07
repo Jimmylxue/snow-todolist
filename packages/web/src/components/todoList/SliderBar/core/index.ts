@@ -1,21 +1,22 @@
 import { TaskType } from '@/api/todolist/taskType/type';
 import dayjs from 'dayjs';
+import { STime } from '../type';
 
 export function getTimeByIndex(timeIndex: number) {
   let startTime = 0,
     endTime = 0;
   switch (timeIndex) {
-    case 2:
+    case STime.今天:
       // 今天
       startTime = dayjs().startOf('D').valueOf();
       endTime = dayjs().endOf('D').valueOf();
       return [startTime, endTime];
-    case 1:
+    case STime.昨天:
       // 昨天
       startTime = dayjs().subtract(1, 'day').startOf('D').valueOf();
       endTime = dayjs().subtract(1, 'day').endOf('D').valueOf();
       return [startTime, endTime];
-    case 0:
+    case STime.近七天:
       // 近七天
       startTime = dayjs().subtract(7, 'day').startOf('D').valueOf();
       endTime = dayjs().endOf('D').valueOf();

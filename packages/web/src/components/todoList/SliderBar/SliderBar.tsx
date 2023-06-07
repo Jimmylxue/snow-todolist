@@ -18,21 +18,14 @@ import { TaskType } from '@/api/todolist/taskType/type';
 import { config } from '@/config/react-query';
 import { useUser } from '@/hooks/useAuth';
 import moment from 'moment';
-import { menuListConst, taskStatusListConst } from './const';
+import { taskStatusListConst, timeListConst } from './const';
 import { useSearchInfo } from '@/hooks/useSearch';
 import Icon from '@ant-design/icons';
 import * as icons from '@ant-design/icons';
 import './style.less';
+import { STime, TSearchTaskParams } from './type';
 
 const { RangePicker } = DatePicker;
-
-export type TSearchTaskParams = {
-  taskType: number;
-  status: number;
-  startTime: number;
-  endTime: number;
-  timeIndex: number;
-};
 
 type TProps = {
   menuShow: boolean;
@@ -43,7 +36,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   const { taskType: taskTypeList, isFetchingTaskType } = useTodoList();
   const { checkUserLoginBeforeFn } = useUser();
 
-  const [timeIndex, setTimeIndex] = useState<number>(0);
+  const [timeIndex, setTimeIndex] = useState<STime>(timeListConst[0].type);
   const [taskStatusIndex, setTaskStatusIndex] = useState<number>(0);
   const [taskTypeIndex, setTaskTypeIndex] = useState<number>(0);
 
@@ -82,12 +75,12 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       timeIndex,
     };
 
-    if (timeIndex === 3 && !timeStr.current?.[0]) {
+    if (timeIndex === STime.自定义 && !timeStr.current?.[0]) {
       // 未选时间 默认赋值一个月的时间
       timeStr.current = getCurrentMonthsTime();
     }
 
-    if (timeIndex === 3 && timeStr.current[0]) {
+    if (timeIndex === STime.自定义 && timeStr.current[0]) {
       // 自定义
       params.startTime = timeStr.current[0];
       params.endTime = timeStr.current[1];
@@ -135,7 +128,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       getTimeStringByDate(res?.[1]!, 'end'),
     ];
     timeStr.current = tempStr;
-    setTimeIndex(3);
+    setTimeIndex(STime.自定义); // 搜索时定位至自定义
   }, [taskTypeList, searchInfo]);
 
   return (
@@ -151,20 +144,20 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
         <div className=' flex justify-between items-center'>
           <div className=' font-bold text-base mb-1'>日期</div>
         </div>
-        {menuListConst.map((menu, index) => (
+        {timeListConst.map((menu, index) => (
           <MenuItem
             key={index}
-            checked={index === timeIndex}
+            checked={menu.type === timeIndex}
             icon={menu.icon}
             text={menu.text}
             message={<></>}
             onClick={() => {
               setSearchInfo(undefined as any);
-              setTimeIndex(index);
+              setTimeIndex(menu.type);
             }}
           />
         ))}
-        {timeIndex === 3 && (
+        {timeIndex === STime.自定义 && (
           <div className='mt-2'>
             <RangePicker
               format={'YYYY/MM/DD'}
@@ -275,7 +268,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   );
 }
 
-function renderIcon(iconName?: string, themeColor?: string) {
+export function renderIcon(iconName?: string, themeColor?: string) {
   // @ts-ignore
   const isAntdIcon = iconName && icons?.[iconName];
 

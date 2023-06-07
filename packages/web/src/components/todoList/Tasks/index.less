@@ -6,6 +6,25 @@
   }
 }
 
+.snow-task-item::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: #f0f0f0;
+  left: 0;
+  bottom: 0;
+}
+
+.snow-task-item{
+  .desc-text{
+    color: var(--text-desc-color);
+  }
+  .ant-checkbox-inner{
+    border-radius: 50% !important;
+  }
+}
+
 .snow-delete-btn{
   display: none !important;
 }

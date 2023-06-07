@@ -1,16 +1,19 @@
 import dayjs from 'dayjs';
 import moment from 'moment';
+import { STime } from './SliderBar/type';
 
 export function getTimeTextByIndex(index?: number) {
   switch (index) {
-    case 2:
+    case STime.今天:
       return '今天';
-    case 1:
+    case STime.昨天:
       return '昨天';
-    case 0:
+    case STime.近七天:
       return '近七天';
-    default:
+    case STime.自定义:
       return '自定义时间';
+    default:
+      return '其他时间';
   }
 }
 

@@ -1,4 +1,4 @@
-import { Checkbox, Popconfirm } from 'antd';
+import { Checkbox, Divider, Popconfirm } from 'antd';
 import { FC, HTMLAttributes } from 'react';
 import {
   DeleteOutlined,
@@ -8,6 +8,7 @@ import {
 import './index.less';
 import dayjs from 'dayjs';
 import { TaskItem as Task } from '@/api/todolist/task/type';
+import { renderIcon } from '../SliderBar/SliderBar';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   taskName: string;
@@ -38,23 +39,19 @@ export const TaskItem: FC<TProps> = ({
             onCompleteTask(e.target.checked);
             // todo 完成任务
           }}></Checkbox>
-        <span onClick={onClick} className=' text-base ml-2 cursor-pointer'>
+        <span onClick={onClick} className=' text-sm ml-2 cursor-pointer'>
           {taskName}
         </span>
       </div>
-      <div className='px-6 text-xs'>{desc}</div>
-      <div className=' flex justify-end mt-3'>
-        <div
-          className='text-xs'
-          style={{
-            color: '#f39c12',
-          }}>
-          <DribbbleOutlined className='mr-1' />
-          {taskType}
+      <div className='px-6 text-xs desc-text mt-1'>{desc}</div>
+      {/* <div className=' flex justify-end mt-3'>
+        <div className='text-xs flex items-center'>
+          {renderIcon(task.typeMessage.icon, task.typeMessage.themeColor)}
+          <div className='ml-1'>{taskType}</div>
         </div>
-      </div>
-      <div className='text-xs flex justify-end text-gray-500'>
-        {dayjs(+task.createTime).format('YYYY-MM-DD - h:mm:ss - a')}
+      </div> */}
+      <div className='text-xs flex justify-end desc-text'>
+        create : {dayjs(+task.createTime).format('YYYY-MM-DD - h:mm:ss - a')}
       </div>
       <Popconfirm
         okText='确定'
