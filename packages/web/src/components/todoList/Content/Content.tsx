@@ -60,11 +60,8 @@ export function Content({ onEditTask, taskData, searchParams }: TProps) {
         {/* 任务项 */}
         {taskList?.map((task, index) => (
           <TaskItem
-            isComplete={task.status}
             key={index}
-            taskName={task.taskName}
             task={task}
-            desc={task.taskContent}
             onClick={() => {
               onEditTask('EDIT', task);
             }}

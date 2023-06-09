@@ -1,4 +1,4 @@
-.btn_hover_dz:hover{
+.btn_hover_dz:hover {
   /* background-color: rgba(255, 255, 255, 0.2); */
   color: red;
   box-shadow: 0 0 5px #fff;
@@ -6,20 +6,16 @@
   /* text-shadow: 5px #fff; */
   transition: background-all 0.5s ease-in-out;
 }
-
-.snow-content{
+.snow-content {
   max-height: calc(100vh - 60px) !important;
   overflow: auto;
 }
-
-.snow-content > .ant-spin-nested-loading{
+.snow-content > .ant-spin-nested-loading {
   height: 100% !important;
 }
-
-.text-desc{
+.text-desc {
   color: var(--text-desc-color);
 }
-
-.primary-color{
+.primary-color {
   color: var(--primary-color);
 }

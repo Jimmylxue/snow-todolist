@@ -66,3 +66,14 @@ export function getRandomColor(index: number) {
   ];
   return colorList[index % colorList.length];
 }
+
+export function getDayCountByTimeStamp(time1: number, time2: number) {
+  // const expect = dayjs(time1);
+  // return expect.diff(time2, 'day');
+  const expect = dayjs(formatStampTime(time1));
+  return expect.diff(formatStampTime(time2), 'day');
+}
+
+export function formatStampTime(time: number) {
+  return dayjs(time).format('YYYY-MM-DD');
+}

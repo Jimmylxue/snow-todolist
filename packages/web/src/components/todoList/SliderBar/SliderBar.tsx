@@ -142,7 +142,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       )}>
       <div className='w-full px-3 py-3'>
         <div className=' flex justify-between items-center'>
-          <div className=' font-bold text-base mb-1'>日期</div>
+          <div className=' font-bold text-small mb-1'>日期</div>
         </div>
         {timeListConst.map((menu, index) => (
           <MenuItem
@@ -184,7 +184,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       </div>
       <div className='w-full px-3 py-3'>
         <div className=' flex justify-between items-center'>
-          <div className=' font-bold text-base mb-1'>状态</div>
+          <div className=' font-bold text-small mb-1'>状态</div>
         </div>
 
         {taskStatusListConst.map((status, index) => (
@@ -205,7 +205,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
       <Spin tip='Loading...' spinning={isFetchingTaskType} className='h-full'>
         <div className='px-3 py-3'>
           <div className=' flex justify-between items-center'>
-            <div className=' font-bold text-base mb-1'>任务类型</div>
+            <div className=' font-bold text-small mb-1'>任务类型</div>
             <SButton
               className='ml-2 cursor-pointer'
               icon={<PlusOutlined className=' flex text-sm flex-shrink-0' />}

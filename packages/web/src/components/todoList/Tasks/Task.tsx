@@ -1,31 +1,39 @@
 import { Checkbox, Divider, Popconfirm } from 'antd';
-import { FC, HTMLAttributes, useRef, useState } from 'react';
-import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
+import {
+  DeleteOutlined,
+  QuestionCircleOutlined,
+  CarryOutOutlined,
+  ProjectOutlined,
+} from '@ant-design/icons';
 import './index.less';
 import dayjs from 'dayjs';
 import { TaskItem as Task } from '@/api/todolist/task/type';
 import classNames from 'classnames';
 import { addAnimate } from '@/utils/animate';
+import { getDayCountByTimeStamp } from '../SliderBar/core';
+import { getExpectNodeByTaskEnum, getTaskCompleteMsg } from './core';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
-  taskName: string;
-  desc: string;
   task: Task;
-  isComplete: 1 | 0;
   onCompleteTask: (status: boolean) => void;
   onDeleteTask: () => void;
 }
 
 export const TaskItem: FC<TProps> = ({
-  taskName,
-  desc,
-  isComplete,
   task,
   onCompleteTask,
   onClick,
   onDeleteTask,
 }) => {
+  const { taskName, taskContent, status, expectTime } = task;
   const ref = useRef<HTMLDivElement>(null);
+
+  const expectNode = useMemo(() => {
+    const taskEnum = getTaskCompleteMsg(task);
+    return getExpectNodeByTaskEnum(taskEnum!, task);
+  }, [task]);
+
   return (
     <div
       ref={ref}
@@ -34,7 +42,7 @@ export const TaskItem: FC<TProps> = ({
       })}>
       <div>
         <Checkbox
-          checked={isComplete === 1}
+          checked={status === 1}
           onChange={(e) => {
             addAnimate(
               ref?.current!,
@@ -50,15 +58,13 @@ export const TaskItem: FC<TProps> = ({
           {taskName}
         </span>
       </div>
-      <div className='px-6 text-xs desc-text mt-1'>{desc}</div>
-      {/* <div className=' flex justify-end mt-3'>
-        <div className='text-xs flex items-center'>
-          {renderIcon(task.typeMessage.icon, task.typeMessage.themeColor)}
-          <div className='ml-1'>{taskType}</div>
+      <div className='px-6 text-xs desc-text mt-1'>{taskContent}</div>
+      <div className='text-xs flex justify-between desc-text items-center mt-2 mb-1'>
+        <div className='pl-6 primary-color'>{expectNode} </div>
+        <div>
+          <CarryOutOutlined className='mr-1' />
+          {dayjs(+task.createTime).format('YYYY-MM-DD - h:mm:ss - a')}
         </div>
-      </div> */}
-      <div className='text-xs flex justify-end desc-text'>
-        create : {dayjs(+task.createTime).format('YYYY-MM-DD - h:mm:ss - a')}
       </div>
       <Popconfirm
         okText='确定'
