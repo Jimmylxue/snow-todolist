@@ -14,7 +14,7 @@ export class Task {
   @Column('int', { name: 'status' })
   status: number;
 
-  @Column('varchar', { name: 'taskName', length: 45 })
+  @Column('varchar', { name: 'taskName', length: 768 })
   taskName: string;
 
   @Column('text', { name: 'taskContent' })
