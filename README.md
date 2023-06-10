@@ -12,6 +12,12 @@
 
 > 可根据接口文档进行二次开发
 
+目前已有：
+
+[浏览器插件端](https://chrome.google.com/webstore/detail/dodd/kgneifofomjghckaeelmgmmpaiaodpmi?hl=zh-CN) - 作者：[妙才 Dev](https://github.com/Developer27149) - [仓库](https://github.com/Developer27149/chrome-extension-todolist)
+
+其他端敬请期待....
+
 ![图片效果](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/base.png?raw=true)
 
 ![登录](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/login.jpg?raw=true)
