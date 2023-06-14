@@ -11,7 +11,7 @@ import { JwtStrategy } from '../admin/system/auth/jwtStrategy.service';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '12h',
+        expiresIn: '7d',
       },
     }),
     TaskTypeModule,
