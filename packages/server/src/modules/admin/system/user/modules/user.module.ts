@@ -13,20 +13,15 @@ import { TaskType } from '@src/modules/todolist/entities/taskType.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, TaskType]),
+    // user模块需要派发 token 所以这里必须得引用 jwt Module
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '7d',
+        expiresIn: '30d',
       },
     }),
   ],
-  providers: [
-    UserService,
-    BcryptService,
-    JwtStrategy,
-    TaskTypeService,
-    BcryptService,
-  ],
+  providers: [UserService, BcryptService, JwtStrategy, TaskTypeService],
   controllers: [UserController],
   // exports: [TypeOrmModule],
 })

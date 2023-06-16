@@ -7,6 +7,11 @@ import { HttpExceptionFilter } from './exception/http-exception.filter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TasksModule } from './schedule/task.module';
 import { TodoListModule } from './modules/todolist/todolist.module';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './modules/admin/system/auth/constats';
+import { BcryptService } from './modules/admin/system/auth/auth.service';
+import { JwtStrategy } from './modules/admin/system/auth/jwtStrategy.service';
+import { UploadModule } from './modules/upload/upload.module';
 @Module({
   imports: [
     NestLogsModule,
@@ -25,6 +30,13 @@ import { TodoListModule } from './modules/todolist/todolist.module';
     TodoListModule,
     ScheduleModule.forRoot(),
     TasksModule,
+    UploadModule,
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: {
+        expiresIn: '30d',
+      },
+    }),
   ],
   controllers: [],
   providers: [
@@ -32,6 +44,8 @@ import { TodoListModule } from './modules/todolist/todolist.module';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+    BcryptService,
+    JwtStrategy,
   ],
 })
 export class AppModule {}
