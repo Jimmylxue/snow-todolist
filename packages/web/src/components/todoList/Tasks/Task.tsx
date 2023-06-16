@@ -13,6 +13,9 @@ import classNames from 'classnames';
 import { addAnimate } from '@/utils/animate';
 import { getDayCountByTimeStamp } from '../SliderBar/core';
 import { getExpectNodeByTaskEnum, getTaskCompleteMsg } from './core';
+import { showFireAnimate } from '../utils';
+// const confetti = require('canvas-confetti');
+// confetti.Promise = MyPromise;
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   task: Task;
@@ -49,9 +52,12 @@ export const TaskItem: FC<TProps> = ({
               ['animate__animated', 'animate__shakeX'],
               800,
             );
+            if (status === 0) {
+              showFireAnimate();
+            }
             setTimeout(() => {
               onCompleteTask(e.target.checked);
-            }, 200);
+            }, 500);
             // todo 完成任务
           }}></Checkbox>
         <span onClick={onClick} className=' text-sm ml-2 cursor-pointer'>
