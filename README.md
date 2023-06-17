@@ -20,7 +20,7 @@
 
 ![图片效果](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/base.png?raw=true)
 
-![登录](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/login.jpg?raw=true)
+![图片效果2](https://github.com/Jimmylxue/Jimmylxue/blob/master/assets/todolist/base2.png?raw=true)
 
 不知不觉记录 todolist 已半年之久了，确实是个非常不错的学习方式，时刻提醒自己还有未完成的任务。
 
