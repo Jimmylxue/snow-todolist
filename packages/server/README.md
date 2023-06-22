@@ -99,6 +99,46 @@ const newPassword = await encrypt(originPassword); // $2a$10$YtclWAftd1X/pHtTUUz
 
 ---
 
+## 用户模块
+
+需要携带 token，否则 401。
+
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwicGFzc3dvcmQiOiJNVEl6TkRVMmMyNXZkeTEwYjJSdlRHbHpkQT09IiwidXNlcklkIjozMiwiaWF0IjoxNjg1NTg4MTMwLCJleHAiOjE2ODU1OTg5MzB9.AdpIFK0THzc7wLPRdgp_HNvM2otPkSkl9hmc3VjkV5g
+```
+
+### 用户详情
+
+**Path:** /user/detail
+
+**Request Demo:**
+
+用户详情根据 token 获取
+
+### 更新用户信息
+
+**Path:** /user/update
+
+**Request Body:**
+
+| name     | type              | desc               |
+| -------- | ----------------- | ------------------ |
+| phone    | string （可不传） | 手机号             |
+| sex      | 0 或 1 （可不传） | 用户性别 0 男 1 女 |
+| avatar   | number （可不传） | 用户头像 url       |
+| username | string （可不传） | 用户名称           |
+
+**Request Demo:**
+
+```json
+{
+  "phone": "133444455555",
+  "sex": "0",
+  "avatar": "https://aaa.jpg",
+  "username": "jimmy"
+}
+```
+
 ## 任务类型模块
 
 需要携带 token，否则 401。

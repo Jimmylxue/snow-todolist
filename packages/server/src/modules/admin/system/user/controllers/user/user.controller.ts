@@ -17,7 +17,7 @@ export class UserController {
   @Post('login')
   async login(@Body() body: LoginDto) {
     const { phone, password } = body;
-    let user = await this.usersService.findUser(phone);
+    let user = await this.usersService.findUserByPhone(phone);
     if (!user) {
       return {
         code: 10000,
@@ -65,7 +65,7 @@ export class UserController {
     // 注册时 传的密码 使用的是 btoa 处理过的密码
     const params = body;
 
-    let res1 = await this.usersService.findUser(body.phone);
+    let res1 = await this.usersService.findUserByPhone(body.phone);
     if (res1) {
       return {
         code: 10000,
@@ -79,7 +79,7 @@ export class UserController {
       createTime: Date.now(),
     });
 
-    let user = await this.usersService.findUser(body.phone);
+    let user = await this.usersService.findUserByPhone(body.phone);
 
     const registerUserId = user.id;
 
@@ -107,6 +107,20 @@ export class UserController {
     return {
       code: 200,
       message: '更新成功',
+    };
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('detail')
+  async getUserDetail(@Req() auth) {
+    // 注册时 传的密码 使用的是 btoa 处理过的密码
+    // const  = body;
+    const { user } = auth;
+    const userId = user.userId;
+    const userDetail = await this.usersService.getDetailById(userId);
+    return {
+      code: 200,
+      result: userDetail,
     };
   }
 

@@ -21,8 +21,12 @@ export class UserService {
     return this.userRepository.insert(params);
   }
 
-  async findUser(phone: string) {
+  async findUserByPhone(phone: string) {
     return await this.userRepository.findOneBy({ phone });
+  }
+
+  async getDetailById(id: number) {
+    return await this.userRepository.findOneBy({ id });
   }
 
   async updateUser(updateParams: any) {
