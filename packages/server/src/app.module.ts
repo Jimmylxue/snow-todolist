@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './modules/admin/admin.module';
-import { NestLogsModule } from 'nest-logs';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './exception/http-exception.filter';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -12,9 +11,9 @@ import { jwtConstants } from './modules/admin/system/auth/constats';
 import { BcryptService } from './modules/admin/system/auth/auth.service';
 import { JwtStrategy } from './modules/admin/system/auth/jwtStrategy.service';
 import { UploadModule } from './modules/upload/upload.module';
+import { LoggerService } from './modules/shared/service/logger.service';
 @Module({
   imports: [
-    NestLogsModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '', // mysql host
@@ -46,6 +45,7 @@ import { UploadModule } from './modules/upload/upload.module';
     },
     BcryptService,
     JwtStrategy,
+    LoggerService,
   ],
 })
 export class AppModule {}

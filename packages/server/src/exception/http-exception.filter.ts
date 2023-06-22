@@ -8,12 +8,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { SystemException } from '.';
-import { Logger } from 'nest-logs';
 import { ErrorCode } from './errorCode';
+import { LoggerService } from '@src/modules/shared/service/logger.service';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter<Error> {
-  constructor() {}
+  constructor(@Inject(LoggerService) private readonly logger: LoggerService) {}
 
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
@@ -25,9 +25,9 @@ export class HttpExceptionFilter implements ExceptionFilter<Error> {
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
     if (status != HttpStatus.INTERNAL_SERVER_ERROR) {
-      Logger.info(exception);
+      this.logger.log(JSON.stringify(exception));
     } else {
-      Logger.info(exception);
+      this.logger.log(JSON.stringify(exception));
     }
 
     if (exception instanceof SystemException) {

@@ -39,7 +39,6 @@
     "error-stack-parser": "^2.1.4",
     "ioredis": "^5.2.3",
     "mysql2": "^2.3.3",
-    "nest-logs": "^0.0.2",
     "passport": "0.6.0",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
@@ -49,7 +48,8 @@
     "sha1": "^1.1.1",
     "typeorm": "^0.3.7",
     "upyun": "^3.4.6",
-    "webpack": "^5.0.0"
+    "webpack": "^5.0.0",
+    "winston": "^3.9.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
