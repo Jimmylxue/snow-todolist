@@ -57,7 +57,7 @@ export const TaskItem: FC<TProps> = ({
             }
             setTimeout(() => {
               onCompleteTask(e.target.checked);
-            }, 500);
+            }, 200);
             // todo 完成任务
           }}></Checkbox>
         <span onClick={onClick} className=' text-sm ml-2 cursor-pointer'>

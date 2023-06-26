@@ -1,10 +1,5 @@
 import { TaskItem } from '@/api/todolist/task/type';
-import {
-  DeleteOutlined,
-  QuestionCircleOutlined,
-  CarryOutOutlined,
-  ProjectOutlined,
-} from '@ant-design/icons';
+import { ProjectOutlined } from '@ant-design/icons';
 import { getDayCountByTimeStamp } from '../SliderBar/core';
 import { Tooltip } from 'antd';
 import dayjs from 'dayjs';
@@ -20,7 +15,9 @@ enum TaskCompleteEnum {
 
 export function getTaskCompleteMsg(task: TaskItem) {
   const { completeTime, status, expectTime } = task;
-  const hasOverTime = +completeTime > +expectTime! || 0;
+  const hasOverTime =
+    // 判断任务是否超时 ： 完成时间 是否大于 期待完成时间 || 当前时间 是否大于 期待完成时间
+    +completeTime > (+expectTime! || 0) || Date.now() > (+expectTime! || 0);
   if (!expectTime && !status) {
     return TaskCompleteEnum['未设置时间&未完成'];
   }
@@ -90,7 +87,7 @@ export function getExpectNodeByTaskEnum(
           title={
             <span>
               任务完成目标：
-              {dayjs(+expectTime!).format('YYYY-MM-DD - h:mm:ss')}
+              {dayjs(+expectTime!).format('YYYY-MM-DD')}
             </span>
           }>
           <div>
