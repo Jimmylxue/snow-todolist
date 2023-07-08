@@ -1,21 +1,17 @@
-import { Checkbox, Divider, Popconfirm } from 'antd';
+import { Checkbox, Popconfirm } from 'antd';
 import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
 import {
   DeleteOutlined,
   QuestionCircleOutlined,
   CarryOutOutlined,
-  ProjectOutlined,
 } from '@ant-design/icons';
 import './index.less';
 import dayjs from 'dayjs';
 import { TaskItem as Task } from '@/api/todolist/task/type';
 import classNames from 'classnames';
 import { addAnimate } from '@/utils/animate';
-import { getDayCountByTimeStamp } from '../SliderBar/core';
 import { getExpectNodeByTaskEnum, getTaskCompleteMsg } from './core';
 import { showFireAnimate } from '../utils';
-// const confetti = require('canvas-confetti');
-// confetti.Promise = MyPromise;
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   task: Task;
@@ -47,6 +43,7 @@ export const TaskItem: FC<TProps> = ({
         <Checkbox
           checked={status === 1}
           onChange={(e) => {
+            onCompleteTask(e.target.checked);
             addAnimate(
               ref?.current!,
               ['animate__animated', 'animate__shakeX'],
@@ -55,10 +52,6 @@ export const TaskItem: FC<TProps> = ({
             if (status === 0) {
               showFireAnimate();
             }
-            setTimeout(() => {
-              onCompleteTask(e.target.checked);
-            }, 200);
-            // todo 完成任务
           }}></Checkbox>
         <span onClick={onClick} className=' text-sm ml-2 cursor-pointer'>
           {taskName}

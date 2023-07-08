@@ -77,7 +77,9 @@ export function getExpectNodeByTaskEnum(
           }>
           <div>
             <ProjectOutlined className='mr-1' />
-            剩余{getDayCountByTimeStamp(+expectTime!, Date.now())}天
+            {getDayCountByTimeStamp(+expectTime!, Date.now()) === 0
+              ? '限时今天'
+              : `剩余${getDayCountByTimeStamp(+expectTime!, Date.now())}天`}
           </div>
         </Tooltip>
       );

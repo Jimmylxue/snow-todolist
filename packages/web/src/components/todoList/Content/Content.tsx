@@ -73,10 +73,14 @@ export function Content({ onEditTask, taskData, searchParams }: TProps) {
               });
               if (res.code === 200) {
                 notification.info({
-                  message: status ? `任务已完成` : '已恢复任务',
+                  message: (
+                    <div className=' font-bold'>
+                      {status ? `任务已完成` : '已恢复任务'}
+                    </div>
+                  ),
                   description: (
                     <>
-                      <p className='text-base'>{task.taskName}</p>
+                      <p className='text-xs mb-2 pb-1'>{task.taskName}</p>
                       <p className='text-xs'>{task.taskContent}</p>
                     </>
                   ),
