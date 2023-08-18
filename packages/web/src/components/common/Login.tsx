@@ -1,7 +1,7 @@
 import { config } from '@/config/react-query';
 import { useUser } from '@/hooks/useAuth';
 import { encrypt } from '@/utils/encrypt';
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, ConfigProvider, Form, Input, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 
 type TProps = {

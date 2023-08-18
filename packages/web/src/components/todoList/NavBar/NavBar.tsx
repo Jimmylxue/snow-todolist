@@ -2,18 +2,23 @@ import {
   UnorderedListOutlined,
   PlusOutlined,
   SearchOutlined,
+  SkinOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+  FireOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Input, MenuProps, Modal } from 'antd';
+import { ConfigProvider, Dropdown, Input, MenuProps, Modal } from 'antd';
 import { Avatar } from '../SAvatar';
 import { SButton } from '../Button';
 import { useUser } from '@/hooks/useAuth';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { TaskItem } from '@/api/todolist/task/type';
 import { debounce } from 'lodash';
 import { useSearchTask } from '@/api/todolist/task';
 import { useSearchInfo } from '@/hooks/useSearch';
 import './navbar.less';
+import { Setting } from '../Setting';
 
 type TProps = {
   onMenuClick: () => void;
@@ -27,14 +32,17 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
   const { mutateAsync } = useSearchTask();
   const { setSearchInfo } = useSearchInfo();
   const [searchText, setSearchText] = useState('');
+  const [settingShow, setSettingShow] = useState<boolean>(false);
 
   const loginItems: MenuProps['items'] = [
     {
-      key: '1',
+      key: '3',
       label: (
-        <a
-          target='_blank'
-          rel='noopener noreferrer'
+        <div
+          className='ml-2'
+          style={{
+            width: 200,
+          }}
           onClick={() => {
             modal.confirm({
               title: '确定退出登录吗',
@@ -44,24 +52,63 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
             });
           }}>
           退出登录
-        </a>
+        </div>
       ),
+      icon: <LogoutOutlined />,
     },
   ];
 
   const logoutItem: MenuProps['items'] = [
     {
-      key: '1',
+      key: '3',
       label: (
-        <a
-          target='_blank'
-          rel='noopener noreferrer'
+        <div
+          className='ml-2'
+          style={{
+            width: 200,
+          }}
           onClick={checkUserLoginBeforeFn}>
           立即登录
-        </a>
+        </div>
       ),
+      icon: <LoginOutlined />,
     },
   ];
+
+  const menuList = useMemo(() => {
+    const baseMenu: MenuProps['items'] = [
+      {
+        key: '1',
+        label: (
+          <div
+            className='ml-2'
+            style={{
+              width: 200,
+            }}
+            onClick={() => {
+              setSettingShow(true);
+            }}>
+            主题设置
+          </div>
+        ),
+        icon: <SkinOutlined />,
+      },
+      // {
+      //   key: '2',
+      //   label: (
+      //     <div
+      //       className='ml-2'
+      //       style={{
+      //         width: 200,
+      //       }}>
+      //       更新日志
+      //     </div>
+      //   ),
+      //   icon: <FireOutlined />,
+      // },
+    ];
+    return baseMenu.concat(!user ? logoutItem : loginItems);
+  }, [user, logoutItem, loginItems]);
 
   const searchFn = useCallback(
     debounce(async (e) => {
@@ -86,10 +133,9 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
 
   return (
     <div
-      className='w-full px-5 flex-shrink-0 dz-navbar'
+      className='w-full px-5 flex-shrink-0 dz-navbar primaryBgColor'
       style={{
         height: 45,
-        backgroundColor: '#db4c3f',
       }}>
       <div className='w-full h-full flex items-center justify-between text-white'>
         <div className='flex items-center'>
@@ -158,7 +204,7 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
             }}
           />
           <div className='ml-2'>
-            <Dropdown menu={{ items: user ? loginItems : logoutItem }}>
+            <Dropdown menu={{ items: menuList }}>
               <Avatar
                 userName={user?.username!}
                 avatar={user?.avatar}
@@ -169,6 +215,7 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
         </div>
       </div>
       {contextHolder}
+      <Setting onClose={() => setSettingShow(false)} visible={settingShow} />
     </div>
   );
 });

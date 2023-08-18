@@ -1,9 +1,47 @@
 @import '~antd/es/style/themes/default.less';
-@import '~antd/dist/antd.less'; 
+// @import '~antd/dist/antd.less'; 
+@import '~antd/dist/antd.variable.min.css';
 
 @primary-color:#DB4C3F !important;
 
+// 橘色
+html[data-theme='default']{
+  --primary-color:#DB4C3F;
+}
+
+// 暗黑模式
+html[data-theme='black']{
+  --primary-color:#2e2e2e;
+  --bg1:#102128;
+  --bg2:#2d5567;
+}
+
+// 深色模式
+html[data-theme='dark']{
+  --primary-color:#333333;
+  --bg1:#102128;
+  --bg2:#2d5567;
+}
+
+// 淡灰色
+html[data-theme='gray']{
+  --primary-color:#f7f7f7;
+  --bg1:#102128;
+  --bg2:#2d5567;
+}
+
+
+// 橘色
+html[data-theme='orange']{
+  --primary-color:#e58938;
+}
+
+// 默认主题色
 :root{
   --text-desc-color:#808080;
   --primary-color:#DB4C3F;
+}
+
+.primaryBgColor{
+  background-color: var(--primary-color);
 }
