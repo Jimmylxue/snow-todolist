@@ -1,17 +1,14 @@
-.sliderBar-container{
+.sliderBar-container {
   height: calc(100vh - 50px) !important;
   overflow: auto !important;
 }
-
 .sliderBarShow {
   width: 300px;
-  // background-color: #fafafa;
   animation: sliderBarShow 0.2s ease forwards;
 }
 .sliderBarClose {
   width: 0px;
   height: 100%;
-  // background-color: #fafafa;
   animation: sliderBarClose 0.2s ease forwards;
 }
 @keyframes sliderBarShow {

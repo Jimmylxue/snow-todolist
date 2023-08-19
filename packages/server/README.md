@@ -410,3 +410,31 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
   "taskId": 1066
 }
 ```
+
+## 其他模块
+
+### 获取更新记录
+
+思路：获取 github 仓库指定生产分支的 commit 记录，这个记录就好似我们产品的更新记录
+
+**Path:** /base/UpdateRecord
+
+**Request Body:**
+
+| name      | type   | desc          |
+| --------- | ------ | ------------- |
+| user      | string | github 用户名 |
+| repos     | string | github 仓库名 |
+| branch    | string | github 分支名 |
+| startTime | string | 开始时间      |
+
+**Request Demo:**
+
+```json
+{
+  "user": "Jimmylxue",
+  "repos": "snow-todolist",
+  "branch": "web-master",
+  "startTime": "2022-01-01"
+}
+```

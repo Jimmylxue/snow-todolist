@@ -6,8 +6,9 @@ import {
   LoginOutlined,
   LogoutOutlined,
   FireOutlined,
+  LeftOutlined,
 } from '@ant-design/icons';
-import { ConfigProvider, Dropdown, Input, MenuProps, Modal } from 'antd';
+import { Dropdown, Input, MenuProps, Modal } from 'antd';
 import { Avatar } from '../SAvatar';
 import { SButton } from '../Button';
 import { useUser } from '@/hooks/useAuth';
@@ -19,6 +20,7 @@ import { useSearchTask } from '@/api/todolist/task';
 import { useSearchInfo } from '@/hooks/useSearch';
 import './navbar.less';
 import { Setting } from '../Setting';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type TProps = {
   onMenuClick: () => void;
@@ -33,6 +35,11 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
   const { setSearchInfo } = useSearchInfo();
   const [searchText, setSearchText] = useState('');
   const [settingShow, setSettingShow] = useState<boolean>(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isHomePage = location.pathname === '/';
 
   const loginItems: MenuProps['items'] = [
     {
@@ -93,19 +100,22 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
         ),
         icon: <SkinOutlined />,
       },
-      // {
-      //   key: '2',
-      //   label: (
-      //     <div
-      //       className='ml-2'
-      //       style={{
-      //         width: 200,
-      //       }}>
-      //       更新日志
-      //     </div>
-      //   ),
-      //   icon: <FireOutlined />,
-      // },
+      {
+        key: '2',
+        label: (
+          <div
+            className='ml-2'
+            style={{
+              width: 200,
+            }}
+            onClick={() => {
+              navigate('/updateRecord');
+            }}>
+            更新日志
+          </div>
+        ),
+        icon: <FireOutlined />,
+      },
     ];
     return baseMenu.concat(!user ? logoutItem : loginItems);
   }, [user, logoutItem, loginItems]);
@@ -133,76 +143,91 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
 
   return (
     <div
-      className='w-full px-5 flex-shrink-0 dz-navbar primaryBgColor'
+      className='w-full px-5 flex-shrink-0 dz-navbar primaryNavBarBgColor'
       style={{
         height: 45,
       }}>
-      <div className='w-full h-full flex items-center justify-between text-white'>
-        <div className='flex items-center'>
-          <SButton
-            icon={
-              <UnorderedListOutlined className=' flex text-xl flex-shrink-0' />
-            }
-            onClick={onMenuClick}
-          />
-          <div className=' relative'>
-            <Input
-              className='dz-input ml-4 border-r-2 w-full'
-              placeholder='搜索'
-              value={searchText}
-              prefix={
-                <SearchOutlined
-                  style={{
-                    color: '#fff',
-                    fontWeight: 300,
-                  }}
-                  className=' text-lg'
-                />
+      <div className='w-full h-full flex items-center justify-between primaryTextColor'>
+        {isHomePage ? (
+          <div className='flex items-center'>
+            <SButton
+              icon={
+                <UnorderedListOutlined className=' flex text-xl flex-shrink-0' />
               }
-              onChange={changeFn}
-              style={{
-                width: 300,
-              }}
+              onClick={onMenuClick}
             />
-            {!!searchList.length && (
-              <div
-                className=' absolute left-0 top-8 ml-4 bg-white z-30'
+            <div className=' relative'>
+              <Input
+                className='dz-input ml-4 border-r-2 w-full primaryTextColor'
+                placeholder='搜索'
+                value={searchText}
+                prefix={
+                  <SearchOutlined
+                    style={{
+                      fontWeight: 300,
+                    }}
+                    className=' text-lg'
+                  />
+                }
+                onChange={changeFn}
                 style={{
                   width: 300,
-                }}>
-                {searchList.map((task, index) => (
-                  <div
-                    key={index}
-                    className='snow-search-item-hover text-black flex justify-between py-2 px-2 text-xs cursor-pointer'
-                    onClick={() => {
-                      setSearchInfo(task);
-                      setSearchList([]);
-                      setSearchText('');
-                    }}>
-                    <div>
-                      {task.taskName.length > 18
-                        ? task.taskName.slice(0, 18) + '...'
-                        : task.taskName}
+                }}
+              />
+              {!!searchList.length && (
+                <div
+                  className=' absolute left-0 top-8 ml-4 bg-white z-30'
+                  style={{
+                    width: 300,
+                  }}>
+                  {searchList.map((task, index) => (
+                    <div
+                      key={index}
+                      className='snow-search-item-hover text-black flex justify-between py-2 px-2 text-xs cursor-pointer'
+                      onClick={() => {
+                        setSearchInfo(task);
+                        setSearchList([]);
+                        setSearchText('');
+                      }}>
+                      <div>
+                        {task.taskName.length > 18
+                          ? task.taskName.slice(0, 18) + '...'
+                          : task.taskName}
+                      </div>
+                      <div>{task.typeMessage.typeName}</div>
                     </div>
-                    <div>{task.typeMessage.typeName}</div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className=' flex items-center'>
+            <SButton
+              icon={<LeftOutlined className=' flex text-xl flex-shrink-0' />}
+              onClick={() => {
+                history.back();
+              }}
+            />
+            <div className='ml-2 text-lg font-semibold'>DODD</div>
+          </div>
+        )}
+
         <div className='flex items-center'>
-          <SButton
-            className='ml-2'
-            icon={<PlusOutlined className=' flex text-xl flex-shrink-0' />}
-            onClick={() => {
-              if (user?.id) {
-                onAddTask();
-                return;
-              }
-              showLoginModal();
-            }}
-          />
+          {isHomePage && (
+            <SButton
+              className='ml-2'
+              icon={<PlusOutlined className=' flex text-xl flex-shrink-0' />}
+              onClick={() => {
+                if (user?.id) {
+                  onAddTask();
+                  return;
+                }
+                showLoginModal();
+              }}
+            />
+          )}
+
           <div className='ml-2'>
             <Dropdown menu={{ items: menuList }}>
               <Avatar

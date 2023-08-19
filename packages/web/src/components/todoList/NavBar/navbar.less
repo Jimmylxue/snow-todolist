@@ -18,14 +18,16 @@
 
 
 .dz-input{
-  background-color: rgba(255, 255, 255, .2) !important;
+  // background-color: rgba(255, 255, 255, .2) !important;
+  background-color: var(--input-bg-color) !important;
+  // border-color: red;
   
   input{
     // background-color: none;
-    color: #fff;
+    color: var(--primary-text-color);
     background: none;
     &::placeholder{
-      color: #fff;
+      color: var(--primary-text-color);
       font-size: 13px;
       font-weight: 300;
     } 

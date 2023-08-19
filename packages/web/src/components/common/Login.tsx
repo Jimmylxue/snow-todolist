@@ -1,15 +1,16 @@
 import { config } from '@/config/react-query';
-import { useUser } from '@/hooks/useAuth';
+import { todoListAuth, useUser } from '@/hooks/useAuth';
 import { encrypt } from '@/utils/encrypt';
-import { Button, ConfigProvider, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
+import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 
 type TProps = {
-  show: boolean;
+  show?: boolean;
   onClose: () => void;
 };
 
-export function Login({ show, onClose }: TProps) {
+export const Login = observer(({ show, onClose }: TProps) => {
   const { login, register } = useUser();
   const { queryClient } = config();
   const [form] = Form.useForm();
@@ -26,7 +27,7 @@ export function Login({ show, onClose }: TProps) {
   return (
     <Modal
       title={modalType === 'login' ? '用户登录' : '用户注册'}
-      open={show}
+      open={todoListAuth.shouldLogin}
       onCancel={onClose}
       forceRender
       footer={null}>
@@ -114,4 +115,4 @@ export function Login({ show, onClose }: TProps) {
       </Form>
     </Modal>
   );
-}
+});

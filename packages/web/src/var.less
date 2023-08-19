@@ -2,38 +2,63 @@
 // @import '~antd/dist/antd.less'; 
 @import '~antd/dist/antd.variable.min.css';
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+p{
+  margin-bottom: 0 !important;
+}
+
 @primary-color:#DB4C3F !important;
 
-// 橘色
+// 默认主题色
 html[data-theme='default']{
   --primary-color:#DB4C3F;
+  --primary-text-color:#fff;
+  --input-bg-color:rgba(255, 255, 255, .2);
+  --primary-page-sliderBar-background:#fafafa;
+  --primary-page-background:#FFF;
 }
 
 // 暗黑模式
 html[data-theme='black']{
   --primary-color:#2e2e2e;
-  --bg1:#102128;
-  --bg2:#2d5567;
+  --primary-text-color:#fff;
+  --input-bg-color:rgba(255, 255, 255, .2);
+  --primary-page-sliderBar-background:#fafafa;
+  --primary-page-background:#FFF;
 }
 
 // 深色模式
 html[data-theme='dark']{
   --primary-color:#333333;
-  --bg1:#102128;
-  --bg2:#2d5567;
+  --primary-text-color:#fff;
+  --input-bg-color:rgba(255, 255, 255, .2);
+  --primary-page-sliderBar-background:#282828;
+  --primary-page-background:#1e1e1e;
 }
 
 // 淡灰色
 html[data-theme='gray']{
   --primary-color:#f7f7f7;
-  --bg1:#102128;
-  --bg2:#2d5567;
+  --primary-text-color:#444;
+  // --input-bg-color:rgba(255, 255, 255, 1);
+  --input-bg-color:rgba(0, 0, 0, 0.05);
+  --primary-page-sliderBar-background:#fafafa;
+  --primary-page-background:#FFF;
 }
 
 
 // 橘色
 html[data-theme='orange']{
   --primary-color:#e58938;
+  --primary-text-color:#fff;
+  --input-bg-color:rgba(255, 255, 255, .2);
+  --primary-page-sliderBar-background:#fafafa;
+  --primary-page-background:#FFF;
 }
 
 // 默认主题色
@@ -42,6 +67,21 @@ html[data-theme='orange']{
   --primary-color:#DB4C3F;
 }
 
-.primaryBgColor{
+// navBar的背景色
+.primaryNavBarBgColor{
   background-color: var(--primary-color);
+}
+
+.primaryTextColor{
+  color: var(--primary-text-color);
+}
+
+// 主体内容区域（任务区域）的背景颜色
+.primaryPageBackgroundColor{
+  background-color: var(--primary-page-background);
+}
+
+// sliderBar的背景颜色
+.primarySliderBarBackgroundColor{
+  background-color: var(--primary-page-sliderBar-background);
 }

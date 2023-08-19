@@ -1,4 +1,3 @@
-import { CheckOutlined } from '@ant-design/icons';
 import { Switch, Typography } from 'antd';
 import { ThemeCard } from './ThemeCard';
 import { themeConst } from '@/config/themeConst';
@@ -38,6 +37,11 @@ export function Theme() {
             }}
           />
         ))}
+      </div>
+      <div>
+        <Text type='secondary'>
+          深色和淡灰色还处于实验阶段，会有些许显示异常，后续完善。
+        </Text>
       </div>
     </div>
   );

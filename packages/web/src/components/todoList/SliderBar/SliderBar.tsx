@@ -134,7 +134,7 @@ export function SliderBar({ menuShow, onSearchChange }: TProps) {
   return (
     <div
       className={classNames(
-        'sliderBar-container whitespace-nowrap overflow-hidden flex-shrink-0',
+        'sliderBar-container whitespace-nowrap overflow-hidden flex-shrink-0 primarySliderBarBackgroundColor',
         {
           sliderBarShow: menuShow,
           sliderBarClose: !menuShow,

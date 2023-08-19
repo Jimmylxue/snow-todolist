@@ -68,7 +68,7 @@ export default defineConfig({
     ],
   },
   server: {
-    port: 8080,
+    port: 8081,
   },
   build: {
     sourcemap: false, //打包后是否包含source-map
