@@ -13,10 +13,11 @@ type TProps = {
   menuShow: boolean;
   taskModalShow: boolean;
   onCloseTaskModal: () => void;
+  opOpenTaskModal: () => void;
 };
 
 export const TodoList = observer(
-  ({ menuShow, taskModalShow, onCloseTaskModal }: TProps) => {
+  ({ menuShow, taskModalShow, onCloseTaskModal, opOpenTaskModal }: TProps) => {
     const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
     const [pageParams, setPageParams] = useState<{
       page: number;
@@ -80,7 +81,9 @@ export const TodoList = observer(
                   // @ts-ignore
                   selectTask.current = { ...task };
                   currentChooseTaskType.current = searchParams?.taskType;
-                  onCloseTaskModal();
+                  console.log('current', currentChooseTaskType.current);
+                  // onCloseTaskModal();
+                  opOpenTaskModal();
                 }}
               />
               {hasOneMorePage && (

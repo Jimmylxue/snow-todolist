@@ -1,4 +1,4 @@
-import { ThemeType } from '@/config/themeConst';
+import { ThemeType } from '@/hooks/useTheme/themeConst';
 import { CheckOutlined } from '@ant-design/icons';
 
 type TProps = {

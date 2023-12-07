@@ -39,21 +39,19 @@ export function TasksModal({
       form.setFieldsValue({
         taskName,
         taskContent,
-        typeId,
+        typeId: typeId || selectTaskType,
         expectTime: expectTime ? moment(+expectTime) : null,
       });
     }
-  }, [selectTask]);
+  }, [selectTask, selectTaskType]);
 
   useEffect(() => {
     if (!show) {
-      form.resetFields();
+      setTimeout(() => {
+        form.resetFields();
+      }, 500);
     }
   }, [show]);
-
-  form.setFieldsValue({
-    typeId: selectTaskType,
-  });
 
   return (
     <Modal
@@ -158,7 +156,6 @@ export function TasksModal({
 }
 
 function DateExtra({ chooseTime }: any) {
-  console.log(chooseTime, 'ss');
   if (!chooseTime) {
     return <div className=' text-xs mt-1 '>还没想好可先不填~</div>;
   }

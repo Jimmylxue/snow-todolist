@@ -1,12 +1,13 @@
 import { Switch, Typography } from 'antd';
 import { ThemeCard } from './ThemeCard';
-import { themeConst } from '@/config/themeConst';
-import { useTheme } from '@/config/theme';
+import { themeConst } from '@/hooks/useTheme/themeConst';
+import { useTheme } from '@/hooks/useTheme';
+import { observer } from 'mobx-react-lite';
 
 const { Text } = Typography;
 
-export function Theme() {
-  const { nowTheme, setTheme } = useTheme();
+export const Theme = observer(() => {
+  const { theme: themeConfig } = useTheme();
   return (
     <div>
       <div>个性化您的Todo-List颜色来匹配您的风格、心情和个性</div>
@@ -31,9 +32,10 @@ export function Theme() {
           <ThemeCard
             key={index}
             theme={theme}
-            checked={nowTheme?.name === theme.name}
+            checked={themeConfig?.theme?.name === theme.name}
             onChooseTheme={() => {
-              setTheme(theme);
+              // setTheme(theme);
+              themeConfig.updateTheme = theme;
             }}
           />
         ))}
@@ -45,4 +47,4 @@ export function Theme() {
       </div>
     </div>
   );
-}
+});

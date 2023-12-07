@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 export function UpdateRecord() {
   const { changeLog } = useUpdateMessage();
-  console.log('aaaaaaaaaaaaa', Object.entries(changeLog));
   return (
     <div
       className=' overflow-auto'
