@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import moment from 'moment';
-import { STime } from './SliderBar/type';
+import { STime } from '../../pages/todoList/menu/type';
 import confetti from 'canvas-confetti';
 
 export function getTimeTextByIndex(index?: number) {

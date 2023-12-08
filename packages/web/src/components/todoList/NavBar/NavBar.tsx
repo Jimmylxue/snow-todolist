@@ -7,8 +7,11 @@ import {
   LogoutOutlined,
   FireOutlined,
   LeftOutlined,
+  AppleOutlined,
+  AndroidOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Input, MenuProps, Modal } from 'antd';
+import { Dropdown, Input, MenuProps, Modal, Tabs } from 'antd';
 import { Avatar } from '../SAvatar';
 import { SButton } from '../Button';
 import { useUser } from '@/hooks/useAuth';
@@ -21,13 +24,14 @@ import { useSearchInfo } from '@/hooks/useSearch';
 import './navbar.less';
 import { Setting } from '../Setting';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { STabs } from '../Tabs';
+// import { STabs } from '../Tabs';
 
 type TProps = {
-  onMenuClick: () => void;
   onAddTask: () => void;
 };
 
-export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
+export const NavBar = observer(({ onAddTask }: TProps) => {
   const { user, logOut, showLoginModal, checkUserLoginBeforeFn } = useUser();
   const [modal, contextHolder] = Modal.useModal();
   const [searchList, setSearchList] = useState<TaskItem[]>([]);
@@ -148,70 +152,57 @@ export const NavBar = observer(({ onMenuClick, onAddTask }: TProps) => {
         height: 45,
       }}>
       <div className='w-full h-full flex items-center justify-between primaryTextColor'>
-        {isHomePage ? (
-          <div className='flex items-center'>
-            <SButton
-              icon={
-                <UnorderedListOutlined className=' flex text-xl flex-shrink-0' />
-              }
-              onClick={onMenuClick}
-            />
-            <div className=' relative'>
-              <Input
-                className='dz-input ml-4 border-r-2 w-full primaryTextColor'
-                placeholder='搜索'
-                value={searchText}
-                prefix={
-                  <SearchOutlined
-                    style={{
-                      fontWeight: 300,
-                    }}
-                    className=' text-lg'
-                  />
-                }
-                onChange={changeFn}
-                style={{
-                  width: 300,
-                }}
-              />
-              {!!searchList.length && (
-                <div
-                  className=' absolute left-0 top-8 ml-4 bg-white z-30'
+        <div className='flex items-center'>
+          <SButton
+            icon={<HomeOutlined className=' flex text-xl flex-shrink-0' />}
+            onClick={() => navigate('center')}
+          />
+          <div className=' relative'>
+            <Input
+              className='dz-input ml-4 border-r-2 w-full primaryTextColor'
+              placeholder='搜索'
+              value={searchText}
+              prefix={
+                <SearchOutlined
                   style={{
-                    width: 300,
-                  }}>
-                  {searchList.map((task, index) => (
-                    <div
-                      key={index}
-                      className='snow-search-item-hover text-black flex justify-between py-2 px-2 text-xs cursor-pointer'
-                      onClick={() => {
-                        setSearchInfo(task);
-                        setSearchList([]);
-                        setSearchText('');
-                      }}>
-                      <div>
-                        {task.taskName.length > 18
-                          ? task.taskName.slice(0, 18) + '...'
-                          : task.taskName}
-                      </div>
-                      <div>{task.typeMessage.typeName}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className=' flex items-center'>
-            <SButton
-              icon={<LeftOutlined className=' flex text-xl flex-shrink-0' />}
-              onClick={() => {
-                history.back();
+                    fontWeight: 300,
+                  }}
+                  className=' text-lg'
+                />
+              }
+              onChange={changeFn}
+              style={{
+                width: 300,
               }}
             />
-            <div className='ml-2 text-lg font-semibold'>DODD</div>
+            {!!searchList.length && (
+              <div
+                className=' absolute left-0 top-8 ml-4 bg-white z-30'
+                style={{
+                  width: 300,
+                }}>
+                {searchList.map((task, index) => (
+                  <div
+                    key={index}
+                    className='snow-search-item-hover text-black flex justify-between py-2 px-2 text-xs cursor-pointer'
+                    onClick={() => {
+                      setSearchInfo(task);
+                      setSearchList([]);
+                      setSearchText('');
+                    }}>
+                    <div>
+                      {task.taskName.length > 18
+                        ? task.taskName.slice(0, 18) + '...'
+                        : task.taskName}
+                    </div>
+                    <div>{task.typeMessage.typeName}</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+          <STabs />
+        </div>
 
         <div className='flex items-center'>
           {isHomePage && (

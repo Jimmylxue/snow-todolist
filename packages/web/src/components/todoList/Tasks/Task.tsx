@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import { TaskItem as Task } from '@/api/todolist/task/type';
 import classNames from 'classnames';
 import { addAnimate } from '@/utils/animate';
-import { getDayCountByTimeStamp } from '../SliderBar/core';
+import { getDayCountByTimeStamp } from '../../../pages/todoList/menu/core';
 import { getExpectNodeByTaskEnum, getTaskCompleteMsg } from './core';
 import { showFireAnimate } from '../utils';
 // const confetti = require('canvas-confetti');

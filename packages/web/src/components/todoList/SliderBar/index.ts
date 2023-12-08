@@ -1,2 +1,2 @@
-export * from './MenuItem';
-export * from './type';
+export * from '../MenuItem';
+export * from '../../../pages/todoList/menu/type';

@@ -1,6 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import { TodoList } from './pages/todoList';
 import 'tailwindcss/tailwind.css';
 import './var.less';
@@ -17,9 +22,9 @@ import { NavBar } from './components/todoList';
 import { Login } from './components/common/Login';
 import { TaskItem } from './api/todolist/task/type';
 import { ThemeProvider } from './hooks/useTheme';
+import { BaseInfo } from './pages/baseInfo';
 const Root = function () {
   const { queryClient, QueryClientProvider } = config();
-  const [menuShow, setMenuShow] = useState<boolean>(true);
   const taskModalType = useRef<'ADD' | 'EDIT'>('ADD');
   const selectTask = useRef<TaskItem>();
   const currentChooseTaskType = useRef<number>();
@@ -35,9 +40,6 @@ const Root = function () {
               <div className=' w-screen h-screen flex flex-col relative primaryPageBackgroundColor'>
                 <Router>
                   <NavBar
-                    onMenuClick={() => {
-                      setMenuShow((status) => !status);
-                    }}
                     onAddTask={() => {
                       taskModalType.current = 'ADD';
                       selectTask.current = void 0;
@@ -47,10 +49,9 @@ const Root = function () {
                   />
                   <Routes>
                     <Route
-                      path='/'
+                      path='/center'
                       element={
                         <TodoList
-                          menuShow={menuShow}
                           taskModalShow={taskModalShow}
                           onCloseTaskModal={() => {
                             setTaskModalShow(false);
@@ -61,7 +62,12 @@ const Root = function () {
                         />
                       }
                     />
+                    <Route path='/base' element={<BaseInfo />} />
                     <Route path='/updateRecord' element={<UpdateRecord />} />
+                    <Route
+                      path='*'
+                      element={<Navigate to='/center' replace />}
+                    />
                   </Routes>
                 </Router>
               </div>

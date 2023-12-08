@@ -8,16 +8,16 @@ import { observer } from 'mobx-react-lite';
 import { TaskItem } from '@/api/todolist/task/type';
 import { ActionBar } from '@/components/todoList/ActionBar';
 import { useUser } from '@/hooks/useAuth';
+import { MenuContainer } from './menu';
 
 type TProps = {
-  menuShow: boolean;
   taskModalShow: boolean;
   onCloseTaskModal: () => void;
   opOpenTaskModal: () => void;
 };
 
 export const TodoList = observer(
-  ({ menuShow, taskModalShow, onCloseTaskModal, opOpenTaskModal }: TProps) => {
+  ({ taskModalShow, onCloseTaskModal, opOpenTaskModal }: TProps) => {
     const [searchParams, setSearchParams] = useState<TSearchTaskParams>();
     const [pageParams, setPageParams] = useState<{
       page: number;
@@ -65,12 +65,13 @@ export const TodoList = observer(
     return (
       <>
         <div className=' w-full flex flex-grow'>
-          <SliderBar
-            menuShow={menuShow}
-            onSearchChange={(searchParams) => {
-              setSearchParams(searchParams);
-            }}
-          />
+          <SliderBar>
+            <MenuContainer
+              onSearchChange={(searchParams) => {
+                setSearchParams(searchParams);
+              }}
+            />
+          </SliderBar>
           <div className='flex-grow h-full snow-content'>
             <Spin tip='Loading...' spinning={isFetching} className='h-full'>
               <Content

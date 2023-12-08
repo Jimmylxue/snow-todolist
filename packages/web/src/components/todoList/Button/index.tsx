@@ -2,19 +2,23 @@ import { FC, HTMLAttributes, ReactNode } from 'react';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   icon: ReactNode;
+  text?: ReactNode;
 }
 
-export const SButton: FC<TProps> = ({ icon, className, ...args }) => {
+export const SButton: FC<TProps> = ({ icon, className, text, ...args }) => {
   return (
     <div
-      {...args}
       className={`btn_hover flex justify-center items-center flex-shrink-0 ${className}`}
-      style={{
-        width: 28,
-        height: 28,
-      }}>
-      {icon}
-      {/* <UnorderedListOutlined className=' flex text-xl flex-shrink-0' /> */}
+      {...args}>
+      <div
+        className=' flex justify-center items-center'
+        style={{
+          width: 28,
+          height: 28,
+        }}>
+        {icon}
+      </div>
+      {text}
     </div>
   );
 };

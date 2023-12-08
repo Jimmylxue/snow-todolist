@@ -1,6 +1,6 @@
 import { TaskItem } from '@/api/todolist/task/type';
 import { ProjectOutlined } from '@ant-design/icons';
-import { getDayCountByTimeStamp } from '../SliderBar/core';
+import { getDayCountByTimeStamp } from '../../../pages/todoList/menu/core';
 import { Tooltip } from 'antd';
 import dayjs from 'dayjs';
 
