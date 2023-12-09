@@ -14,9 +14,8 @@ export class ThemeService {
   }
 
   getDefaultTheme() {
-    const nowTheme = this.getLocalTheme() || this._defaultThemeKey;
     const localTheme = this.getLocalTheme();
     if (localTheme) return JSON.parse(localTheme);
-    return themeConst.find((theme) => theme.name === nowTheme);
+    return themeConst.find((theme) => theme.key === this._defaultThemeKey);
   }
 }
