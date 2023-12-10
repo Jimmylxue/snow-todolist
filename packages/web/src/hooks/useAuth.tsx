@@ -1,5 +1,15 @@
-import { TLoginUser, useUserLogin, useUserRegister } from '@/api/login';
-import { TUserRegisterParams } from '@/api/login/type';
+import {
+  TLoginUser,
+  useSendMail,
+  useUserLogin,
+  useUserLoginByMail,
+  useUserRegister,
+  useUserRegisterByMail,
+} from '@/api/login';
+import {
+  TUserRegisterByMailParams,
+  TUserRegisterParams,
+} from '@/api/login/type';
 import { config } from '@/config/react-query';
 import { message } from 'antd';
 import { makeAutoObservable } from 'mobx';
@@ -38,6 +48,9 @@ export const todoListAuth = new Auth();
 export function useUser() {
   const { mutateAsync } = useUserLogin();
   const { mutateAsync: registerFn } = useUserRegister();
+  const { mutateAsync: loginByMailFn } = useUserLoginByMail();
+  const { mutateAsync: registerByMailFn } = useUserRegisterByMail();
+  const { mutateAsync: sendMailCode } = useSendMail();
   const { queryClient } = config();
 
   useEffect(() => {
@@ -74,6 +87,18 @@ export function useUser() {
     return false;
   };
 
+  const loginByMail = async (params: { mail: string; code: string }) => {
+    const res = await loginByMailFn(params);
+    if (res.code === 200) {
+      message.success('登录成功');
+      localStorage.setItem('token', res.result.token);
+      localStorage.setItem('login-user', JSON.stringify(res.result.user));
+      todoListAuth.setLoginUser(res.result.user);
+      return true;
+    }
+    return false;
+  };
+
   const logOut = () => {
     todoListAuth.user = undefined;
     localStorage.setItem('token', '');
@@ -85,6 +110,15 @@ export function useUser() {
 
   const register = async (params: TUserRegisterParams) => {
     const res = await registerFn(params);
+    if (res.code === 200) {
+      message.success('注册成功');
+      return true;
+    }
+    return false;
+  };
+
+  const registerByMail = async (params: TUserRegisterByMailParams) => {
+    const res = await registerByMailFn(params);
     if (res.code === 200) {
       message.success('注册成功');
       return true;
@@ -111,5 +145,8 @@ export function useUser() {
     showLoginModal,
     register,
     checkUserLoginBeforeFn,
+    loginByMail,
+    registerByMail,
+    sendMailCode,
   };
 }

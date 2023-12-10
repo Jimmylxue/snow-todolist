@@ -3,7 +3,16 @@ export type TUserLoginParams = {
   password: string;
 };
 
+export type TUserLoginByMailParams = {
+  mail: string;
+  code: string;
+};
+
 export type TUserRegisterParams = TUserLoginParams & {
+  username: string;
+};
+
+export type TUserRegisterByMailParams = TUserLoginByMailParams & {
   username: string;
 };
 
