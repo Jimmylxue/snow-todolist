@@ -44,8 +44,7 @@ export const TodoList = observer(
       },
       {
         refetchOnWindowFocus: false,
-        enabled:
-          !!searchParams?.startTime && !!searchParams.taskType && !!user?.id,
+        enabled: !!searchParams?.startTime && !!user?.id,
       },
     );
 

@@ -1,16 +1,17 @@
 import { useTaskType } from '@/api/todolist/taskType';
 import { TaskType } from '@/api/todolist/taskType/type';
-import {
-  FC,
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { FC, ReactNode, createContext, useContext, useMemo } from 'react';
 import { useUser } from './useAuth';
+import { observer } from 'mobx-react-lite';
 
 type TodoListInfo = {
+  /**
+   * 纯正的用户任务类型数据
+   */
+  originTaskType?: TaskType[];
+  /**
+   * 处理过的用户类型数据
+   */
   taskType?: TaskType[];
   isFetchingTaskType?: boolean;
 };
@@ -21,11 +22,7 @@ type TProps = {
   children: ReactNode;
 };
 
-export const TodoListProvider: FC<TProps> = (props) => {
-  const [taskListInfo, setTaskListInfo] = useState<TodoListInfo>({
-    taskType: undefined,
-    isFetchingTaskType: false,
-  });
+export const TodoListProvider: FC<TProps> = observer((props) => {
   const { user } = useUser();
 
   const { data, isFetching } = useTaskType(
@@ -37,24 +34,27 @@ export const TodoListProvider: FC<TProps> = (props) => {
     },
   );
 
-  useEffect(() => {
+  const taskType = useMemo(() => {
     if (data) {
-      setTaskListInfo((info) => ({ ...info, taskType: data.result }));
-    } else {
-      setTaskListInfo((info) => ({ ...info, taskType: [] }));
+      return [
+        { typeId: undefined, typeName: '全部' } as any,
+        ...(data.result || []),
+      ];
     }
+    return [];
   }, [data]);
 
-  useEffect(() => {
-    setTaskListInfo((val) => ({ ...val, isFetchingTaskType: isFetching }));
-  }, [isFetching]);
-
   return (
-    <TodoListContext.Provider value={taskListInfo!}>
+    <TodoListContext.Provider
+      value={{
+        originTaskType: data?.result || [],
+        isFetchingTaskType: isFetching,
+        taskType,
+      }}>
       {props.children}
     </TodoListContext.Provider>
   );
-};
+});
 
 export const useTodoList = () => {
   return useContext(TodoListContext);

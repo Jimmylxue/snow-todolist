@@ -27,7 +27,7 @@ export function TasksModal({
 }: TProps) {
   const [form] = Form.useForm();
 
-  const { taskType } = useTodoList();
+  const { originTaskType } = useTodoList();
   const { queryClient } = config();
 
   const { mutateAsync } = useAddTask();
@@ -142,7 +142,7 @@ export function TasksModal({
               style={{
                 width: 150,
               }}>
-              {taskType?.map((taskType) => (
+              {originTaskType?.map((taskType) => (
                 <Select.Option key={taskType.typeId} value={taskType.typeId}>
                   {taskType.typeName}
                 </Select.Option>
