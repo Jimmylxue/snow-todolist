@@ -1,12 +1,14 @@
 import { DatePicker, Form, Input, Modal, Select, Space, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { useTodoList } from '@/hooks/useTodolist';
 import { useAddTask, useUpdateTask } from '@/api/todolist/task';
 import { config } from '@/config/react-query';
 import { TaskItem } from '@/api/todolist/task/type';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { getTimeByMoment } from '../utils';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 type TProps = {
   type: 'ADD' | 'EDIT';
@@ -32,6 +34,7 @@ export function TasksModal({
 
   const { mutateAsync } = useAddTask();
   const { mutateAsync: updateTask } = useUpdateTask();
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     if (selectTask) {
@@ -107,10 +110,7 @@ export function TasksModal({
         <Form.Item
           name='taskContent'
           rules={[{ required: true, message: '请输入任务描述!' }]}>
-          <Input
-            prefix={<LockOutlined className='site-form-item-icon' />}
-            placeholder='描述'
-          />
+          <ReactQuill theme='snow' value={value} onChange={setValue} />
         </Form.Item>
 
         <Space align='start'>

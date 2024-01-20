@@ -1,21 +1,17 @@
-import { Checkbox, Divider, Popconfirm } from 'antd';
-import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
+import { Checkbox, Popconfirm } from 'antd';
+import { FC, HTMLAttributes, useMemo, useRef } from 'react';
 import {
   DeleteOutlined,
   QuestionCircleOutlined,
   CarryOutOutlined,
-  ProjectOutlined,
 } from '@ant-design/icons';
 import './index.less';
 import dayjs from 'dayjs';
 import { TaskItem as Task } from '@/api/todolist/task/type';
 import classNames from 'classnames';
 import { addAnimate } from '@/utils/animate';
-import { getDayCountByTimeStamp } from '../../../pages/todoList/menu/core';
 import { getExpectNodeByTaskEnum, getTaskCompleteMsg } from './core';
 import { showFireAnimate } from '../utils';
-// const confetti = require('canvas-confetti');
-// confetti.Promise = MyPromise;
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   task: Task;
@@ -29,7 +25,7 @@ export const TaskItem: FC<TProps> = ({
   onClick,
   onDeleteTask,
 }) => {
-  const { taskName, taskContent, status, expectTime } = task;
+  const { taskName, taskContent, status } = task;
   const ref = useRef<HTMLDivElement>(null);
 
   const expectNode = useMemo(() => {
@@ -40,9 +36,10 @@ export const TaskItem: FC<TProps> = ({
   return (
     <div
       ref={ref}
-      className={classNames('snow-task-item relative px-2 py-2 rounded-md', {
-        // 'animate__animated animate__shakeX': isClick,
-      })}>
+      className={classNames(
+        'snow-task-item relative px-2 py-2 rounded-md',
+        {},
+      )}>
       <div>
         <Checkbox
           checked={status === 1}
@@ -58,13 +55,16 @@ export const TaskItem: FC<TProps> = ({
             setTimeout(() => {
               onCompleteTask(e.target.checked);
             }, 200);
-            // todo 完成任务
           }}></Checkbox>
         <span onClick={onClick} className=' text-sm ml-2 cursor-pointer'>
           {taskName}
         </span>
       </div>
-      <div className='px-6 text-xs desc-text mt-1'>{taskContent}</div>
+      <div
+        className='px-6 text-xs desc-text mt-1'
+        dangerouslySetInnerHTML={{
+          __html: taskContent,
+        }}></div>
       <div className='text-xs flex justify-between desc-text items-center mt-2 mb-1'>
         <div className='pl-6 primary-color'>{expectNode} </div>
         <div>
