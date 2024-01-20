@@ -2,16 +2,7 @@ import { config } from '@/config/react-query';
 import { todoListAuth, useUser } from '@/hooks/useAuth';
 import { encrypt } from '@/utils/encrypt';
 import { isQQMail } from '@/utils/util';
-import {
-  Button,
-  Form,
-  Input,
-  Modal,
-  Space,
-  Tooltip,
-  Typography,
-  message,
-} from 'antd';
+import { Button, Form, Input, Modal, message } from 'antd';
 import { debounce } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
@@ -77,6 +68,7 @@ export const Login = observer(({ show, onClose }: TProps) => {
               status = await register(params);
             } else {
               status = await registerByMail(params);
+              onClose();
             }
             if (status) {
               form.resetFields();

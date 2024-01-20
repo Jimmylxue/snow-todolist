@@ -121,6 +121,9 @@ export function useUser() {
     const res = await registerByMailFn(params);
     if (res.code === 200) {
       message.success('注册成功');
+      localStorage.setItem('token', res.result.token);
+      localStorage.setItem('login-user', JSON.stringify(res.result.user));
+      todoListAuth.setLoginUser(res.result.user);
       return true;
     }
     return false;

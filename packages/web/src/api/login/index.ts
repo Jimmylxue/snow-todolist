@@ -93,7 +93,10 @@ export function useUserRegisterByMail(
   options?: UseMutationOptions<
     {
       code: number;
-      result: string;
+      result: {
+        token: string;
+        user: TLoginUser;
+      };
     },
     ClientError,
     TUserRegisterByMailParams
@@ -102,7 +105,10 @@ export function useUserRegisterByMail(
   return useMutation<
     {
       code: number;
-      result: string;
+      result: {
+        token: string;
+        user: TLoginUser;
+      };
     },
     ClientError,
     TUserRegisterByMailParams

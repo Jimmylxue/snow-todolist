@@ -13,7 +13,7 @@ export function SliderBar({ children }: TProps) {
   return (
     <div
       className={classNames(
-        'sliderBar-container whitespace-nowrap flex-shrink-0 overflow-hidden primarySliderBarBackgroundColor relative',
+        'sliderBar-container whitespace-nowrap flex-shrink-0 primarySliderBarBackgroundColor relative overflow-x-hidden',
         {
           sliderBarShow: menuShow,
           sliderBarClose: !menuShow,

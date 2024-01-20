@@ -1,6 +1,12 @@
 .sliderBar-container{
   height: calc(100vh - 50px) !important;
   // overflow: auto !important;
+  -ms-overflow-style: none; /* 隐藏IE和Edge浏览器的滚动条 */
+  scrollbar-width: none; /* 隐藏Firefox浏览器的滚动条 */
+}
+
+.sliderBar-container::-webkit-scrollbar {
+  display: none;
 }
 
 .sliderBarShow {
