@@ -1,15 +1,11 @@
 import {
-  UnorderedListOutlined,
   PlusOutlined,
   SearchOutlined,
-  SkinOutlined,
   LoginOutlined,
   LogoutOutlined,
   FireOutlined,
-  LeftOutlined,
-  AppleOutlined,
-  AndroidOutlined,
   HomeOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import { Dropdown, Input, MenuProps, Modal, Tabs } from 'antd';
 import { Avatar } from '../SAvatar';
@@ -99,10 +95,10 @@ export const NavBar = observer(({ onAddTask }: TProps) => {
             onClick={() => {
               setSettingShow(true);
             }}>
-            主题设置
+            设置
           </div>
         ),
-        icon: <SkinOutlined />,
+        icon: <SettingOutlined />,
       },
       {
         key: '2',

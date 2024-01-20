@@ -1,7 +1,8 @@
 import { Modal } from 'antd';
 import { MenuItem } from '../SliderBar';
-import { CloseOutlined, SkinOutlined, SmileOutlined } from '@ant-design/icons';
-import { Theme } from './Theme';
+import { CloseOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { setting } from './const';
 
 type TProps = {
   onClose: () => void;
@@ -9,6 +10,7 @@ type TProps = {
 };
 
 export function Setting({ onClose, visible }: TProps) {
+  const [currentSet, setCurrentSet] = useState<number>(0);
   return (
     <Modal
       bodyStyle={{
@@ -34,20 +36,18 @@ export function Setting({ onClose, visible }: TProps) {
           <div className=' h-12 flex items-center font-semibold text-base'>
             设置
           </div>
-          {/* <MenuItem
-            checked={true}
-            icon={<SmileOutlined />}
-            text={'账户'}
-            message={<></>}
-            onClick={() => {}}
-          /> */}
-          <MenuItem
-            checked={false}
-            icon={<SkinOutlined />}
-            text={'主题'}
-            message={<></>}
-            onClick={() => {}}
-          />
+          {setting.map((set, index) => (
+            <MenuItem
+              key={set.key}
+              checked={index === currentSet}
+              icon={set.icon}
+              text={set.name}
+              message={<></>}
+              onClick={() => {
+                setCurrentSet(index);
+              }}
+            />
+          ))}
         </div>
         <div className=' flex-grow'>
           <div
@@ -55,11 +55,11 @@ export function Setting({ onClose, visible }: TProps) {
             style={{
               borderBottom: '1px solid #eee',
             }}>
-            <div className=' font-semibold'>主题</div>
+            <div className=' font-semibold'>{setting[currentSet].name}</div>
             <CloseOutlined className=' cursor-pointer' onClick={onClose} />
           </div>
-          <div className='px-6 py-4'>
-            <Theme />
+          <div className='px-6 py-4' style={{ height: 450 }}>
+            {setting[currentSet].component}
           </div>
         </div>
       </div>

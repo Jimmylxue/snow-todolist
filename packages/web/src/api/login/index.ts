@@ -15,6 +15,7 @@ export type TLoginUser = {
   sex: 1 | 0;
   phone: string;
   createTime: string;
+  mail: string;
 };
 
 export function useUserLogin(
