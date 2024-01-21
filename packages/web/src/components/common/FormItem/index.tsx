@@ -30,7 +30,7 @@ export function FormItem({
       }}>
       <div>{name}</div>
       {clickable ? (
-        <a>{value}</a>
+        <a onClick={onEdit}>{value}</a>
       ) : (
         <div className=' flex items-center'>
           {type === 'input' ? (

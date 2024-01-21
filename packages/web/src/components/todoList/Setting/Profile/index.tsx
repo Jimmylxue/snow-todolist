@@ -1,11 +1,12 @@
 import { TLoginUser } from '@/api/login';
-import { useUpdateUser } from '@/api/profile';
+import { useUpdateUser, useUpdateUserPhone } from '@/api/profile';
 import { FormItem } from '@/components/common/FormItem';
 import { Upload } from '@/components/common/Upload';
 import { useUser } from '@/hooks/useAuth';
-import { Button, Input, Modal } from 'antd';
+import { Button, Input, Modal, message } from 'antd';
 import { cloneDeep } from 'lodash';
 import { useState } from 'react';
+import { UpdatePhone } from './modal/updatePhone';
 
 export function Profile() {
   const { user, updateUser } = useUser();
@@ -15,10 +16,15 @@ export function Profile() {
   const { mutateAsync } = useUpdateUser({
     onSuccess: (res) => {
       if (res.code === 200) {
+        message.success('更改成功');
         updateUser(userInfo);
       }
     },
   });
+
+  const { mutateAsync: updateUserPhone } = useUpdateUserPhone({});
+
+  const [updatePhoneShow, setUpdatePhoneShow] = useState<boolean>(false);
 
   return (
     <div>
@@ -79,15 +85,7 @@ export function Profile() {
           name='手机号'
           value={userInfo.phone}
           onEdit={() => {
-            Modal.confirm({
-              title: '修改邮箱',
-              content: <Input placeholder='请输入邮箱' />,
-              cancelText: '取消',
-              okText: '确定',
-            });
-          }}
-          onChange={(value) => {
-            setUserInfo({ ...userInfo, phone: value });
+            setUpdatePhoneShow(true);
           }}
         />
         <FormItem
@@ -104,6 +102,25 @@ export function Profile() {
           }}
         />
       </div>
+
+      <UpdatePhone
+        initData={userInfo}
+        open={updatePhoneShow}
+        isChangePhone={!!userInfo.phone}
+        onOk={async (values) => {
+          const res = await updateUserPhone(values);
+          if (res.code === 200) {
+            const newData = { ...userInfo, phone: values.newPhone };
+            setUserInfo(newData);
+            updateUser(newData);
+            message.success('更改成功');
+          }
+          setUpdatePhoneShow(false);
+        }}
+        onCancel={() => {
+          setUpdatePhoneShow(false);
+        }}
+      />
     </div>
   );
 }
