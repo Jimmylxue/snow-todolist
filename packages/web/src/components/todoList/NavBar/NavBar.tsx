@@ -220,7 +220,7 @@ export const NavBar = observer(({ onAddTask }: TProps) => {
               <Avatar
                 userName={user?.username!}
                 avatar={user?.avatar}
-                showAvatar={false}
+                showAvatar={true}
               />
             </Dropdown>
           </div>

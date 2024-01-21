@@ -1,4 +1,5 @@
 import { TLoginUser } from '@/api/login';
+import { useUpdateUser } from '@/api/profile';
 import { FormItem } from '@/components/common/FormItem';
 import { Upload } from '@/components/common/Upload';
 import { useUser } from '@/hooks/useAuth';
@@ -7,14 +8,27 @@ import { cloneDeep } from 'lodash';
 import { useState } from 'react';
 
 export function Profile() {
-  const { user } = useUser();
+  const { user, updateUser } = useUser();
 
   const [userInfo, setUserInfo] = useState<TLoginUser>(() => cloneDeep(user!));
+
+  const { mutateAsync } = useUpdateUser({
+    onSuccess: (res) => {
+      if (res.code === 200) {
+        updateUser(userInfo);
+      }
+    },
+  });
 
   return (
     <div>
       <div className=' flex flex-col justify-center items-center'>
-        <Upload onUploadSuccess={(url) => {}} defaultUrl={user?.avatar} />
+        <Upload
+          onUploadSuccess={(url) => {
+            setUserInfo({ ...userInfo, avatar: url });
+          }}
+          defaultUrl={userInfo?.avatar}
+        />
         <p>{user?.username}</p>
       </div>
 
@@ -36,7 +50,13 @@ export function Profile() {
         />
 
         <div className=' flex justify-center my-2'>
-          <Button type='primary'>保存基础信息</Button>
+          <Button
+            type='primary'
+            onClick={async () => {
+              await mutateAsync(userInfo);
+            }}>
+            保存基础信息
+          </Button>
         </div>
       </div>
 

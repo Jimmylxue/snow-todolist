@@ -141,6 +141,11 @@ export function useUser() {
     return false;
   };
 
+  const updateUser = (user: TLoginUser) => {
+    localStorage.setItem('login-user', JSON.stringify(user));
+    todoListAuth.setLoginUser(user);
+  };
+
   return {
     user: todoListAuth.user,
     logOut,
@@ -151,5 +156,6 @@ export function useUser() {
     loginByMail,
     registerByMail,
     sendMailCode,
+    updateUser,
   };
 }

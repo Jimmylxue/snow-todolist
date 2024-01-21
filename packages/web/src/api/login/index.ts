@@ -135,23 +135,3 @@ export function useSendMail(
     { mail: string }
   >((data) => post('mail/send_verification_code', data), options);
 }
-
-export function useUpdateTask(
-  options?: UseMutationOptions<
-    {
-      code: number;
-      result: string;
-    },
-    ClientError,
-    TUpdateTaskParams
-  >,
-) {
-  return useMutation<
-    {
-      code: number;
-      result: string;
-    },
-    ClientError,
-    TUpdateTaskParams
-  >((data) => post('task/update', data), options);
-}
