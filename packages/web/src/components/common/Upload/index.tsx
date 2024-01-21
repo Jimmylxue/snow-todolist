@@ -72,8 +72,8 @@ export function Upload({ onUploadSuccess, defaultUrl = '' }: TProps) {
       headers={{
         authorization: 'Bearer ' + localStorage.getItem('token'),
       }}
-      // action='https://api.jimmyxuexue.top/upload'
-      action='http://127.0.0.1:9999/upload'
+      action='https://api.jimmyxuexue.top/upload'
+      // action='http://127.0.0.1:9999/upload'
       beforeUpload={beforeUpload}
       onChange={handleChange}>
       {imageUrl ? (
