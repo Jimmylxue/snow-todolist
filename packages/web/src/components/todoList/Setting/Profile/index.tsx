@@ -7,12 +7,13 @@ import {
 import { FormItem } from '@/components/common/FormItem';
 import { Upload } from '@/components/common/Upload';
 import { useUser } from '@/hooks/useAuth';
-import { Button, Input, Modal, message } from 'antd';
+import { Button, message } from 'antd';
 import { useState } from 'react';
 import { UpdatePhone } from './modal/updatePhone';
 import { UpdateMail } from './modal/updateMail';
+import { observer } from 'mobx-react-lite';
 
-export function Profile() {
+export const Profile = observer(() => {
   const { user, updateUser } = useUser();
 
   const [userInfo, setUserInfo] = useState<TLoginUser>({
@@ -22,8 +23,6 @@ export function Profile() {
     username: user?.username!,
     sex: user?.sex!,
   });
-
-  console.log('userInfo', user, userInfo);
 
   const { mutateAsync } = useUpdateUser({
     onSuccess: (res) => {
@@ -97,19 +96,7 @@ export function Profile() {
             setUpdatePhoneShow(true);
           }}
         />
-        <FormItem
-          clickable
-          name='密码'
-          value='******'
-          onEdit={() => {
-            Modal.confirm({
-              title: '修改邮箱',
-              content: <Input placeholder='请输入邮箱' />,
-              cancelText: '取消',
-              okText: '确定',
-            });
-          }}
-        />
+        <FormItem clickable name='密码' value='******' onEdit={() => {}} />
       </div>
 
       <UpdatePhone
@@ -151,4 +138,4 @@ export function Profile() {
       />
     </div>
   );
-}
+});
