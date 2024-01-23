@@ -1,17 +1,29 @@
 import { TLoginUser } from '@/api/login';
-import { useUpdateUser, useUpdateUserPhone } from '@/api/profile';
+import {
+  useUpdateUser,
+  useUpdateUserMail,
+  useUpdateUserPhone,
+} from '@/api/profile';
 import { FormItem } from '@/components/common/FormItem';
 import { Upload } from '@/components/common/Upload';
 import { useUser } from '@/hooks/useAuth';
 import { Button, Input, Modal, message } from 'antd';
-import { cloneDeep } from 'lodash';
 import { useState } from 'react';
 import { UpdatePhone } from './modal/updatePhone';
+import { UpdateMail } from './modal/updateMail';
 
 export function Profile() {
   const { user, updateUser } = useUser();
 
-  const [userInfo, setUserInfo] = useState<TLoginUser>(() => cloneDeep(user!));
+  const [userInfo, setUserInfo] = useState<TLoginUser>({
+    avatar: user?.avatar!,
+    mail: user?.mail!,
+    phone: user?.phone!,
+    username: user?.username!,
+    sex: user?.sex!,
+  });
+
+  console.log('userInfo', user, userInfo);
 
   const { mutateAsync } = useUpdateUser({
     onSuccess: (res) => {
@@ -23,8 +35,10 @@ export function Profile() {
   });
 
   const { mutateAsync: updateUserPhone } = useUpdateUserPhone({});
+  const { mutateAsync: updateUserMail } = useUpdateUserMail({});
 
   const [updatePhoneShow, setUpdatePhoneShow] = useState<boolean>(false);
+  const [updateMailShow, setUpdateMailShow] = useState<boolean>(false);
 
   return (
     <div>
@@ -70,20 +84,15 @@ export function Profile() {
         <FormItem
           clickable
           name='邮箱'
-          value={userInfo.mail}
+          value={userInfo.mail || '绑定邮箱'}
           onEdit={() => {
-            Modal.confirm({
-              title: '修改邮箱',
-              content: <Input placeholder='请输入邮箱' />,
-              cancelText: '取消',
-              okText: '确定',
-            });
+            setUpdateMailShow(true);
           }}
         />
         <FormItem
           clickable
           name='手机号'
-          value={userInfo.phone}
+          value={userInfo.phone || '绑定手机号'}
           onEdit={() => {
             setUpdatePhoneShow(true);
           }}
@@ -104,7 +113,7 @@ export function Profile() {
       </div>
 
       <UpdatePhone
-        initData={userInfo}
+        initData={{ ...userInfo }}
         open={updatePhoneShow}
         isChangePhone={!!userInfo.phone}
         onOk={async (values) => {
@@ -119,6 +128,25 @@ export function Profile() {
         }}
         onCancel={() => {
           setUpdatePhoneShow(false);
+        }}
+      />
+
+      <UpdateMail
+        open={updateMailShow}
+        isChangeMail={!!userInfo.mail}
+        initData={{ ...userInfo }}
+        onOk={async (values) => {
+          const res = await updateUserMail(values);
+          if (res.code === 200) {
+            const newData = { ...userInfo, mail: values.newMail };
+            setUserInfo(newData);
+            updateUser(newData);
+            message.success('更改成功');
+          }
+          setUpdateMailShow(false);
+        }}
+        onCancel={() => {
+          setUpdateMailShow(false);
         }}
       />
     </div>

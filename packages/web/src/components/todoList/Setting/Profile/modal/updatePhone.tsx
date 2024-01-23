@@ -38,6 +38,8 @@ export function UpdatePhone({
     <Modal
       title={isChangePhone ? '更改手机号' : '绑定手机号'}
       open={open}
+      cancelText='取消'
+      okText='确定'
       onOk={() => {
         form.submit();
       }}

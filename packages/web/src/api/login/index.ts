@@ -9,12 +9,12 @@ import {
 import { ClientError, post } from '..';
 
 export type TLoginUser = {
-  id: number;
+  id?: number;
   username: string;
   avatar: string;
   sex: 1 | 0;
   phone: string;
-  createTime: string;
+  createTime?: string;
   mail: string;
 };
 
