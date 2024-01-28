@@ -21,6 +21,7 @@ import './navbar.less';
 import { Setting } from '../Setting';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { STabs } from '../Tabs';
+import { Letter } from './components/Letter';
 // import { STabs } from '../Tabs';
 
 type TProps = {
@@ -215,7 +216,8 @@ export const NavBar = observer(({ onAddTask }: TProps) => {
             />
           )}
 
-          <div className='ml-2'>
+          <div className='flex items-center ml-2'>
+            <Letter />
             <Dropdown menu={{ items: menuList }}>
               <Avatar
                 userName={user?.username!}
