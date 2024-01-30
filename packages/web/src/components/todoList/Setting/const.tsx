@@ -1,6 +1,11 @@
-import { SkinOutlined, SmileOutlined } from '@ant-design/icons';
+import {
+  InfoCircleOutlined,
+  SkinOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
 import { Theme } from './Theme';
 import { Profile } from './Profile';
+import { About } from './About';
 
 /**
  * 设置的功能集合
@@ -17,5 +22,11 @@ export const setting = [
     name: '主题',
     icon: <SkinOutlined />,
     component: <Theme />,
+  },
+  {
+    key: 'about',
+    name: '关于',
+    icon: <InfoCircleOutlined />,
+    component: <About />,
   },
 ];
