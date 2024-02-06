@@ -1,4 +1,8 @@
-import { FilterOutlined, RadarChartOutlined } from '@ant-design/icons';
+import {
+  FilterOutlined,
+  HistoryOutlined,
+  RadarChartOutlined,
+} from '@ant-design/icons';
 
 export type TabKey = '/center' | '/base';
 
@@ -11,6 +15,15 @@ export const TabConst = [
       </>
     ),
     key: '/center',
+  },
+  {
+    label: (
+      <>
+        <HistoryOutlined />
+        打卡中心
+      </>
+    ),
+    key: '/habit',
   },
   {
     label: (

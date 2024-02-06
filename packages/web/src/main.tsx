@@ -23,6 +23,7 @@ import { Login } from './components/common/Login';
 import { TaskItem } from './api/todolist/task/type';
 import { ThemeProvider } from './hooks/useTheme';
 import { BaseInfo } from './pages/baseInfo';
+import { HabitPage } from './pages/habit';
 const Root = function () {
   const { queryClient, QueryClientProvider } = config();
   const taskModalType = useRef<'ADD' | 'EDIT'>('ADD');
@@ -64,6 +65,7 @@ const Root = function () {
                     />
                     <Route path='/base' element={<BaseInfo />} />
                     <Route path='/updateRecord' element={<UpdateRecord />} />
+                    <Route path='/habit' element={<HabitPage />} />
                     <Route
                       path='*'
                       element={<Navigate to='/center' replace />}

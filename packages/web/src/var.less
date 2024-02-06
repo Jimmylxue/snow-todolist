@@ -23,7 +23,7 @@ html[data-theme='default']{
   --primary-page-background:#FFF;
   --text-desc-color:#808080;
   --tab-default-text-color:#ddd;
-
+  --sign-item-bg-color:#fae7e4;
 }
 
 // 暗黑模式
@@ -35,6 +35,7 @@ html[data-theme='black']{
   --primary-page-background:#FFF;
   --text-desc-color:#808080;
   --tab-default-text-color:#ddd;
+  --sign-item-bg-color:#d5786c;
 }
 
 // 深色模式
@@ -46,6 +47,8 @@ html[data-theme='dark']{
   --primary-page-background:#1e1e1e;
   --text-desc-color:#808080;
   --tab-default-text-color:#ddd;
+  /** 打卡Item 的背景色 */
+  --sign-item-bg-color:#d5786c;
 }
 
 // 淡灰色
@@ -58,6 +61,7 @@ html[data-theme='gray']{
   --primary-page-background:#FFF;
   --text-desc-color:#808080;
   --tab-default-text-color:#ddd;
+  --sign-item-bg-color:#d5786c;
 }
 
 
@@ -70,6 +74,7 @@ html[data-theme='orange']{
   --primary-page-background:#FFF;
   --text-desc-color:#808080;
   --tab-default-text-color:#ddd;
+  --sign-item-bg-color:#d5786c;
 }
 
 // 默认主题色
@@ -103,4 +108,14 @@ html[data-theme='orange']{
 
 .primary-color{
   color: var(--primary-color);
+}
+
+.primaryHoverSignItemBackgroundColor{
+  &:hover{
+    background-color: var(--sign-item-bg-color);
+  }
+}
+
+.primarySignItemBackgroundColor{
+  background-color: var(--sign-item-bg-color);
 }
