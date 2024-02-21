@@ -74,3 +74,14 @@ export type THabitDetail = {
     habit: THabit;
   }[];
 };
+
+export type TAddHabit = {
+  name: string;
+  frequency: number;
+  frequencyDay?: string;
+  frequencyWeek?: number;
+  notifyFlag: boolean;
+  notifyTime: number;
+};
+
+export type TEditHabit = TAddHabit & { habitId: number };

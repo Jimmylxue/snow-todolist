@@ -6,9 +6,10 @@ import { EStatus } from '@/api/sign/habit/type';
 type TProps = {
   status: EStatus;
   onChange: (val: EStatus) => void;
+  onAddHabit: () => void;
 };
 
-export function NavBar({ status, onChange }: TProps) {
+export function NavBar({ status, onChange, onAddHabit }: TProps) {
   return (
     <div className=' flex justify-between items-center px-3 mb-3'>
       <div className=' text-xl font-bold'>打卡</div>
@@ -19,7 +20,7 @@ export function NavBar({ status, onChange }: TProps) {
         </Radio.Group>
       </div>
       <div>
-        <SButton icon={<PlusOutlined />} />
+        <SButton icon={<PlusOutlined />} onClick={onAddHabit} />
       </div>
     </div>
   );

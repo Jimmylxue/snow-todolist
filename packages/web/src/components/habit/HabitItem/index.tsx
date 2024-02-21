@@ -4,19 +4,28 @@ import smile1Png from '@/assets/img/sign/smile1.png';
 import { MenuContainer } from '../MenuContainer';
 import { EStatus, TUserHabit } from '@/api/sign/habit/type';
 import { HTMLAttributes } from 'react';
+import { TUpdateSignParams } from '@/api/sign/habit';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   checked?: boolean;
   habit: TUserHabit;
+  updateSign: (params: TUpdateSignParams) => void;
+  onEdit: (type: 'edit' | 'complete' | 'delete') => void;
 }
 
-export function HabitItem({ checked, habit, ...args }: TProps) {
+export function HabitItem({
+  checked,
+  habit,
+  updateSign,
+  onEdit,
+  ...args
+}: TProps) {
   const hasSignWeekCount = habit.nearWeekInfo.filter(
     (item) => !!item.isSign,
   ).length;
 
   return (
-    <MenuContainer trigger={['contextMenu']}>
+    <MenuContainer trigger={['contextMenu']} onChange={onEdit}>
       <div
         {...args}
         className={classNames(
@@ -45,6 +54,12 @@ export function HabitItem({ checked, habit, ...args }: TProps) {
                   count={1}
                   value={item.isSign ? 1 : 0}
                   tooltips={[`${item.date} ${item.dayOfWeek}`]}
+                  onChange={() => {
+                    updateSign({
+                      signDate: item.date,
+                      habitId: habit.habitId,
+                    });
+                  }}
                 />
               ))}
             </div>

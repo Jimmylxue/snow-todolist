@@ -9,12 +9,15 @@ import { MenuContainer } from '@/components/habit/MenuContainer';
 import { useHabitDetail } from '@/api/sign/habit';
 import moment, { Moment } from 'moment';
 import { useState } from 'react';
+import classNames from 'classnames';
+import { getDateInfo } from '../core';
 
 type TProps = {
   habitId?: number;
 };
 
 export function HabitDetail({ habitId }: TProps) {
+  const todayMoment = moment();
   const [currentMoment, setCurrentMoment] = useState<Moment>(moment());
 
   const { data } = useHabitDetail(
@@ -31,6 +34,74 @@ export function HabitDetail({ habitId }: TProps) {
   );
 
   const habitDetail = data?.result;
+
+  const dateFullCellRender = (value: Moment) => {
+    const {
+      renderIsNowDay,
+      isOverToday,
+      isNotNowMonth,
+      isNotNowYear,
+      itemCurrent,
+      itemCurrentMonth,
+    } = getDateInfo(todayMoment, value);
+
+    const isCompleted =
+      data?.result?.records
+        .map((item) => +item.signDay)
+        .includes(itemCurrent) && itemCurrentMonth === todayMoment.month();
+
+    if (isOverToday || isNotNowYear || isNotNowMonth) {
+      /**
+       * 渲染默认样式
+       */
+      return (
+        <div
+          className=' mx-auto flex justify-center items-center'
+          style={{
+            width: 40,
+            height: 40,
+          }}>
+          {itemCurrent}
+        </div>
+      );
+    }
+
+    if (isCompleted) {
+      return (
+        <div
+          className={classNames(
+            ' rounded-full mx-auto flex justify-center items-center',
+            {
+              primaryNavBarBgColor: isCompleted,
+              'text-white': isCompleted,
+            },
+          )}
+          style={{
+            width: 40,
+            height: 40,
+          }}>
+          {itemCurrent}
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className={classNames(
+            ' rounded-full mx-auto flex justify-center items-center',
+            {
+              'primary-color': renderIsNowDay,
+            },
+          )}
+          style={{
+            width: 40,
+            height: 40,
+            backgroundColor: '#f6f6f6',
+          }}>
+          {itemCurrent}
+        </div>
+      );
+    }
+  };
 
   return (
     <div
@@ -53,7 +124,7 @@ export function HabitDetail({ habitId }: TProps) {
           </div>
         </div>
         <div>
-          <MenuContainer placement='bottomRight'>
+          <MenuContainer placement='bottomRight' onChange={() => {}}>
             <SettingOutlined />
           </MenuContainer>
         </div>
@@ -153,7 +224,8 @@ export function HabitDetail({ habitId }: TProps) {
       <Calendar
         fullscreen={false}
         defaultValue={currentMoment}
-        onChange={(val) => {
+        dateFullCellRender={dateFullCellRender}
+        onPanelChange={(val) => {
           setCurrentMoment(val);
         }}
       />

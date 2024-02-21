@@ -1,6 +1,18 @@
-import { QueryKey, UseQueryOptions, useQuery } from 'react-query';
+import {
+  QueryKey,
+  UseMutationOptions,
+  UseQueryOptions,
+  useMutation,
+  useQuery,
+} from 'react-query';
 import { ClientError, post } from '../..';
-import { EStatus, THabitDetail, TUserHabit } from './type';
+import {
+  EStatus,
+  TAddHabit,
+  TEditHabit,
+  THabitDetail,
+  TUserHabit,
+} from './type';
 
 export function useUserHabit(
   queryKey: QueryKey,
@@ -52,4 +64,78 @@ export function useHabitDetail(
     },
     ClientError
   >(queryKey, () => post('/checkIn/detail', variable), config);
+}
+
+export type TUpdateSignParams = {
+  habitId: number;
+  signDate: string;
+};
+
+/**
+ * 更新打卡
+ */
+export function useUpdateSign(
+  options?: UseMutationOptions<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TUpdateSignParams
+  >,
+) {
+  return useMutation<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TUpdateSignParams
+  >((data) => post('/checkIn/sign', data), options);
+}
+
+/**
+ * 添加打卡习惯
+ */
+export function useAddHabit(
+  options?: UseMutationOptions<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TAddHabit
+  >,
+) {
+  return useMutation<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TAddHabit
+  >((data) => post('/habit/add', data), options);
+}
+
+/**
+ * 更新打卡习惯
+ */
+export function useEditHabit(
+  options?: UseMutationOptions<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TEditHabit
+  >,
+) {
+  return useMutation<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    TEditHabit
+  >((data) => post('/habit/update', data), options);
 }

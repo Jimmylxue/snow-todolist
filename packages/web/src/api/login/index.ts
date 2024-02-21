@@ -1,6 +1,5 @@
 import { UseMutationOptions, useMutation } from 'react-query';
 import {
-  TUpdateTaskParams,
   TUserLoginByMailParams,
   TUserLoginParams,
   TUserRegisterByMailParams,
