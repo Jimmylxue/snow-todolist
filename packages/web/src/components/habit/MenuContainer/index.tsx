@@ -1,3 +1,4 @@
+import { EStatus, THabit } from '@/api/sign/habit/type';
 import { DropDownProps, Dropdown } from 'antd';
 import { ReactNode } from 'react';
 
@@ -5,7 +6,8 @@ type TProps = {
   children: ReactNode;
   placement?: DropDownProps['placement'];
   trigger?: DropDownProps['trigger'];
-  onChange: (type: 'edit' | 'complete' | 'delete') => void;
+  onChange: (type: 'edit' | 'complete' | 'delete' | 'reset') => void;
+  habit: THabit;
 };
 
 export function MenuContainer({
@@ -13,6 +15,7 @@ export function MenuContainer({
   placement,
   trigger,
   onChange,
+  habit,
 }: TProps) {
   return (
     <Dropdown
@@ -35,8 +38,12 @@ export function MenuContainer({
               <a
                 target='_blank'
                 rel='noopener noreferrer'
-                onClick={() => onChange('complete')}>
-                归档
+                onClick={() =>
+                  onChange(
+                    habit?.status === EStatus.已归档 ? 'reset' : 'complete',
+                  )
+                }>
+                {habit?.status === EStatus.已归档 ? '恢复' : '归档'}
               </a>
             ),
           },

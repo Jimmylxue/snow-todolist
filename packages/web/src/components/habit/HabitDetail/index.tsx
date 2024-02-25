@@ -11,17 +11,21 @@ import moment, { Moment } from 'moment';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { getDateInfo } from '../core';
+import { useOperation } from '@/pages/habit/useOperation';
+import { EStatus, THabit } from '@/api/sign/habit/type';
+import { Empty } from '@/components/common/Empty';
 
 type TProps = {
   habitId?: number;
+  onEditHabit: (hab: THabit) => void;
 };
 
-export function HabitDetail({ habitId }: TProps) {
+export function HabitDetail({ habitId, onEditHabit }: TProps) {
   const todayMoment = moment();
   const [currentMoment, setCurrentMoment] = useState<Moment>(moment());
 
   const { data } = useHabitDetail(
-    ['habitDetail', currentMoment],
+    ['habitDetail', currentMoment, habitId],
     {
       habitId: habitId!,
       signYear: String(currentMoment.year()),
@@ -33,7 +37,11 @@ export function HabitDetail({ habitId }: TProps) {
     },
   );
 
+  const { updateStatus, delHabit } = useOperation();
+
   const habitDetail = data?.result;
+
+  const habit = habitDetail?.records?.[0]?.habit;
 
   const dateFullCellRender = (value: Moment) => {
     const {
@@ -109,126 +117,159 @@ export function HabitDetail({ habitId }: TProps) {
       style={{
         borderLeft: '1px solid #f3f3f3',
       }}>
-      <div className=' flex justify-between items-center px-4'>
-        <div className=' flex items-center'>
-          <img
-            src={smile1Png}
-            style={{
-              width: 40,
-              height: 40,
-            }}
-            alt=''
-          />
-          <div className=' ml-2 text-lg'>
-            {habitDetail?.records?.[0]?.habit?.name}
-          </div>
-        </div>
-        <div>
-          <MenuContainer placement='bottomRight' onChange={() => {}}>
-            <SettingOutlined />
-          </MenuContainer>
-        </div>
-      </div>
-      <div className=' mt-4 px-4'>
-        <div className=' flex  gap-4 '>
-          <div
-            className=' w-1/2 py-4 px-4'
-            style={{
-              backgroundColor: '#f8f8f8',
-            }}>
-            <div className=' flex '>
+      {!habit ? (
+        <Empty desc='点击习惯标题查看详情' emptyType={2} />
+      ) : (
+        <>
+          <div className=' flex justify-between items-center px-4'>
+            <div className=' flex items-center'>
               <img
-                src={monthPng}
+                src={smile1Png}
                 style={{
-                  width: 20,
-                  height: 20,
+                  width: 40,
+                  height: 40,
                 }}
                 alt=''
               />
-              <div className='text-desc ml-1'>月打卡</div>
+              <div className=' ml-2 text-lg'>{habit?.name}</div>
             </div>
-            <div className=' flex items-center'>
-              <div className=' text-2xl mr-1'>{habitDetail?.monthCount}</div>
-              <div className=' mt-1'>天</div>
+            <div>
+              <MenuContainer
+                placement='bottomRight'
+                onChange={async (type) => {
+                  if (type === 'edit') {
+                    onEditHabit(habit!);
+                    return;
+                  }
+                  if (type === 'complete') {
+                    await updateStatus({
+                      habitId: habit?.habitId!,
+                      status: EStatus.已归档,
+                    });
+                    return;
+                  }
+                  if (type === 'reset') {
+                    await updateStatus({
+                      habitId: habit?.habitId!,
+                      status: EStatus.进行中,
+                    });
+                    return;
+                  }
+                  if (type === 'delete') {
+                    await delHabit({
+                      habitId: habit?.habitId!,
+                    });
+                  }
+                }}
+                habit={habit!}>
+                <SettingOutlined />
+              </MenuContainer>
             </div>
           </div>
-          <div
-            className=' w-1/2 py-4 px-4'
-            style={{
-              backgroundColor: '#f8f8f8',
-            }}>
-            <div className=' flex '>
-              <img
-                src={allPng}
+          <div className=' mt-4 px-4'>
+            <div className=' flex  gap-4 '>
+              <div
+                className=' w-1/2 py-4 px-4'
                 style={{
-                  width: 20,
-                  height: 20,
-                }}
-                alt=''
-              />
-              <div className='text-desc ml-1'>总打卡</div>
-            </div>
-            <div className=' flex items-center'>
-              <div className=' text-2xl mr-1'>{habitDetail?.allCount}</div>
-              <div className=' mt-1'>天</div>
-            </div>
-          </div>
-        </div>
-        <div className=' flex gap-4 mt-4'>
-          <div
-            className=' w-1/2 py-4 px-4'
-            style={{
-              backgroundColor: '#f8f8f8',
-            }}>
-            <div className=' flex '>
-              <img
-                src={ratePng}
-                style={{
-                  width: 20,
-                  height: 20,
-                }}
-                alt=''
-              />
-              <div className='text-desc ml-1'>月完成率</div>
-            </div>
-            <div className=' flex items-center'>
-              <div className=' text-2xl mr-1'>{habitDetail?.monthRate}</div>
-              <div className=' mt-1'>%</div>
-            </div>
-          </div>
-          <div
-            className=' w-1/2 py-4 px-4'
-            style={{
-              backgroundColor: '#f8f8f8',
-            }}>
-            <div className=' flex '>
-              <img
-                src={lianxuPng}
-                style={{
-                  width: 20,
-                  height: 20,
-                }}
-                alt=''
-              />
-              <div className='text-desc ml-1'>当前连续</div>
-            </div>
-            <div className=' flex items-center'>
-              <div className=' text-2xl mr-1'>
-                {habitDetail?.monthContinuityCount}
+                  backgroundColor: '#f8f8f8',
+                }}>
+                <div className=' flex '>
+                  <img
+                    src={monthPng}
+                    style={{
+                      width: 20,
+                      height: 20,
+                    }}
+                    alt=''
+                  />
+                  <div className='text-desc ml-1'>月打卡</div>
+                </div>
+                <div className=' flex items-center'>
+                  <div className=' text-2xl mr-1'>
+                    {habitDetail?.monthCount}
+                  </div>
+                  <div className=' mt-1'>天</div>
+                </div>
               </div>
-              <div className=' mt-1'>天</div>
+              <div
+                className=' w-1/2 py-4 px-4'
+                style={{
+                  backgroundColor: '#f8f8f8',
+                }}>
+                <div className=' flex '>
+                  <img
+                    src={allPng}
+                    style={{
+                      width: 20,
+                      height: 20,
+                    }}
+                    alt=''
+                  />
+                  <div className='text-desc ml-1'>总打卡</div>
+                </div>
+                <div className=' flex items-center'>
+                  <div className=' text-2xl mr-1'>{habitDetail?.allCount}</div>
+                  <div className=' mt-1'>天</div>
+                </div>
+              </div>
+            </div>
+            <div className=' flex gap-4 mt-4'>
+              <div
+                className=' w-1/2 py-4 px-4'
+                style={{
+                  backgroundColor: '#f8f8f8',
+                }}>
+                <div className=' flex '>
+                  <img
+                    src={ratePng}
+                    style={{
+                      width: 20,
+                      height: 20,
+                    }}
+                    alt=''
+                  />
+                  <div className='text-desc ml-1'>月完成率</div>
+                </div>
+                <div className=' flex items-center'>
+                  <div className=' text-2xl mr-1'>{habitDetail?.monthRate}</div>
+                  <div className=' mt-1'>%</div>
+                </div>
+              </div>
+              <div
+                className=' w-1/2 py-4 px-4'
+                style={{
+                  backgroundColor: '#f8f8f8',
+                }}>
+                <div className=' flex '>
+                  <img
+                    src={lianxuPng}
+                    style={{
+                      width: 20,
+                      height: 20,
+                    }}
+                    alt=''
+                  />
+                  <div className='text-desc ml-1'>当前连续</div>
+                </div>
+                <div className=' flex items-center'>
+                  <div className=' text-2xl mr-1'>
+                    {habitDetail?.monthContinuityCount}
+                  </div>
+                  <div className=' mt-1'>天</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <Calendar
-        fullscreen={false}
-        defaultValue={currentMoment}
-        dateFullCellRender={dateFullCellRender}
-        onPanelChange={(val) => {
-          setCurrentMoment(val);
-        }}
-      />
+          <Calendar
+            fullscreen={false}
+            defaultValue={currentMoment}
+            dateFullCellRender={dateFullCellRender}
+            onPanelChange={(val) => {
+              setCurrentMoment(val);
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }

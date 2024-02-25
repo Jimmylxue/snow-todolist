@@ -139,3 +139,49 @@ export function useEditHabit(
     TEditHabit
   >((data) => post('/habit/update', data), options);
 }
+
+/**
+ * 更新打卡习惯
+ */
+export function useUpdateStatusHabit(
+  options?: UseMutationOptions<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    { habitId: number; status: EStatus }
+  >,
+) {
+  return useMutation<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    { habitId: number; status: EStatus }
+  >((data) => post('/habit/updateStatus', data), options);
+}
+
+/**
+ * 删除打卡习惯
+ */
+export function useDelHabit(
+  options?: UseMutationOptions<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    { habitId: number }
+  >,
+) {
+  return useMutation<
+    {
+      code: number;
+      result: string;
+    },
+    ClientError,
+    { habitId: number }
+  >((data) => post('/habit/del', data), options);
+}

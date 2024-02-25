@@ -1,5 +1,5 @@
 export enum EStatus {
-  '进行中',
+  '进行中' = 1,
   '已归档',
 }
 
@@ -35,7 +35,7 @@ export enum ENotifyTime {
   '21:00',
 }
 
-type THabit = {
+export type THabit = {
   habitId: number;
   name: string;
   desc: string;

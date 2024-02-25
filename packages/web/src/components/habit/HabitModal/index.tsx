@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { IUseModalResult } from '@/hooks/useModal';
-import { TUserHabit } from '@/api/sign/habit/type';
+import { THabit, TUserHabit } from '@/api/sign/habit/type';
 import { useEffect } from 'react';
 import { useAddHabit, useEditHabit } from '@/api/sign/habit';
 import { config } from '@/config/react-query';
@@ -99,7 +99,7 @@ export const HabitModal = ({
   open,
   initValue,
   closeModal,
-}: IUseModalResult<{ type: 'ADD' | 'EDIT'; habitInfo?: TUserHabit }>) => {
+}: IUseModalResult<{ type: 'ADD' | 'EDIT'; habitInfo?: THabit }>) => {
   const type = initValue?.type;
   const [form] = Form.useForm();
   const { mutateAsync: addHabit } = useAddHabit();
@@ -107,8 +107,6 @@ export const HabitModal = ({
   const { queryClient } = config();
 
   const frequency = Form.useWatch('frequency', form);
-
-  console.log('frequency', frequency);
 
   useEffect(() => {
     if (!open) {
@@ -121,7 +119,6 @@ export const HabitModal = ({
       ...(initValue?.habitInfo || {}),
       frequencyDay: initValue?.habitInfo?.frequencyDay?.split(',')?.map(Number),
     };
-    console.log('init', init);
     form.setFieldsValue(init);
   }, [initValue]);
 
@@ -142,6 +139,9 @@ export const HabitModal = ({
       }>
       <Form
         form={form}
+        labelCol={{
+          span: 4,
+        }}
         name='horizontal_login'
         onFinish={async () => {
           const params = form.getFieldsValue();
@@ -166,6 +166,7 @@ export const HabitModal = ({
         }}>
         <Form.Item
           name='name'
+          label='习惯名称'
           rules={[{ required: true, message: '请输入习惯名称!' }]}>
           <Input
             prefix={<UserOutlined className='site-form-item-icon' />}
@@ -173,8 +174,9 @@ export const HabitModal = ({
           />
         </Form.Item>
         <Form.Item
+          label='打卡频率'
           name='frequency'
-          rules={[{ required: true, message: '请输入习惯名称!' }]}>
+          rules={[{ required: true, message: '清选择打卡频率!' }]}>
           <Radio.Group>
             <Radio value={0}>按天</Radio>
             <Radio value={1}>按周</Radio>
@@ -202,10 +204,13 @@ export const HabitModal = ({
           </Form.Item>
         )}
 
-        <Form.Item name='notifyFlag'>
+        <Form.Item
+          name='notifyFlag'
+          label='提醒开关'
+          extra='开启后，到指定时间您将会收到一条邮箱信息'>
           <Switch checkedChildren='开启' unCheckedChildren='关闭' />
         </Form.Item>
-        <Form.Item name='notifyTime'>
+        <Form.Item name='notifyTime' label='提醒时间'>
           <Select
             placeholder={'请选择提醒时间'}
             showSearch

@@ -10,7 +10,7 @@ interface TProps extends HTMLAttributes<HTMLDivElement> {
   checked?: boolean;
   habit: TUserHabit;
   updateSign: (params: TUpdateSignParams) => void;
-  onEdit: (type: 'edit' | 'complete' | 'delete') => void;
+  onEdit: (type: 'edit' | 'complete' | 'delete' | 'reset') => void;
 }
 
 export function HabitItem({
@@ -25,7 +25,7 @@ export function HabitItem({
   ).length;
 
   return (
-    <MenuContainer trigger={['contextMenu']} onChange={onEdit}>
+    <MenuContainer trigger={['contextMenu']} onChange={onEdit} habit={habit}>
       <div
         {...args}
         className={classNames(
