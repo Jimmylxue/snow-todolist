@@ -1,3 +1,5 @@
+import { TUpdateSignParams } from '.';
+
 export enum EStatus {
   '进行中' = 1,
   '已归档',
@@ -73,6 +75,7 @@ export type THabitDetail = {
     updateTime: string;
     habit: THabit;
   }[];
+  habit: THabit;
 };
 
 export type TAddHabit = {
@@ -85,3 +88,8 @@ export type TAddHabit = {
 };
 
 export type TEditHabit = TAddHabit & { habitId: number };
+
+export type TUpdateSign = (
+  params: TUpdateSignParams,
+  isWantComplete: boolean,
+) => void;

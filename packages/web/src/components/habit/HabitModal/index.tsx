@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Checkbox,
   Form,
@@ -137,6 +138,14 @@ export const HabitModal = ({
           </Button>
         </div>
       }>
+      <div className=' mb-4'>
+        <Alert
+          message='消息提醒目前为实验功能，消息可能通知不及时'
+          type='warning'
+          showIcon
+        />
+      </div>
+
       <Form
         form={form}
         labelCol={{
@@ -168,13 +177,11 @@ export const HabitModal = ({
           name='name'
           label='习惯名称'
           rules={[{ required: true, message: '请输入习惯名称!' }]}>
-          <Input
-            prefix={<UserOutlined className='site-form-item-icon' />}
-            placeholder='习惯名称'
-          />
+          <Input placeholder='习惯名称' />
         </Form.Item>
         <Form.Item
           label='打卡频率'
+          initialValue={0}
           name='frequency'
           rules={[{ required: true, message: '清选择打卡频率!' }]}>
           <Radio.Group>

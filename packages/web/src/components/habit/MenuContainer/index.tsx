@@ -1,5 +1,5 @@
 import { EStatus, THabit } from '@/api/sign/habit/type';
-import { DropDownProps, Dropdown } from 'antd';
+import { DropDownProps, Dropdown, Modal } from 'antd';
 import { ReactNode } from 'react';
 
 type TProps = {
@@ -53,7 +53,16 @@ export function MenuContainer({
               <a
                 target='_blank'
                 rel='noopener noreferrer'
-                onClick={() => onChange('delete')}>
+                onClick={() => {
+                  Modal.confirm({
+                    title: '确定删除该习惯吗？',
+                    okText: '确定',
+                    cancelText: '取消',
+                    onOk: () => {
+                      onChange('delete');
+                    },
+                  });
+                }}>
                 删除
               </a>
             ),

@@ -1,4 +1,14 @@
-import { Moment } from 'moment';
+import { TUpdateSignParams } from '@/api/sign/habit';
+import { THabitDetail } from '@/api/sign/habit/type';
+import moment, { Moment } from 'moment';
+
+/**
+ * 检查日期是否超过今天的日期
+ */
+export function checkIsOverToday(checkMoment: Moment) {
+  const todayMoment = moment();
+  return checkMoment.valueOf() > todayMoment.valueOf();
+}
 
 export function getDateInfo(current: Moment, item: Moment) {
   /** 遍历项的天 */
@@ -22,7 +32,7 @@ export function getDateInfo(current: Moment, item: Moment) {
     nowMonth === itemCurrentMonth;
 
   /** 渲染项是否大于当前时间 */
-  const isOverToday = item.valueOf() > current.valueOf();
+  const isOverToday = checkIsOverToday(item);
 
   const isNotNowMonth = itemCurrentMonth !== nowMonth;
   const isNotNowYear = itemCurrentYear !== nowYear;
@@ -35,4 +45,11 @@ export function getDateInfo(current: Moment, item: Moment) {
     itemCurrent,
     itemCurrentMonth,
   };
+}
+
+export function getDateIsComplete(checkDate: Moment, habDetail: THabitDetail) {
+  const checkDateString = checkDate.format('YYYY-MM-DD');
+  return habDetail?.records
+    .map((item) => item.signDate)
+    .includes(checkDateString);
 }

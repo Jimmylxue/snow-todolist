@@ -1,15 +1,14 @@
 import { Rate } from 'antd';
 import classNames from 'classnames';
-import smile1Png from '@/assets/img/sign/smile1.png';
 import { MenuContainer } from '../MenuContainer';
-import { EStatus, TUserHabit } from '@/api/sign/habit/type';
+import { EStatus, TUpdateSign, TUserHabit } from '@/api/sign/habit/type';
 import { HTMLAttributes } from 'react';
-import { TUpdateSignParams } from '@/api/sign/habit';
+import { SmileIcon } from '../SmileLogo';
 
 interface TProps extends HTMLAttributes<HTMLDivElement> {
   checked?: boolean;
   habit: TUserHabit;
-  updateSign: (params: TUpdateSignParams) => void;
+  updateSign: TUpdateSign;
   onEdit: (type: 'edit' | 'complete' | 'delete' | 'reset') => void;
 }
 
@@ -35,14 +34,7 @@ export function HabitItem({
           },
         )}>
         <div className=' flex items-center'>
-          <img
-            src={smile1Png}
-            style={{
-              width: 40,
-              height: 40,
-            }}
-            alt=''
-          />
+          <SmileIcon status={habit.status} />
           <div className=' ml-2'>{habit.name}</div>
         </div>
         <div className=' flex items-center'>
@@ -54,11 +46,14 @@ export function HabitItem({
                   count={1}
                   value={item.isSign ? 1 : 0}
                   tooltips={[`${item.date} ${item.dayOfWeek}`]}
-                  onChange={() => {
-                    updateSign({
-                      signDate: item.date,
-                      habitId: habit.habitId,
-                    });
+                  onChange={(value) => {
+                    updateSign(
+                      {
+                        signDate: item.date,
+                        habitId: habit.habitId,
+                      },
+                      !!value,
+                    );
                   }}
                 />
               ))}

@@ -81,7 +81,12 @@ export const Content = observer(
                     description: (
                       <>
                         <p className='text-base'>{task.taskName}</p>
-                        <p className='text-xs'>{task.taskContent}</p>
+                        <p className='text-xs'>
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html: task.taskContent,
+                            }}></p>
+                        </p>
                       </>
                     ),
                     placement: 'bottomLeft',

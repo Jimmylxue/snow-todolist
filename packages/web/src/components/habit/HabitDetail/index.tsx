@@ -4,23 +4,24 @@ import monthPng from '@/assets/img/sign/month.png';
 import allPng from '@/assets/img/sign/all.png';
 import ratePng from '@/assets/img/sign/rate.png';
 import lianxuPng from '@/assets/img/sign/lianxu.png';
-import smile1Png from '@/assets/img/sign/smile1.png';
 import { MenuContainer } from '@/components/habit/MenuContainer';
 import { useHabitDetail } from '@/api/sign/habit';
 import moment, { Moment } from 'moment';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { getDateInfo } from '../core';
+import { checkIsOverToday, getDateInfo, getDateIsComplete } from '../core';
 import { useOperation } from '@/pages/habit/useOperation';
-import { EStatus, THabit } from '@/api/sign/habit/type';
+import { EStatus, THabit, TUpdateSign } from '@/api/sign/habit/type';
 import { Empty } from '@/components/common/Empty';
+import { SmileIcon } from '../SmileLogo';
 
 type TProps = {
   habitId?: number;
   onEditHabit: (hab: THabit) => void;
+  updateSign: TUpdateSign;
 };
 
-export function HabitDetail({ habitId, onEditHabit }: TProps) {
+export function HabitDetail({ habitId, onEditHabit, updateSign }: TProps) {
   const todayMoment = moment();
   const [currentMoment, setCurrentMoment] = useState<Moment>(moment());
 
@@ -41,7 +42,9 @@ export function HabitDetail({ habitId, onEditHabit }: TProps) {
 
   const habitDetail = data?.result;
 
-  const habit = habitDetail?.records?.[0]?.habit;
+  const habit = habitDetail?.habit;
+
+  const habitIsComplete = habit?.status === EStatus.已归档;
 
   const dateFullCellRender = (value: Moment) => {
     const {
@@ -50,21 +53,19 @@ export function HabitDetail({ habitId, onEditHabit }: TProps) {
       isNotNowMonth,
       isNotNowYear,
       itemCurrent,
-      itemCurrentMonth,
     } = getDateInfo(todayMoment, value);
 
-    const isCompleted =
-      data?.result?.records
-        .map((item) => +item.signDay)
-        .includes(itemCurrent) && itemCurrentMonth === todayMoment.month();
+    const dateIsCompleted = getDateIsComplete(value, data?.result!);
 
-    if (isOverToday || isNotNowYear || isNotNowMonth) {
+    if (!dateIsCompleted && (isOverToday || isNotNowYear || isNotNowMonth)) {
       /**
        * 渲染默认样式
        */
       return (
         <div
-          className=' mx-auto flex justify-center items-center'
+          className={classNames(' mx-auto flex justify-center items-center ', {
+            'cursor-not-allowed': isOverToday || habitIsComplete,
+          })}
           style={{
             width: 40,
             height: 40,
@@ -74,14 +75,15 @@ export function HabitDetail({ habitId, onEditHabit }: TProps) {
       );
     }
 
-    if (isCompleted) {
+    if (dateIsCompleted) {
       return (
         <div
           className={classNames(
             ' rounded-full mx-auto flex justify-center items-center',
             {
-              primaryNavBarBgColor: isCompleted,
-              'text-white': isCompleted,
+              'cursor-not-allowed': habitIsComplete,
+              primaryNavBarBgColor: dateIsCompleted,
+              'text-white': dateIsCompleted,
             },
           )}
           style={{
@@ -97,6 +99,7 @@ export function HabitDetail({ habitId, onEditHabit }: TProps) {
           className={classNames(
             ' rounded-full mx-auto flex justify-center items-center',
             {
+              'cursor-not-allowed': habitIsComplete,
               'primary-color': renderIsNowDay,
             },
           )}
@@ -117,20 +120,13 @@ export function HabitDetail({ habitId, onEditHabit }: TProps) {
       style={{
         borderLeft: '1px solid #f3f3f3',
       }}>
-      {!habit ? (
+      {!habitDetail ? (
         <Empty desc='点击习惯标题查看详情' emptyType={2} />
       ) : (
         <>
           <div className=' flex justify-between items-center px-4'>
             <div className=' flex items-center'>
-              <img
-                src={smile1Png}
-                style={{
-                  width: 40,
-                  height: 40,
-                }}
-                alt=''
-              />
+              <SmileIcon status={habit?.status!} />
               <div className=' ml-2 text-lg'>{habit?.name}</div>
             </div>
             <div>
@@ -231,7 +227,9 @@ export function HabitDetail({ habitId, onEditHabit }: TProps) {
                   <div className='text-desc ml-1'>月完成率</div>
                 </div>
                 <div className=' flex items-center'>
-                  <div className=' text-2xl mr-1'>{habitDetail?.monthRate}</div>
+                  <div className=' text-2xl mr-1'>
+                    {Number(Number(habitDetail?.monthRate) * 100).toFixed(0)}
+                  </div>
                   <div className=' mt-1'>%</div>
                 </div>
               </div>
@@ -266,6 +264,19 @@ export function HabitDetail({ habitId, onEditHabit }: TProps) {
             dateFullCellRender={dateFullCellRender}
             onPanelChange={(val) => {
               setCurrentMoment(val);
+            }}
+            onSelect={(moment) => {
+              const signDate = moment.format('YYYY-MM-DD');
+              const itemIsComplete = getDateIsComplete(moment, data?.result!);
+              const isOverToday = checkIsOverToday(moment);
+              if (isOverToday || habitIsComplete) {
+                // 选择的日期大于今天 或者 任务是已归档的任务 点击都不处理
+                return;
+              }
+              updateSign(
+                { habitId: habit?.habitId!, signDate },
+                !itemIsComplete,
+              );
             }}
           />
         </>

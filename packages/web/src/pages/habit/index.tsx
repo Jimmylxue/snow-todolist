@@ -10,6 +10,7 @@ import { HabitModal } from '@/components/habit/HabitModal';
 import { useOperation } from './useOperation';
 import { Empty } from '@/components/common/Empty';
 import { Button } from 'antd';
+import { showFireAnimate } from '@/components/todoList/utils';
 
 export function HabitPage() {
   const [signStatus, setSignStatus] = useState<EStatus>(EStatus.进行中);
@@ -63,7 +64,8 @@ export function HabitPage() {
               habit={hab}
               key={hab.habitId}
               checked={hab.habitId === selectHabitId}
-              onClick={() => {
+              onClick={(e) => {
+                console.log('点击了');
                 setSelectHabitId(hab.habitId);
               }}
               updateSign={async (params) => {
@@ -127,6 +129,12 @@ export function HabitPage() {
             type: 'EDIT',
             habitInfo: hab,
           });
+        }}
+        updateSign={async (params, isWantComplete) => {
+          if (isWantComplete) {
+            showFireAnimate();
+          }
+          await updateSign(params);
         }}
       />
       <HabitModal {...habitModal} />
