@@ -126,22 +126,45 @@ export function useDelTask(
   >((data) => post('task/del', data), options);
 }
 
+// export function useSearchTask(
+//   options?: UseMutationOptions<
+//     {
+//       code: number;
+//       result: TUserTaskList;
+//     },
+//     ClientError,
+//     TSearchTaskParams
+//   >,
+// ) {
+//   return useMutation<
+//     {
+//       code: number;
+//       result: TUserTaskList;
+//     },
+//     ClientError,
+//     TSearchTaskParams
+//   >((data) => post('task/search', data), options);
+// }
+
 export function useSearchTask(
-  options?: UseMutationOptions<
+  queryKey: QueryKey,
+  variable: TSearchTaskParams,
+  config?: UseQueryOptions<
     {
       code: number;
-      result: TUserTaskList;
+      message: number;
+
+      result?: TUserTaskList;
     },
-    ClientError,
-    TSearchTaskParams
+    ClientError
   >,
 ) {
-  return useMutation<
+  return useQuery<
     {
       code: number;
-      result: TUserTaskList;
+      message: number;
+      result?: TUserTaskList;
     },
-    ClientError,
-    TSearchTaskParams
-  >((data) => post('task/search', data), options);
+    ClientError
+  >(queryKey, () => post('/task/search', variable), config);
 }

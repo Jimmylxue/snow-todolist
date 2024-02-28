@@ -18,7 +18,7 @@ export function STabs() {
   }, [pathname]);
 
   return (
-    <div className='dz-tabs mt-3 ml-5'>
+    <div className='dz-tabs mt-4 ml-5'>
       <Tabs items={TabConst} activeKey={tabKey} onChange={onTabChange} />
     </div>
   );

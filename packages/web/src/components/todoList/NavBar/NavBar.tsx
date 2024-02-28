@@ -1,28 +1,22 @@
 import {
   PlusOutlined,
-  SearchOutlined,
   LoginOutlined,
   LogoutOutlined,
   FireOutlined,
-  HomeOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import { Dropdown, Input, MenuProps, Modal, Tabs } from 'antd';
+import { Dropdown, MenuProps, Modal } from 'antd';
 import { Avatar } from '../SAvatar';
 import { SButton } from '../Button';
 import { useUser } from '@/hooks/useAuth';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useMemo, useState } from 'react';
-import { TaskItem } from '@/api/todolist/task/type';
-import { debounce } from 'lodash';
-import { useSearchTask } from '@/api/todolist/task';
-import { useSearchInfo } from '@/hooks/useSearch';
+import { useMemo, useState } from 'react';
 import './navbar.less';
 import { Setting } from '../Setting';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { STabs } from '../Tabs';
 import { Letter } from './components/Letter';
-// import { STabs } from '../Tabs';
+import { Search } from '../Search';
 
 type TProps = {
   onAddTask: () => void;
@@ -31,10 +25,6 @@ type TProps = {
 export const NavBar = observer(({ onAddTask }: TProps) => {
   const { user, logOut, showLoginModal, checkUserLoginBeforeFn } = useUser();
   const [modal, contextHolder] = Modal.useModal();
-  const [searchList, setSearchList] = useState<TaskItem[]>([]);
-  const { mutateAsync } = useSearchTask();
-  const { setSearchInfo } = useSearchInfo();
-  const [searchText, setSearchText] = useState('');
   const [settingShow, setSettingShow] = useState<boolean>(false);
 
   const location = useLocation();
@@ -121,27 +111,6 @@ export const NavBar = observer(({ onAddTask }: TProps) => {
     return baseMenu.concat(!user ? logoutItem : loginItems);
   }, [user, logoutItem, loginItems]);
 
-  const searchFn = useCallback(
-    debounce(async (e) => {
-      const searchValue = e.target.value;
-      setSearchText(searchValue);
-      if (!searchValue) {
-        return;
-      }
-
-      const res = await mutateAsync({ taskName: searchValue });
-      if (res.code === 200) {
-        setSearchList(res.result.result);
-      }
-    }, 500),
-    [],
-  );
-
-  const changeFn = (e: any) => {
-    setSearchText(e.target.value);
-    searchFn(e);
-  };
-
   return (
     <div
       className='w-full px-5 flex-shrink-0 dz-navbar primaryNavBarBgColor'
@@ -150,54 +119,13 @@ export const NavBar = observer(({ onAddTask }: TProps) => {
       }}>
       <div className='w-full h-full flex items-center justify-between primaryTextColor'>
         <div className='flex items-center'>
-          <SButton
-            icon={<HomeOutlined className=' flex text-xl flex-shrink-0' />}
+          <img
+            className=' rounded cursor-pointer'
+            src='https://image.jimmyxuexue.top/img/202306061406698.jpg'
+            width={25}
+            alt=''
             onClick={() => navigate('center')}
           />
-          <div className=' relative'>
-            <Input
-              className='dz-input ml-4 border-r-2 w-full primaryTextColor'
-              placeholder='搜索'
-              value={searchText}
-              prefix={
-                <SearchOutlined
-                  style={{
-                    fontWeight: 300,
-                  }}
-                  className=' text-lg'
-                />
-              }
-              onChange={changeFn}
-              style={{
-                width: 300,
-              }}
-            />
-            {!!searchList.length && (
-              <div
-                className=' absolute left-0 top-8 ml-4 bg-white z-30'
-                style={{
-                  width: 300,
-                }}>
-                {searchList.map((task, index) => (
-                  <div
-                    key={index}
-                    className='snow-search-item-hover text-black flex justify-between py-2 px-2 text-xs cursor-pointer'
-                    onClick={() => {
-                      setSearchInfo(task);
-                      setSearchList([]);
-                      setSearchText('');
-                    }}>
-                    <div>
-                      {task.taskName.length > 18
-                        ? task.taskName.slice(0, 18) + '...'
-                        : task.taskName}
-                    </div>
-                    <div>{task.typeMessage.typeName}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
           <STabs />
         </div>
 
@@ -217,6 +145,7 @@ export const NavBar = observer(({ onAddTask }: TProps) => {
           )}
 
           <div className='flex items-center ml-2'>
+            <Search />
             <Letter />
             <Dropdown menu={{ items: menuList }}>
               <Avatar
