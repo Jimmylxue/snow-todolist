@@ -1,5 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { SearchModal } from './SearchModal';
+// import { SearchModal } from './SearchModalBad';
 import { useModal } from '@/hooks/useModal';
 import { useEffect } from 'react';
 import hotkeys from 'hotkeys-js';
