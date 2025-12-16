@@ -161,33 +161,35 @@ export const Login = observer(({ show, onClose }: TProps) => {
         )}
 
         <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-          {modalType === 'login' ? (
-            <Button type='primary' htmlType='submit'>
-              登录
-            </Button>
-          ) : (
-            <Button type='primary' htmlType='submit'>
-              注册
-            </Button>
-          )}
+          <div className=' flex justify-between items-center'>
+            {modalType === 'login' ? (
+              <Button type='primary' htmlType='submit'>
+                登录
+              </Button>
+            ) : (
+              <Button type='primary' htmlType='submit'>
+                注册
+              </Button>
+            )}
 
-          <Button
-            type='link'
-            onClick={() => {
-              form.resetFields();
-              setModalType((val) => (val === 'login' ? 'register' : 'login'));
-            }}>
-            {modalType === 'login' ? '没有账号，立即注册' : '返回登录'}
-          </Button>
+            <Button
+              type='link'
+              onClick={() => {
+                form.resetFields();
+                setModalType((val) => (val === 'login' ? 'register' : 'login'));
+              }}>
+              {modalType === 'login' ? '没有账号，立即注册' : '返回登录'}
+            </Button>
+          </div>
 
-          <Button
+          {/* <Button
             type='link'
             onClick={() => {
               form.resetFields();
               setHandleType(handleType === 'mail' ? 'phone' : 'mail');
             }}>
             {handleType === 'mail' ? '手机' : '邮箱'}登录
-          </Button>
+          </Button> */}
         </Form.Item>
       </Form>
     </Modal>

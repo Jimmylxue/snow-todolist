@@ -66,7 +66,7 @@ export function useUserLoginByMail(
     },
     ClientError,
     TUserLoginByMailParams
-  >((data) => post('user/login_by_mail', data), options);
+  >((data) => post('mail/login_mail', data), options);
 }
 
 export function useUserRegister(

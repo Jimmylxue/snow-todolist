@@ -13,7 +13,8 @@
 		"web:dev": "pnpm -C ./packages/web dev",
 		"web:prod": "pnpm -C ./packages/web dev:prod",
 		"web:build": "pnpm -C ./packages/web build",
-		"web:test": "pnpm -C ./packages/web test"
+		"web:test": "pnpm -C ./packages/web test",
+		"servers:dev": "pnpm -C ./packages/servers start:dev"
 	},
 	"author": "",
 	"license": "ISC",
