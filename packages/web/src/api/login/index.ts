@@ -112,7 +112,7 @@ export function useUserRegisterByMail(
     },
     ClientError,
     TUserRegisterByMailParams
-  >((data) => post('user/register_by_mail', data), options);
+  >((data) => post('mail/register_mail', data), options);
 }
 
 export function useSendMail(

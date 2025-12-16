@@ -12,7 +12,7 @@ export function Letter() {
   const { data, refetch } = useUserLetter(
     ['userLetter'],
     {
-      platform: 0,
+      platform: 1,
     },
     {
       refetchOnWindowFocus: false,

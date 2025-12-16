@@ -8,6 +8,7 @@
     "dev:prod": "vite --mode production",
     "dev:crx": "cross-env BUILD_CRX=1 vite build --watch",
     "build": "tsc && vite build",
+    "build:prod": "tsc && vite build --mode production",
     "build:crx": "cross-env BUILD_CRX=1 vite --mode production build",
     "preview": "vite preview",
     "test": "jest",
