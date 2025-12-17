@@ -16,22 +16,22 @@ export const TabConst = [
     ),
     key: '/center',
   },
-  {
-    label: (
-      <>
-        <HistoryOutlined />
-        打卡中心
-      </>
-    ),
-    key: '/habit',
-  },
-  {
-    label: (
-      <>
-        <RadarChartOutlined />
-        备忘概况
-      </>
-    ),
-    key: '/base',
-  },
+  // {
+  //   label: (
+  //     <>
+  //       <HistoryOutlined />
+  //       打卡中心
+  //     </>
+  //   ),
+  //   key: '/habit',
+  // },
+  // {
+  //   label: (
+  //     <>
+  //       <RadarChartOutlined />
+  //       备忘概况
+  //     </>
+  //   ),
+  //   key: '/base',
+  // },
 ];

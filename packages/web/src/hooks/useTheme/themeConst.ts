@@ -60,7 +60,7 @@ const orangeTheme = {
 export const themeConst = [
   defaultTheme,
   blackTheme,
-  darkTheme,
+  // darkTheme,
   grayTheme,
   orangeTheme,
 ];
