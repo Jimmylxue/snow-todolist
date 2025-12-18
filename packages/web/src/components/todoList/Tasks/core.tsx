@@ -43,6 +43,8 @@ export function getExpectNodeByTaskEnum(
   task: TaskItem,
 ) {
   const { expectTime, completeTime } = task;
+
+  const remainingDay = getDayCountByTimeStamp(+expectTime!, Date.now());
   switch (status) {
     case TaskCompleteEnum['未设置时间&未完成']:
       return (
@@ -77,7 +79,7 @@ export function getExpectNodeByTaskEnum(
           }>
           <div>
             <ProjectOutlined className='mr-1' />
-            剩余{getDayCountByTimeStamp(+expectTime!, Date.now())}天
+            {remainingDay === 0 ? '今天截止' : `剩余${remainingDay}天`}
           </div>
         </Tooltip>
       );
