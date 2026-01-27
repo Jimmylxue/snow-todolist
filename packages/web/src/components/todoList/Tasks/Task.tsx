@@ -35,7 +35,11 @@ export const TaskItem: FC<TProps> = ({
   }, [task]);
 
   const handleToggleStatus = () => {
-    addAnimate(ref?.current!, ['animate__animated', 'animate__shakeX'], 800);
+    addAnimate(
+      ref?.current!,
+      ['animate__animated', 'animate__shakeX'],
+      800,
+    );
     if (status === 0) {
       showFireAnimate();
     }
@@ -71,11 +75,11 @@ export const TaskItem: FC<TProps> = ({
           __html: taskContent || '暂无描述',
         }}></div>
       <div className='pl-8 mt-3 flex items-center justify-between text-xs text-gray-400'>
-        <div className='primary-color flex items-center'>{expectNode}</div>
-        <div className='flex items-center'>
-          <CarryOutOutlined className='mr-1' />
-          {dayjs(+task.createTime).format('YYYY-MM-DD HH:mm')}
-        </div>
+         <div className='primary-color flex items-center'>{expectNode}</div>
+         <div className='flex items-center'>
+            <CarryOutOutlined className='mr-1' />
+            {dayjs(+task.createTime).format('YYYY-MM-DD HH:mm')}
+         </div>
       </div>
       <Popconfirm
         okText='确定'
@@ -84,7 +88,7 @@ export const TaskItem: FC<TProps> = ({
         icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
         onConfirm={onDeleteTask}>
         <div className='snow-delete-btn'>
-          <DeleteOutlined className='text-lg cursor-pointer text-red-400 hover:text-red-500' />
+           <DeleteOutlined className='text-lg cursor-pointer text-red-400 hover:text-red-500' />
         </div>
       </Popconfirm>
     </div>

@@ -26,12 +26,24 @@ export const Login = observer(({ show, onClose }: TProps) => {
   const [form] = Form.useForm();
   const [modalType, setModalType] = useState<'login' | 'register'>('login');
   const [handleType, setHandleType] = useState<'phone' | 'mail'>('mail');
+  const [countdown, setCountdown] = useState(0);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [countdown]);
 
   useEffect(() => {
     if (show) {
       setModalType('login');
     } else {
       form.resetFields();
+      setCountdown(0);
     }
   }, [show]);
 
@@ -130,6 +142,7 @@ export const Login = observer(({ show, onClose }: TProps) => {
                       <Button
                         type='link'
                         size='small'
+                        disabled={countdown > 0}
                         className='text-[var(--primary-color)] font-medium p-0 h-auto'
                         onClick={debounce(async () => {
                           const mail = form.getFieldValue('mail');
@@ -137,11 +150,15 @@ export const Login = observer(({ show, onClose }: TProps) => {
                             message.error('请输入正确的qq邮箱地址');
                             return;
                           }
-                          await sendMailCode({ mail });
-                          message.success('验证码发送成功，有效期10分钟');
-                          console.log('mail', mail);
+                          try {
+                            await sendMailCode({ mail });
+                            message.success('验证码发送成功，有效期10分钟');
+                            setCountdown(60);
+                          } catch (error) {
+                            // ignore error, usually handled by interceptor
+                          }
                         }, 500)}>
-                        获取验证码
+                        {countdown > 0 ? `${countdown}秒后重试` : '获取验证码'}
                       </Button>
                     }
                   />

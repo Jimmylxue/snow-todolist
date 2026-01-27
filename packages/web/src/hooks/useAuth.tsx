@@ -50,7 +50,8 @@ export function useUser() {
   const { mutateAsync: registerFn } = useUserRegister();
   const { mutateAsync: loginByMailFn } = useUserLoginByMail();
   const { mutateAsync: registerByMailFn } = useUserRegisterByMail();
-  const { mutateAsync: sendMailCode } = useSendMail();
+  const { mutateAsync: sendMailCode, isLoading: sendMailCodeLoading } =
+    useSendMail();
   const { queryClient } = config();
 
   useEffect(() => {
@@ -157,5 +158,6 @@ export function useUser() {
     registerByMail,
     sendMailCode,
     updateUser,
+    sendMailCodeLoading,
   };
 }

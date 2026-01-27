@@ -6,7 +6,7 @@ export type TSearchTaskParams = {
   startTime: number;
   endTime: number;
   timeIndex: number;
-  filterType: 1 | 2; // 1: 创建时间, 2: 预期完成时间
+  filterType?: 1 | 2; // 1: 创建时间, 2: 预期完成时间
 };
 
 export enum STime {

@@ -72,7 +72,7 @@ export const TasksModal = ({
       const params = {
         ...values,
         taskContent: desc,
-        expectTime: values.expectTime?.valueOf(),
+        expectTime: String(values.expectTime?.valueOf()),
       };
 
       if (type === 'ADD') {
@@ -130,6 +130,7 @@ export const TasksModal = ({
       }}
       wrapClassName='snow-modal-wrapper'
       centered
+      maskClosable={false}
       destroyOnClose>
       <Form form={form} layout='vertical' className='mt-6' requiredMark={false}>
         <Form.Item

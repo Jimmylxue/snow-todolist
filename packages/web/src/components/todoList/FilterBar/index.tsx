@@ -126,7 +126,7 @@ export function FilterBar({ onChange }: TProps) {
                 }}
                 options={[
                   { label: '创建时间', value: 1 },
-                  { label: '完成时间', value: 2 },
+                  { label: '预期时间', value: 2 },
                 ]}
               />
             </div>
