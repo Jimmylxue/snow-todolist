@@ -24,6 +24,7 @@ export function useUserTask(
     startTime?: number;
     endTime?: number;
     status?: number;
+    filterType?: 1 | 2;
   },
   config?: UseQueryOptions<
     {

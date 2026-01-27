@@ -4,6 +4,7 @@ import {
   DeleteOutlined,
   QuestionCircleOutlined,
   CarryOutOutlined,
+  CheckOutlined,
 } from '@ant-design/icons';
 import './index.less';
 import dayjs from 'dayjs';
@@ -33,43 +34,47 @@ export const TaskItem: FC<TProps> = ({
     return getExpectNodeByTaskEnum(taskEnum!, task);
   }, [task]);
 
+  const handleToggleStatus = () => {
+    addAnimate(ref?.current!, ['animate__animated', 'animate__shakeX'], 800);
+    if (status === 0) {
+      showFireAnimate();
+    }
+    setTimeout(() => {
+      onCompleteTask(status !== 1);
+    }, 200);
+  };
+
   return (
     <div
       ref={ref}
-      className={classNames(
-        'snow-task-item relative px-2 py-2 rounded-md',
-        {},
-      )}>
-      <div>
-        <Checkbox
-          checked={status === 1}
-          onChange={(e) => {
-            addAnimate(
-              ref?.current!,
-              ['animate__animated', 'animate__shakeX'],
-              800,
-            );
-            if (status === 0) {
-              showFireAnimate();
-            }
-            setTimeout(() => {
-              onCompleteTask(e.target.checked);
-            }, 200);
-          }}></Checkbox>
-        <span onClick={onClick} className=' text-sm ml-2 cursor-pointer'>
+      className={classNames('snow-task-item', { completed: status === 1 })}>
+      <div className='flex items-center'>
+        <div
+          className={classNames('snow-task-checkbox', {
+            checked: status === 1,
+          })}
+          onClick={handleToggleStatus}>
+          <CheckOutlined className='check-icon' />
+        </div>
+        <span
+          onClick={onClick}
+          className={classNames(
+            'snow-task-title text-base ml-3 font-medium cursor-pointer',
+            { 'line-through text-gray-400': status === 1 },
+          )}>
           {taskName}
         </span>
       </div>
       <div
-        className='px-6 text-xs desc-text mt-1'
+        className='pl-8 text-sm desc-text mt-2 text-gray-500'
         dangerouslySetInnerHTML={{
-          __html: taskContent,
+          __html: taskContent || '暂无描述',
         }}></div>
-      <div className='text-xs flex justify-between desc-text items-center mt-2 mb-1'>
-        <div className='pl-6 primary-color'>{expectNode} </div>
-        <div>
+      <div className='pl-8 mt-3 flex items-center justify-between text-xs text-gray-400'>
+        <div className='primary-color flex items-center'>{expectNode}</div>
+        <div className='flex items-center'>
           <CarryOutOutlined className='mr-1' />
-          {dayjs(+task.createTime).format('YYYY-MM-DD - h:mm:ss - a')}
+          {dayjs(+task.createTime).format('YYYY-MM-DD HH:mm')}
         </div>
       </div>
       <Popconfirm
@@ -78,7 +83,9 @@ export const TaskItem: FC<TProps> = ({
         title='确定删除该任务吗？'
         icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
         onConfirm={onDeleteTask}>
-        <DeleteOutlined className='snow-delete-btn absolute right-2 top-1/2 -translate-y-1/2 text-base cursor-pointer' />
+        <div className='snow-delete-btn'>
+          <DeleteOutlined className='text-lg cursor-pointer text-red-400 hover:text-red-500' />
+        </div>
       </Popconfirm>
     </div>
   );

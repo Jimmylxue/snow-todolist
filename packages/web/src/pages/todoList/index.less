@@ -8,8 +8,27 @@
 }
 
 .snow-content{
-  max-height: calc(100vh - 60px) !important;
-  overflow: auto;
+  max-height: calc(100vh - 200px) !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 24px;
+  
+  /* Custom Scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
 }
 
 .snow-content > .ant-spin-nested-loading{

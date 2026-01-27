@@ -38,17 +38,30 @@ export const SearchModal = ({ open, closeModal }: IUseModalResult) => {
       footer={null}
       onCancel={closeModal}
       destroyOnClose
-      width={900}>
-      <div>
+      width={600}
+      className='snow-search-modal'
+      maskStyle={{
+        backdropFilter: 'blur(4px)',
+        backgroundColor: 'rgba(0,0,0,0.2)',
+      }}
+      modalRender={(modal) => (
+        <div className='snow-search-container animate__animated animate__fadeInDown'>
+          {modal}
+        </div>
+      )}>
+      <div className='p-4'>
         <Input
-          className=' w-full rounded'
-          placeholder='搜索'
+          className='snow-search-input w-full rounded-xl text-lg border-none shadow-none'
+          placeholder='搜索任务...'
+          bordered={false}
+          autoFocus
           prefix={
             <SearchOutlined
               style={{
-                fontWeight: 300,
+                fontSize: 20,
+                color: '#999',
+                marginRight: 8,
               }}
-              className=' text-lg'
             />
           }
           onChange={handleInput}
@@ -60,24 +73,40 @@ export const SearchModal = ({ open, closeModal }: IUseModalResult) => {
             handleInput(e as any);
           }}
         />
-        {!!searchList.length && (
-          <div className='mt-2'>
+        <div className='snow-divider my-2'></div>
+        
+        {!!searchList.length ? (
+          <div className='mt-2 max-h-[400px] overflow-y-auto snow-search-list'>
             {searchList.map((task) => (
               <div
-                className='dz-search-item w-full flex items-center py-2 border border-solid border-gray-300 px-3 mt-1 rounded cursor-pointer'
+                className='snow-search-item w-full flex items-center py-3 px-4 rounded-lg cursor-pointer transition-all duration-200'
                 key={task.taskId}
                 onClick={() => {
                   closeModal();
                   setSearchInfo(task);
                 }}>
-                <div className='primary-color mr-1'>#</div>
-                <div>{task?.typeMessage?.typeName || '任务类型'}</div>
-                <RightOutlined className=' text-xs mx-2' />
-                <div>{task.taskName}</div>
+                <div className='snow-search-tag mr-3'>
+                  {task?.typeMessage?.typeName || '任务'}
+                </div>
+                <div className='flex-grow text-gray-700 font-medium'>
+                  {task.taskName}
+                </div>
+                <RightOutlined className='text-gray-300 text-xs' />
               </div>
             ))}
           </div>
+        ) : (
+          <div className='py-12 flex flex-col items-center justify-center text-gray-400'>
+             {searchText ? '未找到相关任务' : '输入关键词开始搜索...'}
+          </div>
         )}
+        
+        <div className='flex justify-end mt-4 pt-2 border-t border-gray-100'>
+           <div className='text-xs text-gray-400 flex items-center gap-4'>
+              <span className='flex items-center'><span className='kbd'>↵</span> 选择</span>
+              <span className='flex items-center'><span className='kbd'>esc</span> 关闭</span>
+           </div>
+        </div>
       </div>
     </Modal>
   );

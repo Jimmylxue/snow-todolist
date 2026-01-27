@@ -1,5 +1,73 @@
-.dz-search-item{
-  &:hover{
-    border-color: var(--primary-color);
-  }
+/* Reset default modal styles */
+.snow-search-modal .ant-modal-content {
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  overflow: hidden;
+}
+
+.snow-search-modal .ant-modal-body {
+  padding: 0;
+}
+
+/* Input */
+.snow-search-input {
+  background: transparent !important;
+  padding: 12px 0;
+  font-size: 20px;
+  color: #333;
+}
+.snow-search-input input {
+  font-weight: 500;
+}
+
+.snow-divider {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.06);
+  width: 100%;
+}
+
+/* List Items */
+.snow-search-item:hover {
+  background-color: var(--primary-soft-bg);
+}
+.snow-search-item:hover .snow-search-tag {
+  background-color: #fff;
+  color: var(--primary-color);
+}
+
+.snow-search-tag {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #666;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+/* KBD hint */
+.kbd {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: monospace;
+  margin-right: 4px;
+  font-size: 11px;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+/* Custom Scrollbar for list */
+.snow-search-list::-webkit-scrollbar {
+  width: 4px;
+}
+.snow-search-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.snow-search-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
 }

@@ -31,10 +31,11 @@ export const MenuItem: FC<TProps> = ({
     <>
       <div
         {...args}
-        className='snow_project_menuItem_hover flex justify-between items-center px-2 py-2 rounded-md cursor-pointer '
-        style={{
-          backgroundColor: checked ? '#eee' : '',
-        }}>
+        className={classNames(
+          'snow_project_menuItem_hover flex justify-between items-center px-2 py-2 rounded-md cursor-pointer',
+          className,
+          { checked },
+        )}>
         <div className='flex items-center'>
           {icon}
           <span className='ml-2'>{text}</span>

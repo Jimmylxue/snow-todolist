@@ -26,6 +26,9 @@ export function getTimeByIndex(timeIndex: number) {
 }
 
 export function getStatusByIndex(status: number) {
+  if (status === -1) {
+    return { status: undefined };
+  }
   return { status };
 }
 

@@ -151,6 +151,10 @@ export function MenuContainer({ onSearchChange }: TProps) {
               format={'YYYY/MM/DD'}
               defaultValue={dateRangeValue.current}
               value={dateRangeValue.current}
+              size='small'
+              bordered={false}
+              allowClear={false}
+              className='w-full'
               onChange={(date) => {
                 const res = date?.map((info) => info?.format('YYYY/MM/DD'));
                 const tempStr = [

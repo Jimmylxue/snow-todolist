@@ -3,16 +3,24 @@
   .snow-edit{
     display: none;
   }
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 8px;
+  transition: all .2s ease;
 }
 
 .snow_project_menuItem_hover:hover{
-  box-shadow: 0 0 5px #fff;
-  background-color: #eee;
-  transition: background-all 0.5s ease-in-out;
+  background-color: rgba(0,0,0,.02);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   .snow-edit{
     display: block !important;
   }
   .snow-message-count{
     display: none;
   }
+}
+
+.snow_project_menuItem_hover.checked{
+  border-color: var(--primary-color);
+  background-color: var(--primary-soft-bg);
+  box-shadow: 0 4px 16px var(--primary-soft-bg);
 }

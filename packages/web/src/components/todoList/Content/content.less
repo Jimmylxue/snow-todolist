@@ -2,3 +2,22 @@
 .dz-content .ant-btn-link{
   color: var(--text-desc-color);
 }
+
+.snow-content-inner{
+  animation: fadeIn .2s ease;
+}
+
+.snow-content-header{
+  border-bottom: 1px dashed rgba(0,0,0,0.06);
+}
+.snow-content-title{
+  color: var(--primary-color);
+}
+.snow-content-subtitle{
+  color: var(--text-desc-color);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0px); }
+}

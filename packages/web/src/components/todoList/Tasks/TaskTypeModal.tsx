@@ -6,6 +6,8 @@ import { config } from '@/config/react-query';
 import { TaskType } from '@/api/todolist/taskType/type';
 import Icon from '@ant-design/icons';
 import * as icons from '@ant-design/icons';
+import './TaskTypeModal.less';
+
 type TProps = {
   type: 'ADD' | 'EDIT';
   typeInfo?: TaskType;
@@ -49,15 +51,26 @@ export const TaskTypeModal = ({ type, show, onCancel, typeInfo }: TProps) => {
       cancelText={'取消'}
       forceRender
       onCancel={onCancel}
+      wrapClassName='snow-task-type-modal'
+      width={480}
       footer={
         <div className='flex justify-end w-full'>
-          <Button type='primary' onClick={form.submit}>
-            {type === 'ADD' ? '添加类型' : '编辑类型'}
+          <Button
+            onClick={onCancel}
+            className='mr-2 rounded-lg border-none bg-gray-100 text-gray-500 hover:bg-gray-200'>
+            取消
+          </Button>
+          <Button
+            type='primary'
+            onClick={form.submit}
+            className='rounded-lg shadow-md'>
+            {type === 'ADD' ? '立即添加' : '保存修改'}
           </Button>
         </div>
       }>
       <Form
         form={form}
+        layout='vertical'
         name='horizontal_login'
         onFinish={async () => {
           const params = form.getFieldsValue();
@@ -84,27 +97,35 @@ export const TaskTypeModal = ({ type, show, onCancel, typeInfo }: TProps) => {
         }}>
         <Form.Item
           name='typeName'
+          label='类型名称'
           rules={[{ required: true, message: '请输入类型名称!' }]}>
           <Input
-            prefix={<UserOutlined className='site-form-item-icon' />}
-            placeholder='类型名称'
+            prefix={
+              <UserOutlined className='site-form-item-icon text-gray-400' />
+            }
+            placeholder='例如：工作、学习、生活'
+            className='py-2'
           />
         </Form.Item>
         <Form.Item
           name='desc'
+          label='描述信息'
           rules={[{ required: true, message: '请输入类型描述!' }]}>
           <Input
-            prefix={<LockOutlined className='site-form-item-icon' />}
-            placeholder='类型描述'
+            prefix={
+              <LockOutlined className='site-form-item-icon text-gray-400' />
+            }
+            placeholder='简短描述该类型的用途'
+            className='py-2'
           />
         </Form.Item>
-        <Space>
-          <Form.Item name='icon'>
+        <div className='flex gap-4'>
+          <Form.Item name='icon' label='图标' className='flex-1'>
             <Select
-              placeholder={'请选择图标'}
+              placeholder={'选择图标'}
               showSearch
               allowClear
-              style={{ width: 200 }}
+              className='w-full'
               onChange={(val) => {
                 console.log(val);
               }}>
@@ -121,14 +142,16 @@ export const TaskTypeModal = ({ type, show, onCancel, typeInfo }: TProps) => {
               })}
             </Select>
           </Form.Item>
-          <Form.Item name='themeColor'>
-            <Input
-              type='color'
-              style={{ width: 100 }}
-              placeholder='请选择主题色'
-            />
+          <Form.Item name='themeColor' label='主题色' className='flex-shrink-0'>
+            <div className='relative overflow-hidden rounded-lg w-[100px] h-[40px] border border-gray-200'>
+              <Input
+                type='color'
+                className='absolute inset-[-4px] w-[120%] h-[120%] cursor-pointer p-0 border-none'
+                style={{ padding: 0 }}
+              />
+            </div>
           </Form.Item>
-        </Space>
+        </div>
       </Form>
     </Modal>
   );

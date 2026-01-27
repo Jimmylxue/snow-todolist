@@ -1,0 +1,83 @@
+.snow-side-decor{
+  width: 200px;
+  margin: 0 12px;
+}
+.snow-side-card{
+  border: none;
+  border-radius: 16px;
+  background-color: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255,255,255,0.6);
+  transition: all 0.3s ease;
+}
+.snow-side-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.1);
+}
+.snow-side-title{
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.snow-side-desc{
+  color: var(--text-desc-color);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.snow-side-tags{
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.snow-side-gradient{
+  background: linear-gradient(135deg, var(--primary-soft-bg), rgba(255,255,255,0.8));
+}
+.snow-side-progress{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.snow-side-progress-text{
+  font-weight: 600;
+}
+.snow-side-progress-sub{
+  color: var(--text-desc-color);
+  font-size: 12px;
+}
+.snow-side-metrics{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.snow-side-metric-key{
+  color: var(--text-desc-color);
+  font-size: 12px;
+}
+.snow-side-metric-val{
+  font-weight: 700;
+}
+.snow-side-tip{
+  background-color: rgba(255,255,255,0.5);
+}
+
+.snow-kbd-hint {
+  font-size: 12px;
+  color: var(--text-desc-color);
+  display: flex;
+  align-items: center;
+}
+.kbd {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: monospace;
+  margin-right: 4px;
+  font-size: 11px;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.05);
+}

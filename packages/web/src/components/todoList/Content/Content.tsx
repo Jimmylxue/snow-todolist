@@ -42,16 +42,16 @@ export const Content = observer(
     return (
       <div className='dz-content content w-full flex justify-center'>
         <div
-          className=' h-full'
+          className=' h-full snow-content-inner'
           style={{
-            width: 800,
+            width: 880,
           }}>
-          <div className=' flex justify-between items-center py-1 my-3'>
+          <div className='snow-content-header flex justify-between items-center py-1 my-3'>
             <div className='flex items-end'>
-              <span className=' text-base font-bold'>
+              <span className='snow-content-title text-base font-bold'>
                 {getTimeTextByIndex(searchParams?.timeIndex)}
               </span>
-              <span className=' text-xs ml-2 text-gray-400 '>
+              <span className='snow-content-subtitle text-xs ml-2 text-gray-400 '>
                 {getFullTimeByIndex(
                   searchParams?.timeIndex,
                   searchParams?.startTime,
@@ -146,17 +146,20 @@ export const Content = observer(
               恢复搜索
             </Button>
           ) : (
-            <Button
-              icon={<PlusCircleOutlined />}
-              type='link'
-              className='mt-5'
-              onClick={() => {
-                if (checkUserLoginBeforeFn()) {
-                  onEditTask('ADD');
-                }
-              }}>
-              添加任务
-            </Button>
+            <div className='flex justify-center mt-6 mb-8'>
+              <div
+                className='w-full max-w-2xl h-14 rounded-2xl border-2 border-dashed border-gray-300 hover:border-[var(--primary-color)] bg-white/50 hover:bg-white transition-all duration-300 cursor-pointer flex items-center justify-center gap-3 text-gray-400 hover:text-[var(--primary-color)] group'
+                onClick={() => {
+                  if (checkUserLoginBeforeFn()) {
+                    onEditTask('ADD');
+                  }
+                }}>
+                <div className='w-8 h-8 rounded-full bg-gray-100 group-hover:bg-[var(--primary-soft-bg)] flex items-center justify-center transition-colors'>
+                  <PlusCircleOutlined className='text-lg' />
+                </div>
+                <span className='font-medium text-base'>添加新任务</span>
+              </div>
+            </div>
           )}
         </div>
       </div>

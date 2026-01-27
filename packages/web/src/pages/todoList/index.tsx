@@ -1,14 +1,14 @@
 import { Content, TSearchTaskParams, TasksModal } from '@/components/todoList';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './index.less';
-import { SliderBar } from '@/components/todoList/SliderBar/SliderBar';
+import { FilterBar } from '@/components/todoList/FilterBar/index';
 import { useUserTask } from '@/api/todolist/task';
 import { Pagination, Spin } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { TaskItem } from '@/api/todolist/task/type';
 import { ActionBar } from '@/components/todoList/ActionBar';
 import { useUser } from '@/hooks/useAuth';
-import { MenuContainer } from './menu';
+import { SideDecor } from '@/components/todoList/SideDecor/index';
 
 type TProps = {
   taskModalShow: boolean;
@@ -39,6 +39,7 @@ export const TodoList = observer(
         startTime: searchParams?.startTime,
         endTime: searchParams?.endTime,
         typeId: searchParams?.taskType,
+        filterType: searchParams?.filterType,
         page: pageParams.page,
         pageSize: pageParams.pageSize,
       },
@@ -63,51 +64,61 @@ export const TodoList = observer(
 
     return (
       <>
-        <div className=' w-full flex flex-grow'>
-          <SliderBar>
-            <MenuContainer
-              onSearchChange={(searchParams) => {
-                setSearchParams(searchParams);
-              }}
-            />
-          </SliderBar>
-          <div className='flex-grow h-full snow-content'>
+        <div className=' w-full flex flex-col flex-grow'>
+          <FilterBar
+            onChange={(params) => {
+              setSearchParams(params);
+            }}
+          />
+          <div className='flex-grow h-full snow-content mt-2'>
             <Spin tip='Loading...' spinning={isFetching} className='h-full'>
-              <Content
-                searchParams={searchParams}
-                taskData={data?.result?.result || []}
-                onEditTask={(type, task) => {
-                  taskModalType.current = type;
-                  // @ts-ignore
-                  selectTask.current = { ...task };
-                  currentChooseTaskType.current = searchParams?.taskType;
-                  console.log('current', currentChooseTaskType.current);
-                  // onCloseTaskModal();
-                  opOpenTaskModal();
-                }}
-              />
-              {hasOneMorePage && (
-                <div
-                  className=' flex w-full justify-end '
-                  style={{
-                    width: 800,
-                    margin: '0 auto',
-                    marginTop: 10,
-                  }}>
-                  <Pagination
-                    size='small'
-                    current={data?.result?.page}
-                    defaultCurrent={data?.result?.page}
-                    total={data?.result?.total}
-                    onChange={(pageData) => {
-                      setPageParams((params) => ({
-                        ...params,
-                        page: pageData,
-                      }));
-                    }}
-                  />
+              <div className='w-full flex justify-center'>
+                <div className='flex w-full max-w-[1280px] justify-center'>
+                  <div className='hidden xl:block'>
+                    <SideDecor
+                      position='left'
+                      taskData={data?.result?.result || []}
+                    />
+                  </div>
+                  <div className='flex-grow max-w-[800px]'>
+                    <Content
+                      searchParams={searchParams}
+                      taskData={data?.result?.result || []}
+                      onEditTask={(type, task) => {
+                        taskModalType.current = type;
+                        // @ts-ignore
+                        selectTask.current = { ...task };
+                        currentChooseTaskType.current = searchParams?.taskType;
+                        console.log('current', currentChooseTaskType.current);
+                        // onCloseTaskModal();
+                        opOpenTaskModal();
+                      }}
+                    />
+                    {hasOneMorePage && (
+                      <div className='flex w-full justify-end mt-4 px-4'>
+                        <Pagination
+                          size='small'
+                          current={data?.result?.page}
+                          defaultCurrent={data?.result?.page}
+                          total={data?.result?.total}
+                          onChange={(pageData) => {
+                            setPageParams((params) => ({
+                              ...params,
+                              page: pageData,
+                            }));
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  <div className='hidden xl:block'>
+                    <SideDecor
+                      position='right'
+                      taskData={data?.result?.result || []}
+                    />
+                  </div>
                 </div>
-              )}
+              </div>
             </Spin>
           </div>
         </div>

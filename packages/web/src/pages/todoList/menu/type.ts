@@ -2,10 +2,11 @@ import { ReactNode } from 'react';
 
 export type TSearchTaskParams = {
   taskType: number;
-  status: number;
+  status: number | undefined;
   startTime: number;
   endTime: number;
   timeIndex: number;
+  filterType: 1 | 2; // 1: 创建时间, 2: 预期完成时间
 };
 
 export enum STime {

@@ -1,0 +1,59 @@
+.snow-task-type-modal {
+  .ant-modal-content {
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  .ant-modal-header {
+    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 20px 24px;
+    
+    .ant-modal-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+  }
+
+  .ant-modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 16px 24px;
+  }
+
+  .ant-input, .ant-input-affix-wrapper {
+    border-radius: 8px;
+    padding: 8px 12px;
+    border-color: #eee;
+    background-color: #fafafa;
+    transition: all 0.3s;
+    
+    &:hover, &:focus, &-focused {
+      background-color: #fff;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px var(--primary-soft-bg);
+    }
+    
+    input {
+      background-color: transparent;
+    }
+  }
+
+  .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #eee !important;
+    background-color: #fafafa !important;
+    height: 40px !important;
+    display: flex;
+    align-items: center;
+    
+    &:hover, &:focus {
+      border-color: var(--primary-color) !important;
+    }
+  }
+}
