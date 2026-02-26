@@ -6,7 +6,7 @@ import { TaskItem } from '@/api/todolist/task/type';
 import { useTodoList } from '@/hooks/useTodolist';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import {
   ClockCircleOutlined,
   AlignLeftOutlined,
@@ -53,9 +53,10 @@ export const TasksModal = ({
       form.setFieldsValue({
         taskName: selectTask.taskName,
         typeId: selectTask.typeId,
-        expectTime: selectTask?.expectTime
-          ? dayjs(+selectTask.expectTime)
-          : undefined,
+        expectTime:
+          selectTask?.expectTime && !isNaN(+selectTask.expectTime)
+            ? moment(+selectTask.expectTime)
+            : undefined,
       });
       setDesc(selectTask.taskContent);
     }
@@ -186,8 +187,8 @@ export const TasksModal = ({
               className='w-full h-12 rounded-xl border-none bg-gray-50 hover:bg-white transition-all'
               placeholder='选填，默认为无'
               suffixIcon={<ClockCircleOutlined className='text-gray-400' />}
-              format='YYYY-MM-DD HH:mm'
-              showTime={{ format: 'HH:mm' }}
+              format='YYYY-MM-DD'
+              // showTime={{ format: 'HH:mm' }}
             />
           </Form.Item>
         </div>
