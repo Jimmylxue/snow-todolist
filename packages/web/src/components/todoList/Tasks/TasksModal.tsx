@@ -72,7 +72,9 @@ export const TasksModal = ({
       const params = {
         ...values,
         taskContent: desc,
-        expectTime: String(values.expectTime?.valueOf()),
+        expectTime: values.expectTime?.valueOf()
+          ? String(values.expectTime?.valueOf())
+          : undefined,
       };
 
       if (type === 'ADD') {
