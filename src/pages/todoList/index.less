@@ -1,0 +1,37 @@
+.btn_hover_dz:hover{
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  color: red;
+  box-shadow: 0 0 5px #fff;
+  background-color: #eee;
+  /* text-shadow: 5px #fff; */
+  transition: background-all 0.5s ease-in-out;
+}
+
+.snow-content{
+  max-height: calc(100vh - 200px) !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 24px;
+  
+  /* Custom Scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.snow-content > .ant-spin-nested-loading{
+  height: 100% !important;
+}
+

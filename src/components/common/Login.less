@@ -1,0 +1,44 @@
+.snow-login-modal {
+  .ant-input,
+  .ant-input-password {
+    border-bottom-width: 2px !important;
+    border-bottom-style: solid !important;
+    border-bottom-color: #e5e7eb !important; /* border-gray-200 */
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0.75rem !important; /* rounded-xl */
+    
+    &:hover,
+    &:focus,
+    &-focused {
+      border-bottom-color: var(--primary-color) !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .ant-input-affix-wrapper {
+    border-bottom-width: 2px !important;
+    border-bottom-style: solid !important;
+    border-bottom-color: #e5e7eb !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0.75rem !important;
+    padding-top: 0.75rem; /* h-12 approx */
+    padding-bottom: 0.75rem;
+    background-color: #f9fafb !important; /* bg-gray-50 */
+    
+    &:hover,
+    &:focus,
+    &-focused {
+      background-color: #ffffff !important;
+      border-bottom-color: var(--primary-color) !important;
+      box-shadow: none !important;
+    }
+
+    input {
+      background-color: transparent !important;
+    }
+  }
+}

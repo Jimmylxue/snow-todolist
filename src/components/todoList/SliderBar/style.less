@@ -1,0 +1,38 @@
+.sliderBar-container{
+  height: calc(100vh - 50px) !important;
+  // overflow: auto !important;
+  -ms-overflow-style: none; /* 隐藏IE和Edge浏览器的滚动条 */
+  scrollbar-width: none; /* 隐藏Firefox浏览器的滚动条 */
+}
+
+.sliderBar-container::-webkit-scrollbar {
+  display: none;
+}
+
+.sliderBarShow {
+  width: 300px;
+  // background-color: #fafafa;
+  animation: sliderBarShow 0.2s ease forwards;
+}
+.sliderBarClose {
+  width: 0px;
+  height: 100%;
+  // background-color: #fafafa;
+  animation: sliderBarClose 0.2s ease forwards;
+}
+@keyframes sliderBarShow {
+  from {
+    width: 0;
+  }
+  to {
+    width: 300px;
+  }
+}
+@keyframes sliderBarClose {
+  from {
+    width: 300px;
+  }
+  to {
+    width: 0px;
+  }
+}

@@ -1,0 +1,167 @@
+.snow-filterbar{
+  background: transparent;
+  margin-bottom: 16px;
+}
+.snow-filterbar-inner{
+  width: 100%;
+  max-width: 800px;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  background-color: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid rgba(255,255,255,0.6);
+}
+@media (min-width: 1280px){
+  .snow-filterbar-inner{
+    width: 100%;
+    max-width: 1280px;
+  }
+}
+
+/* Time Tabs */
+.snow-time-tabs{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.snow-filter-time-type {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.snow-divider-vertical {
+  width: 1px;
+  height: 20px;
+  background-color: rgba(0,0,0,0.1);
+  margin: 0 12px;
+}
+
+.snow-tab-item{
+  padding: 6px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.snow-tab-item:hover{
+  background-color: rgba(0,0,0,0.03);
+  color: var(--primary-color);
+}
+.snow-tab-item.active{
+  color: var(--primary-color);
+  background-color: var(--primary-soft-bg);
+}
+
+.snow-divider{
+  height: 1px;
+  width: 100%;
+  background-color: rgba(0,0,0,0.04);
+}
+
+/* Secondary Filters */
+.snow-filter-row{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.snow-filter-group{
+  display: flex;
+  align-items: center;
+}
+.snow-filter-group .label{
+  font-size: 13px;
+  color: #999;
+  margin-right: 12px;
+}
+
+.snow-filter-group .items{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.snow-filter-types{
+  max-height: 90px;
+  overflow: auto;
+}
+
+/* Pills */
+.snow-pill{
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 13px;
+  transition: all 0.15s ease;
+  background-color: transparent;
+  color: #666;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  .anticon {
+    font-size: 14px !important;
+  }
+}
+.snow-pill:hover{
+  background-color: rgba(0,0,0,0.06);
+}
+.snow-pill.active{
+  background-color: transparent;
+  color: var(--primary-color);
+  font-weight: 600;
+  // box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+  }
+}
+
+.snow-pill.snow-add-type {
+  border-style: dashed;
+  background-color: transparent;
+  color: #999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  
+  &:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: var(--primary-soft-bg);
+  }
+}
+
+/* Popover overrides */
+.snow-filter-popover{
+  .ant-picker{
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+}

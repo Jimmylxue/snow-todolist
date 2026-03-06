@@ -1,0 +1,9 @@
+.dz-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--primary-text-color) !important;
+}
+.dz-tabs .ant-tabs-tab {
+  color: var(--tab-default-text-color) !important;
+}
+.dz-tabs .ant-tabs-ink-bar {
+  display: none;
+}
