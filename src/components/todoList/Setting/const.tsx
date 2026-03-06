@@ -2,10 +2,12 @@ import {
   InfoCircleOutlined,
   SkinOutlined,
   SmileOutlined,
+  BellOutlined,
 } from '@ant-design/icons';
 import { Theme } from './Theme';
 import { Profile } from './Profile';
 import { About } from './About';
+import { Notice } from './Notice';
 
 /**
  * 设置的功能集合
@@ -16,6 +18,12 @@ export const setting = [
     name: '账户',
     icon: <SmileOutlined />,
     component: <Profile />,
+  },
+  {
+    key: 'notice',
+    name: '通知',
+    icon: <BellOutlined />,
+    component: <Notice />,
   },
   {
     key: 'theme',
